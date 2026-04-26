@@ -1,7 +1,27 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(mkdir -p /home/npons/NovaCMS/_bmad/core /home/npons/NovaCMS/_bmad/bmm /home/npons/NovaCMS/_bmad-output/planning-artifacts /home/npons/NovaCMS/_bmad-output/implementation-artifacts /home/npons/NovaCMS/docs)",
+      "Bash(cp /home/npons/Clients/Eclat_Brillance/_bmad-output/product-brief-admin-panel.md /home/npons/NovaCMS/_bmad-output/product-brief-admin-panel.md)",
+      "Bash(npm run *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)",
+      "Bash(command -v code)",
+      "Bash(code -r \"/home/npons/NovaCMS\" \"/home/npons/NovaCMS/_bmad-output/implementation-artifacts/spec-mvp-text-pipeline.md\")",
+      "Bash(echo \"exit=$?\")",
+      "Read(//home/npons/.claude/skills/bmad-init/**)",
+      "Bash(python scripts/bmad_init.py check --project-root /home/npons/Clients/Eclat_Brillance)",
+      "Bash(npm --version)",
+      "Bash(python *)",
+      "Bash(git -C /home/npons/Clients/Eclat_Brillance status --short)",
+      "Bash(git *)",
+      "Bash(npm install *)",
+      "Bash(xargs -I{} sh -c 'echo \"=== {} ===\"; cat {}')",
+      "Bash(code -r \"/home/npons/Clients/Eclat_Brillance\" \"/home/npons/Clients/Eclat_Brillance/_bmad-output/implementation-artifacts/spec-migrate-vite-react-tailwind.md\")"
     ]
   }
 }
