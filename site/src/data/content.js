@@ -1,0 +1,154 @@
+export const siteConfig = {
+  name: 'Éclat Brillance',
+  tagline: 'Entretien professionnel',
+  tel: '06 98 61 36 83',
+  telHref: 'tel:+33698613683',
+  email: 'contact@eclatbrillance.com',
+  formId: 'YOUR_FORM_ID',
+};
+
+export const nav = [
+  { label: 'À propos', href: '#apropos' },
+  { label: 'Prestations', href: '#prestations' },
+  { label: 'Pourquoi nous', href: '#atouts' },
+  { label: 'Devis gratuit', href: '#contact', cta: true },
+];
+
+export const hero = {
+  eyebrow: 'Entreprise locale · Réactivité · Professionnalisme',
+  title: 'Des locaux impeccables,',
+  titleEm: 'une image professionnelle.',
+  lede: "Nous accompagnons les entreprises dans l'entretien de leurs espaces de travail afin de garantir propreté, hygiène et confort au quotidien.",
+  primaryCta: 'Demander un devis',
+  proof: ['Devis gratuit sous 24h', 'Essai sans engagement', 'Qualité garantie'],
+  badge: {
+    kicker: 'Offre de bienvenue',
+    number: '−15',
+    unit: '%',
+    sub: 'sur votre première prestation',
+  },
+};
+
+export const apropos = {
+  kicker: 'À propos',
+  title: "Un partenaire d'entretien discret et exigeant.",
+  body: "Chez Éclat Brillance, nous considérons que la propreté de vos locaux reflète directement le sérieux de votre activité. C'est pourquoi nous mettons à votre disposition une équipe formée, des produits efficaces et respectueux de l'environnement, et un service pensé pour s'adapter à votre rythme — en ponctuel comme en contrat.",
+  highlights: [
+    "Prestations ponctuelles ou contrats d'entretien sur-mesure",
+    'Intervention rapide partout dans votre zone',
+    'Interlocuteur dédié, disponible et transparent',
+  ],
+};
+
+export const prestationsSection = {
+  kicker: 'Nos prestations',
+  title: 'Un service complet pour chaque espace.',
+  lead: 'Six expertises pour maintenir vos locaux en état impeccable, du quotidien aux remises en état les plus exigeantes.',
+};
+
+export const prestations = [
+  {
+    title: 'Entretien de bureaux',
+    body: 'Nettoyage régulier ou ponctuel de vos espaces de travail : postes, sols, sanitaires, espaces communs.',
+    iconPaths: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M8 14h2"/><path d="M14 14h2"/>',
+  },
+  {
+    title: "Nettoyage d'immeubles",
+    body: "Entretien des parties communes : halls, escaliers, ascenseurs, paliers. Rigueur et constance.",
+    iconPaths: '<path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/>',
+  },
+  {
+    title: 'Commerces & locaux',
+    body: 'Des boutiques et espaces recevant du public toujours prêts à accueillir vos clients.',
+    iconPaths: '<path d="M3 7h18l-2 13H5L3 7z"/><path d="M8 7V4a4 4 0 0 1 8 0v3"/>',
+  },
+  {
+    title: 'Après travaux & chantiers',
+    body: "Dépoussiérage, dégraissage, évacuation des résidus — vos locaux livrés prêts à l'emploi.",
+    iconPaths: '<path d="M14 3l7 7-11 11H3v-7L14 3z"/><path d="M13 4l7 7"/>',
+  },
+  {
+    title: 'Vitres & surfaces vitrées',
+    body: 'Façades, baies, verrières : transparence totale grâce à un matériel et des techniques professionnels.',
+    iconPaths: '<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M4 9h16"/><path d="M4 15h16"/><path d="M12 3v18"/>',
+  },
+  {
+    title: 'Remise en état complète',
+    body: "Pour un local vieilli, un changement d'occupant ou une fin de bail — on repart sur une base saine.",
+    iconPaths: '<path d="M3 12l4-8 5 8 5-8 4 8"/><path d="M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>',
+  },
+];
+
+export const atoutsSection = {
+  kicker: 'Pourquoi nous choisir',
+  title: 'Le détail qui fait la différence.',
+};
+
+export const atouts = [
+  {
+    num: '01',
+    title: 'Équipe sérieuse et discrète',
+    body: 'Des intervenants formés, stables et respectueux de vos espaces et de vos collaborateurs.',
+  },
+  {
+    num: '02',
+    title: 'Produits écologiques',
+    body: "Une propreté efficace sans compromis sur la santé de vos équipes ni sur l'environnement.",
+  },
+  {
+    num: '03',
+    title: 'Service fiable',
+    body: 'Un interlocuteur unique, des plannings tenus et une qualité contrôlée à chaque passage.',
+  },
+  {
+    num: '04',
+    title: 'Intervention rapide',
+    body: 'Besoin urgent ? Nous répondons sous 24h et nous adaptons à vos contraintes horaires.',
+  },
+];
+
+export const contact = {
+  kicker: 'Contact & devis',
+  title: 'Parlons de vos besoins.',
+  body: 'Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Vous pouvez aussi nous joindre directement :',
+  notePrefix: 'Offre de bienvenue :',
+  note: '−15 % sur votre première prestation.',
+  formLabels: {
+    nom: 'Nom complet',
+    societe: 'Société',
+    email: 'Email',
+    tel: 'Téléphone',
+    prestation: 'Type de prestation',
+    message: 'Votre message',
+  },
+  formPlaceholder: 'Surface, fréquence, contraintes horaires…',
+  formSelectDefault: '— Sélectionnez —',
+  submitLabel: 'Envoyer ma demande',
+  submitLoading: 'Envoi…',
+  statusMessages: {
+    validationError: 'Merci de compléter les champs obligatoires.',
+    mailtoSuccess: "Votre client mail va s'ouvrir pour finaliser l'envoi.",
+    formspreeSuccess: 'Merci ! Votre demande a bien été envoyée. Nous revenons vers vous sous 24 h.',
+    formspreeError: 'Une erreur est survenue. Merci de réessayer ou de nous appeler directement.',
+    networkError: 'Connexion impossible. Merci de nous contacter par téléphone ou email.',
+  },
+  prestationOptions: [
+    "Entretien de bureaux",
+    "Nettoyage d'immeubles et parties communes",
+    "Nettoyage de commerces et locaux professionnels",
+    "Nettoyage après travaux et chantiers",
+    "Nettoyage de vitres et surfaces vitrées",
+    "Remise en état complète",
+    "Autre / Je ne sais pas",
+  ],
+};
+
+export const footer = {
+  description: "Entretien de bureaux et locaux professionnels.\nEntreprise locale, réactive et engagée.",
+  contactHeading: 'Contact',
+  infoHeading: 'Informations',
+  infoLines: ['Devis gratuit sous 24h', 'Intervention rapide'],
+  devisLabel: 'Demander un devis',
+  legal: 'Tous droits réservés.',
+  mentions: 'Mentions légales',
+};
