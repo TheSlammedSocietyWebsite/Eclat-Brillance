@@ -30,20 +30,22 @@ site/
 │   │   └── content.js     # Données par défaut (référence)
 │   ├── admin.css          # Styles du panel admin
 │   └── index.css          # Styles du site (Tailwind)
-├── api/                   # Vercel Edge Functions
-│   ├── login.ts
-│   ├── logout.ts
-│   ├── me.ts
-│   ├── save.ts
+├── api/                   # Vercel Edge Functions (DOIT être en .js)
+│   ├── login.js
+│   ├── logout.js
+│   ├── me.js
+│   ├── save.js
 │   └── _lib/
-│       ├── session.ts
-│       └── github.ts
+│       ├── crypto.js      # Web Crypto PBKDF2 (auth)
+│       ├── session.js     # JWT session
+│       └── github.js      # Commit sur GitHub
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
-├── tsconfig.json
 └── vercel.json
 ```
+
+**Important** : Les Edge Functions doivent être en `.js` (pas `.ts`). Vercel TypeScript 5.9+ est trop strict pour les types implicites des Edge Functions.
 
 ## Lancer en local
 
@@ -80,18 +82,19 @@ npx vercel dev
 
 | Variable | Description |
 |---|---|
-| `ADMIN_PASSWORD_HASH` | Hash bcrypt du mot de passe admin. **Jamais** en clair. |
+| `ADMIN_PASSWORD_HASH` | Hash PBKDF2 du mot de passe admin. **Jamais** en clair. |
 | `SESSION_SECRET` | Secret aléatoire ≥32 octets pour signer le JWT. |
 | `GITHUB_TOKEN` | PAT fine-grained, scope `Contents: read+write` sur ce repo uniquement. |
-| `GITHUB_REPO_OWNER` | Owner du repo (ex: `npons971`). |
-| `GITHUB_REPO_NAME` | Nom du repo (ex: `eclat-brillance`). |
-| `GITHUB_BRANCH` | Branche cible (`main`). |
-| `CONTENT_PATH` | Chemin du fichier JSON (`public/content.json`). |
+| `GITHUB_REPO_OWNER` | Owner du repo (ex: `TheSlammedSocietyWebsite`). |
+| `GITHUB_REPO_NAME` | Nom du repo (ex: `Eclat-Brillance`). |
+| `GITHUB_BRANCH` | Branche cible (`master`). |
+| `CONTENT_PATH` | Chemin du fichier JSON (`site/public/content.json`). |
 
-### Générer le hash bcrypt
+### Générer le hash du mot de passe (PBKDF2)
 
 ```bash
-node -e "console.log(require('bcryptjs').hashSync('TON_MOT_DE_PASSE', 12))"
+cd site
+node -e "const { hashPassword } = require('./api/_lib/crypto.js'); hashPassword('TON_MOT_DE_PASSE').then(h => console.log(h))"
 ```
 
 ### Générer le SESSION_SECRET
@@ -105,10 +108,11 @@ node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"
 1. Importer le repo dans Vercel.
 2. Framework Preset : **Vite** (auto-détecté).
 3. Build Command / Output Directory : laisser les defaults Vite.
-4. Renseigner les variables d'environnement (Production + Preview).
-5. Deploy.
+4. **Root Directory** : `site` (si le repo contient d'autres dossiers).
+5. Renseigner les variables d'environnement (Production + Preview).
+6. Deploy.
 
-Vercel rebuild automatiquement à chaque push sur `main` — y compris ceux générés par `/api/save`.
+Vercel rebuild automatiquement à chaque push sur `master` — y compris ceux générés par `/api/save`.
 
 ## Édition du contenu
 
@@ -146,3 +150,11 @@ Le formulaire fonctionne avec [Formspree](https://formspree.io) (gratuit jusqu'�
 - Meta description + OpenGraph en place
 - `prefers-reduced-motion` respecté
 - Contenu versionné dans Git (rollback possible)
+
+## Dépannage courant
+
+| Problème | Cause | Solution |
+|---|---|---|
+| "Erreur de connexion" / `server_misconfig` | Module incompatible Edge (ex: `bcryptjs`) | Utiliser Web Crypto API native (voir `api/_lib/crypto.js`) |
+| Build échoue sur Edge Functions | Fichiers `.ts` avec types implicites | Renommer en `.js` |
+| "Invalid route source pattern" | Regex negative lookahead dans `vercel.json` | Utiliser des rewrites explicites |

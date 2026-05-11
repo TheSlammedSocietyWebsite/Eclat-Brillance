@@ -24,21 +24,22 @@ Dans le dashboard Vercel du projet → **Settings → Environment Variables**
 
 | Variable | Valeur | Exemple |
 |---|---|---|
-| `ADMIN_PASSWORD_HASH` | Hash bcrypt du mot de passe admin | `$2a$12$...` |
+| `ADMIN_PASSWORD_HASH` | Hash PBKDF2 du mot de passe admin | `pbkdf2:SALT:HASH` |
 | `SESSION_SECRET` | Secret aléatoire ≥32 octets | `aB3x9...` (48 octets base64) |
 | `GITHUB_TOKEN` | GitHub PAT fine-grained | `github_pat_11A...` |
-| `GITHUB_REPO_OWNER` | Owner du repo GitHub | `npons971` |
-| `GITHUB_REPO_NAME` | Nom du repo GitHub | `eclat-brillance` |
-| `GITHUB_BRANCH` | Branche cible | `main` |
-| `CONTENT_PATH` | Chemin du fichier dans le repo | `public/content.json` |
+| `GITHUB_REPO_OWNER` | Owner du repo GitHub | `TheSlammedSocietyWebsite` |
+| `GITHUB_REPO_NAME` | Nom du repo GitHub | `Eclat-Brillance` |
+| `GITHUB_BRANCH` | Branche cible | `master` |
+| `CONTENT_PATH` | Chemin du fichier dans le repo | `site/public/content.json` |
 
 **⚠️ Important** : Renseigner ces variables pour **Production** ET **Preview**.
 
 ### Générer les valeurs
 
 ```bash
-# Hash bcrypt du mot de passe
-node -e "console.log(require('bcryptjs').hashSync('MOT_DE_PASSE_DU_CLIENT', 12))"
+# Hash PBKDF2 du mot de passe (compatible Vercel Edge)
+cd site
+node -e "const { hashPassword } = require('./api/_lib/crypto.js'); hashPassword('MOT_DE_PASSE').then(h => console.log(h))"
 
 # Session secret
 node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"
@@ -150,7 +151,8 @@ Tant que `formId` vaut `"YOUR_FORM_ID"`, le formulaire ouvre le client mail de l
 
 1. Générer un nouveau hash :
    ```bash
-   node -e "console.log(require('bcryptjs').hashSync('NOUVEAU_MOT_DE_PASSE', 12))"
+   cd site
+   node -e "const { hashPassword } = require('./api/_lib/crypto.js'); hashPassword('NOUVEAU_MOT_DE_PASSE').then(h => console.log(h))"
    ```
 2. Mettre à jour la variable `ADMIN_PASSWORD_HASH` sur Vercel
 3. Redeployer (`vercel --prod` ou push un commit vide)
@@ -169,16 +171,35 @@ Option B — Modifier `public/content.json` directement dans le repo et push
 
 ---
 
-## 8. Dépannage
+## 8. Notes importantes sur les Edge Functions
+
+- **Format** : Les Edge Functions doivent être en `.js` (pas `.ts`). Vercel utilise TypeScript 5.9+ avec une config stricte qui fait échouer le build sur les types implicites.
+- **Compatibilité** : N'utiliser que des modules compatibles Edge (`jose` ✅, `bcryptjs` ❌). L'authentification utilise **Web Crypto API** (PBKDF2) au lieu de `bcryptjs`.
+- **Routing** : Le `vercel.json` ne supporte pas les regex avec negative lookahead. Utiliser des rewrites explicites :
+  ```json
+  {
+    "rewrites": [
+      { "source": "/api/:path*", "destination": "/api/:path*" },
+      { "source": "/:path*", "destination": "/index.html" }
+    ]
+  }
+  ```
+
+---
+
+## 9. Dépannage
 
 | Problème | Cause probable | Solution |
 |---|---|---|
 | "Session expirée" sur /admin | Cookie invalide ou `SESSION_SECRET` changé | Se reconnecter |
 | "Échec de la sauvegarde" | `GITHUB_TOKEN` invalide ou expiré | Regénérer le token GitHub |
 | "Contenu trop volumineux" | `content.json` dépasse 900 Ko | Réduire la taille du contenu |
-| Le site ne se met pas à jour après save | Vercel n'a pas rebuild | Vérifier que le commit est bien pushé sur `main` |
+| Le site ne se met pas à jour après save | Vercel n'a pas rebuild | Vérifier que le commit est bien pushé sur `master` |
 | `api/*` ne répond pas en local | `npm run dev` ne sert pas les Edge Functions | Utiliser `npx vercel dev` |
 | Build échoue | Erreur TypeScript ou import manquant | Vérifier `npm run build` en local |
+| "Erreur de connexion" / `server_misconfig` | `bcryptjs` incompatible avec l'environnement Edge | Remplacer par Web Crypto API (PBKDF2) — voir `api/_lib/crypto.js` |
+| "Deployment failed" — invalid route source pattern | Regex avec negative lookahead dans `vercel.json` | Utiliser des rewrites explicites (voir section 8) |
+| Build échoue sur les Edge Functions | Fichiers `.ts` avec types implicites | Renommer en `.js` et retirer les types TypeScript |
 
 ---
 
@@ -192,4 +213,4 @@ Option B — Modifier `public/content.json` directement dans le repo et push
 
 ---
 
-*Dernière mise à jour : {date}*
+*Dernière mise à jour : 2026-05-11*
