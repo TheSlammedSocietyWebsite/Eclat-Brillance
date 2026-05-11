@@ -89,7 +89,7 @@ vercel --prod   # Production
 vercel          # Preview (staging)
 ```
 
-Ou simplement push sur `main` → Vercel rebuild auto.
+Ou simplement push sur `master` → Vercel rebuild auto.
 
 ---
 
@@ -138,7 +138,7 @@ Tant que `formId` vaut `"YOUR_FORM_ID"`, le formulaire ouvre le client mail de l
 
 ### Ce qu'il ne faut PAS transmettre
 
-- ❌ Le hash bcrypt (`ADMIN_PASSWORD_HASH`)
+- ❌ Le hash (`ADMIN_PASSWORD_HASH`)
 - ❌ Le `SESSION_SECRET`
 - ❌ Le `GITHUB_TOKEN`
 - ❌ L'accès au dashboard Vercel (sauf si le client le demande explicitement)
@@ -166,40 +166,8 @@ Option B — Modifier `public/content.json` directement dans le repo et push
 
 1. Modifier les fichiers React dans `src/`
 2. `npm run build` en local pour vérifier
-3. Commit + push sur `main`
+3. Commit + push sur `master`
 4. Vercel rebuild auto
-
----
-
-## 8. Notes importantes sur les Edge Functions
-
-- **Format** : Les Edge Functions doivent être en `.js` (pas `.ts`). Vercel utilise TypeScript 5.9+ avec une config stricte qui fait échouer le build sur les types implicites.
-- **Compatibilité** : N'utiliser que des modules compatibles Edge (`jose` ✅, `bcryptjs` ❌). L'authentification utilise **Web Crypto API** (PBKDF2) au lieu de `bcryptjs`.
-- **Routing** : Le `vercel.json` ne supporte pas les regex avec negative lookahead. Utiliser des rewrites explicites :
-  ```json
-  {
-    "rewrites": [
-      { "source": "/api/:path*", "destination": "/api/:path*" },
-      { "source": "/:path*", "destination": "/index.html" }
-    ]
-  }
-  ```
-
----
-
-## 9. Dépannage
-
-| Problème | Cause probable | Solution |
-|---|---|---|
-| "Session expirée" sur /admin | Cookie invalide ou `SESSION_SECRET` changé | Se reconnecter |
-| "Échec de la sauvegarde" | `GITHUB_TOKEN` invalide ou expiré | Regénérer le token GitHub |
-| "Contenu trop volumineux" | `content.json` dépasse 900 Ko | Réduire la taille du contenu |
-| Le site ne se met pas à jour après save | Vercel n'a pas rebuild | Vérifier que le commit est bien pushé sur `master` |
-| `api/*` ne répond pas en local | `npm run dev` ne sert pas les Edge Functions | Utiliser `npx vercel dev` |
-| Build échoue | Erreur TypeScript ou import manquant | Vérifier `npm run build` en local |
-| "Erreur de connexion" / `server_misconfig` | `bcryptjs` incompatible avec l'environnement Edge | Remplacer par Web Crypto API (PBKDF2) — voir `api/_lib/crypto.js` |
-| "Deployment failed" — invalid route source pattern | Regex avec negative lookahead dans `vercel.json` | Utiliser des rewrites explicites (voir section 8) |
-| Build échoue sur les Edge Functions | Fichiers `.ts` avec types implicites | Renommer en `.js` et retirer les types TypeScript |
 
 ---
 
@@ -210,6 +178,12 @@ Option B — Modifier `public/content.json` directement dans le repo et push
 | `https://monsite.vercel.app/` | Site public |
 | `https://monsite.vercel.app/admin` | Panel admin (protégé) |
 | `https://monsite.vercel.app/admin/login` | Page de connexion |
+
+---
+
+## Documentation technique
+
+Pour les notes de déploiement, la structure des Edge Functions et le dépannage avancé → voir `docs/DEPLOY_NOTES.md`
 
 ---
 
