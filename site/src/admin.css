@@ -228,7 +228,7 @@
 }
 
 .image-slot {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .image-slot-label {
@@ -239,27 +239,52 @@
 }
 
 .image-slot-preview {
-  position: relative;
-  display: inline-block;
-  max-width: 320px;
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 4 / 3;
+  background: #f0f0f0;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
 }
 
 .image-slot-preview img {
   width: 100%;
-  height: auto;
-  border-radius: 6px;
+  height: 100%;
+  object-fit: contain;
   display: block;
 }
 
-.image-slot-preview button {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.75rem;
-  background: rgba(0, 0, 0, 0.6);
+.image-slot-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.admin-page .media-uploader-btn {
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  background: #1a2b4a;
   color: white;
   border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-page .media-uploader-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-page .btn-remove {
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  background: transparent;
+  color: #b00020;
+  border: 1px solid #b00020;
   border-radius: 4px;
   cursor: pointer;
 }

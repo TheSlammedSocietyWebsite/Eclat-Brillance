@@ -3,7 +3,7 @@ import { useState, useRef, useCallback } from 'react';
 const MAX_FILE_BYTES = 1_500_000; // ~1.5MB raw
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-export default function MediaUploader({ onUpload }) {
+export default function MediaUploader({ onUpload, asButton = false, buttonLabel = 'Choisir un fichier' }) {
   const [state, setState] = useState('idle');
   const [error, setError] = useState(null);
   const inputRef = useRef(null);
@@ -85,6 +85,29 @@ export default function MediaUploader({ onUpload }) {
     },
     [handleFile],
   );
+
+  if (asButton) {
+    return (
+      <>
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          onChange={onInputChange}
+          style={{ display: 'none' }}
+        />
+        <button
+          type="button"
+          className={`media-uploader-btn ${state === 'uploading' || state === 'reading' ? 'busy' : ''}`}
+          onClick={() => inputRef.current?.click()}
+          disabled={state === 'uploading' || state === 'reading'}
+        >
+          {state === 'uploading' || state === 'reading' ? 'Upload…' : buttonLabel}
+        </button>
+        {state === 'error' && <span className="mu-error">{error}</span>}
+      </>
+    );
+  }
 
   return (
     <div

@@ -25,7 +25,7 @@ export default function Apropos() {
         <div className="apropos-figure" ref={figureRef} aria-hidden="true">
           <div
             className="figure-card figure-card-1"
-            style={{ backgroundImage: `linear-gradient(135deg, rgba(26,43,74,0.8), rgba(26,43,74,0.3)), url("${img1}")` }}
+            style={{ backgroundImage: `linear-gradient(135deg, rgba(26,43,74,0.45), rgba(26,43,74,0.15)), url("${img1}")` }}
           />
           <div
             className="figure-card figure-card-2"
