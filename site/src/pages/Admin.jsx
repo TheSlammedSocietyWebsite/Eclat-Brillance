@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
 import TextEditor from '../components/TextEditor';
-import { fetchContent, logout, save } from '../lib/api';
+import ColorEditor from '../components/ColorEditor';
+import MediaUploader from '../components/MediaUploader';
+import { fetchContent, save, rollback } from '../lib/api';
+import { useAuth } from '../hooks/useAuth';
 import '../admin.css';
 
 const FIELDS = [
@@ -62,6 +64,14 @@ const FIELDS = [
   { path: 'footer.devisLabel', label: 'Footer — Label devis' },
   { path: 'footer.legal', label: 'Footer — Mention légale' },
   { path: 'footer.mentions', label: 'Footer — Mentions légales' },
+];
+
+const COLOR_FIELDS = [
+  { path: 'theme.primary', label: 'Couleur principale' },
+  { path: 'theme.text', label: 'Couleur du texte' },
+  { path: 'theme.bg', label: 'Couleur de fond' },
+  { path: 'theme.muted', label: 'Couleur secondaire' },
+  { path: 'theme.accent', label: "Couleur d'accent" },
 ];
 
 function getDeep(obj, path) {
@@ -130,22 +140,36 @@ function messageForError(code) {
   }
 }
 
+function isContentEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
 export default function Admin() {
   const [content, setContent] = useState(bundledContent);
+  const [initialContent, setInitialContent] = useState(bundledContent);
   const [state, setState] = useState('idle');
   const [errorMsg, setErrorMsg] = useState(null);
-  const nav = useNavigate();
+  const [deployState, setDeployState] = useState('idle');
+  const [rollbackState, setRollbackState] = useState('idle');
+  const { logoutAndRedirect } = useAuth();
+
+  const dirty = !isContentEqual(content, initialContent);
 
   const mountedRef = useRef(true);
   const inFlightRef = useRef(false);
   const savedTimerRef = useRef(null);
   const navTimerRef = useRef(null);
+  const deployPollRef = useRef(null);
+  const deployTimeoutRef = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
     fetchContent()
       .then((latest) => {
-        if (!cancelled && latest) setContent(latest);
+        if (!cancelled && latest) {
+          setContent(latest);
+          setInitialContent(latest);
+        }
       })
       .catch(() => {});
     return () => {
@@ -158,14 +182,50 @@ export default function Admin() {
       mountedRef.current = false;
       if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
       if (navTimerRef.current) clearTimeout(navTimerRef.current);
+      if (deployPollRef.current) clearInterval(deployPollRef.current);
+      if (deployTimeoutRef.current) clearTimeout(deployTimeoutRef.current);
     };
   }, []);
 
+  useEffect(() => {
+    if (!dirty) return;
+    const handler = (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [dirty]);
+
+  function startDeployPolling(savedContent) {
+    if (deployPollRef.current) clearInterval(deployPollRef.current);
+    if (deployTimeoutRef.current) clearTimeout(deployTimeoutRef.current);
+    setDeployState('checking');
+
+    const check = async () => {
+      const latest = await fetchContent();
+      if (!mountedRef.current) return;
+      if (latest && isContentEqual(latest, savedContent)) {
+        setDeployState('deployed');
+        if (deployPollRef.current) clearInterval(deployPollRef.current);
+        if (deployTimeoutRef.current) clearTimeout(deployTimeoutRef.current);
+      }
+    };
+
+    check();
+    deployPollRef.current = setInterval(check, 10_000);
+    deployTimeoutRef.current = setTimeout(() => {
+      if (deployPollRef.current) clearInterval(deployPollRef.current);
+      if (mountedRef.current) setDeployState('idle');
+    }, 300_000); // 5 minutes max
+  }
+
   async function onSave() {
-    if (inFlightRef.current) return;
+    if (inFlightRef.current || !dirty) return;
     inFlightRef.current = true;
     setState('saving');
     setErrorMsg(null);
+    setDeployState('idle');
 
     const res = await save(content);
 
@@ -176,6 +236,8 @@ export default function Admin() {
 
     if (res.ok) {
       setState('saved');
+      setInitialContent(content);
+      startDeployPolling(content);
       if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
       savedTimerRef.current = setTimeout(() => {
         if (mountedRef.current) setState((s) => (s === 'saved' ? 'idle' : s));
@@ -186,16 +248,38 @@ export default function Admin() {
       if (res.error === 'unauthorized') {
         if (navTimerRef.current) clearTimeout(navTimerRef.current);
         navTimerRef.current = setTimeout(() => {
-          if (mountedRef.current) nav('/admin/login', { replace: true });
+          if (mountedRef.current) logoutAndRedirect();
         }, 1500);
       }
     }
     inFlightRef.current = false;
   }
 
+  async function onRollback() {
+    if (!window.confirm('Revenir à la version précédente ? Les modifications non sauvegardées seront perdues.')) return;
+    setRollbackState('rolling');
+    const res = await rollback();
+    if (!mountedRef.current) return;
+    if (res.ok) {
+      setRollbackState('rolled');
+      const latest = await fetchContent();
+      if (latest) {
+        setContent(latest);
+        setInitialContent(latest);
+      }
+      setTimeout(() => {
+        if (mountedRef.current) setRollbackState('idle');
+      }, 4000);
+    } else {
+      setRollbackState('error');
+      setTimeout(() => {
+        if (mountedRef.current) setRollbackState('idle');
+      }, 4000);
+    }
+  }
+
   async function onLogout() {
-    await logout();
-    if (mountedRef.current) nav('/admin/login', { replace: true });
+    await logoutAndRedirect();
   }
 
   return (
@@ -210,6 +294,7 @@ export default function Admin() {
           void onSave();
         }}
       >
+        <h2>Contenu</h2>
         {FIELDS.map((f) => (
           <TextEditor
             key={f.path}
@@ -219,12 +304,75 @@ export default function Admin() {
             multiline={f.multiline}
           />
         ))}
+
+        <h2>Thème</h2>
+        {COLOR_FIELDS.map((f) => (
+          <ColorEditor
+            key={f.path}
+            label={f.label}
+            value={getDeep(content, f.path)}
+            onChange={(v) => setContent((c) => setDeep(c, f.path, v))}
+          />
+        ))}
+
+        <h2>Vidéo</h2>
+        <TextEditor
+          label="URL YouTube ou Vimeo"
+          value={typeof content.video === 'string' ? content.video : ''}
+          onChange={(v) => setContent((c) => ({ ...c, video: v || null }))}
+        />
+
+        <h2>Médias</h2>
+        <MediaUploader
+          onUpload={(url) =>
+            setContent((c) => ({
+              ...c,
+              media: [...(c.media ?? []), url],
+            }))
+          }
+        />
+        {content.media && content.media.length > 0 && (
+          <div className="media-list">
+            {content.media.map((src, i) => (
+              <div key={i} className="media-item">
+                <img src={src} alt="" />
+                <button
+                  type="button"
+                  onClick={() =>
+                    setContent((c) => ({
+                      ...c,
+                      media: (c.media ?? []).filter((_, idx) => idx !== i),
+                    }))
+                  }
+                >
+                  Supprimer
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="actions">
-          <button type="submit" disabled={state === 'saving'}>
+          <button type="submit" disabled={state === 'saving' || !dirty}>
             {state === 'saving' ? 'Sauvegarde…' : 'Sauvegarder'}
           </button>
-          {state === 'saved' && (
+          <button type="button" onClick={onRollback} disabled={rollbackState === 'rolling'}>
+            {rollbackState === 'rolling' ? 'Retour en arrière…' : 'Annuler dernier changement'}
+          </button>
+          {state === 'saved' && deployState === 'idle' && (
             <span className="success">Sauvegardé — rebuild Vercel en cours (~60s).</span>
+          )}
+          {deployState === 'checking' && (
+            <span className="success">Vérification du déploiement…</span>
+          )}
+          {deployState === 'deployed' && (
+            <span className="success">En ligne !</span>
+          )}
+          {rollbackState === 'rolled' && (
+            <span className="success">Retour à la version précédente effectué.</span>
+          )}
+          {rollbackState === 'error' && (
+            <span className="error">Échec du retour en arrière.</span>
           )}
           {state === 'error' && errorMsg && <span className="error">{errorMsg}</span>}
         </div>

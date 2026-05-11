@@ -44,7 +44,7 @@ export function parseCookie(header, name) {
 
 function cookieAttrs(maxAgeSec) {
   const secure = isProduction() ? '; Secure' : '';
-  return `HttpOnly${secure}; SameSite=Lax; Path=/; Max-Age=${maxAgeSec}`;
+  return `HttpOnly${secure}; SameSite=Strict; Path=/; Max-Age=${maxAgeSec}`;
 }
 
 export function buildCookie(token, maxAgeSec = EXP_SEC) {

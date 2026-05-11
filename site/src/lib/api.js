@@ -50,3 +50,23 @@ export async function fetchContent() {
   if (!res || !res.ok) return null;
   return await res.json().catch(() => null);
 }
+
+export async function uploadMedia(filename, content, contentType) {
+  const res = await safeFetch('/api/media', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename, content, contentType }),
+  });
+  if (!res) return { ok: false, error: 'network' };
+  const j = await res.json().catch(() => ({}));
+  if (res.ok && j.url) return { ok: true, url: j.url };
+  return { ok: false, error: j.error ?? 'unknown' };
+}
+
+export async function rollback() {
+  const res = await safeFetch('/api/rollback', { method: 'POST' });
+  if (!res) return { ok: false, error: 'network' };
+  const j = await res.json().catch(() => ({}));
+  if (res.ok && j.commitSha) return { ok: true, commitSha: j.commitSha };
+  return { ok: false, error: j.error ?? 'unknown' };
+}

@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react';
-import { me } from './api';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 import NotFound from '../pages/NotFound';
 
 export default function AuthGuard({ children }) {
-  const [state, setState] = useState('checking');
+  const { isAuthenticated, isLoading } = useAuth();
+  const nav = useNavigate();
 
   useEffect(() => {
-    let cancelled = false;
-    me()
-      .then((ok) => {
-        if (!cancelled) setState(ok ? 'ok' : 'unauth');
-      })
-      .catch(() => {
-        if (!cancelled) setState('unauth');
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    if (!isLoading && !isAuthenticated) {
+      nav('/admin/login', { replace: true });
+    }
+  }, [isLoading, isAuthenticated, nav]);
 
-  if (state === 'checking') return <main><p>Vérification de la session…</p></main>;
-  if (state === 'unauth') return <NotFound />;
+  if (isLoading) return <main><p>Vérification de la session…</p></main>;
+  if (!isAuthenticated) return <NotFound />;
   return <>{children}</>;
 }
