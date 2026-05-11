@@ -337,30 +337,45 @@ export default function Admin() {
         )}
 
         <h2>Images</h2>
-        {IMAGE_SLOTS.map((slot) => (
-          <div key={slot.path} className="image-slot">
-            <span className="image-slot-label">{slot.label}</span>
-            {getDeep(content, slot.path) ? (
-              <div className="image-slot-preview">
-                <img src={getDeep(content, slot.path)} alt="" />
-                <button
-                  type="button"
-                  onClick={() =>
-                    setContent((c) => setDeep(c, slot.path, ''))
+        {IMAGE_SLOTS.map((slot) => {
+          const currentUrl = getDeep(content, slot.path);
+          return (
+            <div key={slot.path} className="image-slot">
+              <span className="image-slot-label">{slot.label}</span>
+              {currentUrl ? (
+                <>
+                  <div className="image-slot-preview">
+                    <img src={currentUrl} alt="" />
+                  </div>
+                  <div className="image-slot-actions">
+                    <MediaUploader
+                      asButton
+                      buttonLabel="Remplacer l'image"
+                      onUpload={(url) =>
+                        setContent((c) => setDeep(c, slot.path, url))
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="btn-remove"
+                      onClick={() =>
+                        setContent((c) => setDeep(c, slot.path, ''))
+                      }
+                    >
+                      Supprimer
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <MediaUploader
+                  onUpload={(url) =>
+                    setContent((c) => setDeep(c, slot.path, url))
                   }
-                >
-                  Supprimer
-                </button>
-              </div>
-            ) : (
-              <MediaUploader
-                onUpload={(url) =>
-                  setContent((c) => setDeep(c, slot.path, url))
-                }
-              />
-            )}
-          </div>
-        ))}
+                />
+              )}
+            </div>
+          );
+        })}
 
         <div className="actions">
           <button type="submit" disabled={state === 'saving' || !dirty}>
