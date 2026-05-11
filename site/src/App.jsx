@@ -1,24 +1,22 @@
-import Header from './components/Header.jsx';
-import Hero from './components/Hero.jsx';
-import Apropos from './components/Apropos.jsx';
-import Prestations from './components/Prestations.jsx';
-import Atouts from './components/Atouts.jsx';
-import Contact from './components/Contact.jsx';
-import Footer from './components/Footer.jsx';
-import './index.css';
+import { Routes, Route } from 'react-router-dom';
+import Site from './pages/Site.jsx';
+import Login from './pages/Login.jsx';
+import Admin from './pages/Admin.jsx';
+import AuthGuard from './lib/auth-guard.jsx';
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <Apropos />
-        <Prestations />
-        <Atouts />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Site />} />
+      <Route path="/admin/login" element={<Login />} />
+      <Route
+        path="/admin"
+        element={
+          <AuthGuard>
+            <Admin />
+          </AuthGuard>
+        }
+      />
+    </Routes>
   );
 }

@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useId } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
-import { contact, siteConfig } from '../data/content.js';
+import { useContent } from '../hooks/useContent.jsx';
 
 const PhoneIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -15,7 +15,11 @@ const MailIcon = () => (
   </svg>
 );
 
-const { formLabels, formPlaceholder, formSelectDefault, submitLabel, submitLoading, statusMessages } = contact;
+const CheckIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+);
 
 export default function Contact() {
   const copyRef = useScrollReveal();
@@ -23,9 +27,13 @@ export default function Contact() {
   const formEl = useRef(null);
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ msg: '', type: null });
+  const statusId = useId();
+  const { contact, site, hero } = useContent();
 
-  const action = `https://formspree.io/f/${siteConfig.formId}`;
-  const useFormspree = siteConfig.formId && siteConfig.formId !== 'YOUR_FORM_ID';
+  const { formLabels, formPlaceholder, formSelectDefault, submitLabel, submitLoading, statusMessages, prestationOptions } = contact;
+
+  const action = `https://formspree.io/f/${site.formId}`;
+  const useFormspree = site.formId && site.formId !== 'YOUR_FORM_ID';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +62,7 @@ export default function Contact() {
         `Prestation : ${fd.get('prestation') || ''}\n\n` +
         `${fd.get('message') || ''}`
       );
-      window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
       setLoading(false);
       setStatus({ msg: statusMessages.mailtoSuccess, type: 'success' });
       return;
@@ -91,13 +99,21 @@ export default function Contact() {
           <ul className="contact-direct">
             <li>
               <PhoneIcon />
-              <a href={siteConfig.telHref}>{siteConfig.tel}</a>
+              <a href={site.telHref}>{site.tel}</a>
             </li>
             <li>
               <MailIcon />
-              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
             </li>
           </ul>
+          <div className="contact-proof" aria-label="Garanties">
+            {hero.proof.map((item, i) => (
+              <span key={item} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                <CheckIcon />
+                {item}
+              </span>
+            ))}
+          </div>
           <p className="contact-note">
             {contact.notePrefix} <strong>{contact.note}</strong>
           </p>
@@ -111,11 +127,12 @@ export default function Contact() {
           method="POST"
           noValidate
           onSubmit={handleSubmit}
+          aria-describedby={status.msg ? statusId : undefined}
         >
           <div className="form-row">
             <label>
-              <span>{formLabels.nom} <em>*</em></span>
-              <input type="text" name="nom" required autoComplete="name" />
+              <span>{formLabels.nom} <em aria-hidden="true">*</em></span>
+              <input type="text" name="nom" required autoComplete="name" aria-required="true" />
             </label>
             <label>
               <span>{formLabels.societe}</span>
@@ -124,19 +141,19 @@ export default function Contact() {
           </div>
           <div className="form-row">
             <label>
-              <span>{formLabels.email} <em>*</em></span>
-              <input type="email" name="email" required autoComplete="email" />
+              <span>{formLabels.email} <em aria-hidden="true">*</em></span>
+              <input type="email" name="email" required autoComplete="email" aria-required="true" />
             </label>
             <label>
-              <span>{formLabels.tel} <em>*</em></span>
-              <input type="tel" name="telephone" required autoComplete="tel" />
+              <span>{formLabels.tel} <em aria-hidden="true">*</em></span>
+              <input type="tel" name="telephone" required autoComplete="tel" aria-required="true" />
             </label>
           </div>
           <label>
-            <span>{formLabels.prestation} <em>*</em></span>
-            <select name="prestation" required>
+            <span>{formLabels.prestation} <em aria-hidden="true">*</em></span>
+            <select name="prestation" required aria-required="true">
               <option value="">{formSelectDefault}</option>
-              {contact.prestationOptions.map(opt => (
+              {prestationOptions.map(opt => (
                 <option key={opt}>{opt}</option>
               ))}
             </select>
@@ -154,7 +171,7 @@ export default function Contact() {
           </button>
 
           {status.msg && (
-            <p className={`form-status${status.type ? ` is-${status.type}` : ''}`} role="status" aria-live="polite">
+            <p id={statusId} className={`form-status${status.type ? ` is-${status.type}` : ''}`} role="status" aria-live="polite">
               {status.msg}
             </p>
           )}

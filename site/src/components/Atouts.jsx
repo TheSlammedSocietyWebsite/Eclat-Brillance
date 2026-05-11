@@ -1,5 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
-import { atouts, atoutsSection } from '../data/content.js';
+import { useContent } from '../hooks/useContent.jsx';
 
 function AtoutItem({ num, title, body }) {
   const ref = useScrollReveal();
@@ -14,6 +14,7 @@ function AtoutItem({ num, title, body }) {
 
 export default function Atouts() {
   const headRef = useScrollReveal();
+  const { atouts, atoutsSection } = useContent();
 
   return (
     <section className="atouts" id="atouts">

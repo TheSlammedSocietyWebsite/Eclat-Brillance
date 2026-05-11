@@ -1,5 +1,5 @@
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
-import { prestations, prestationsSection } from '../data/content.js';
+import { useContent } from '../hooks/useContent.jsx';
 
 function ServiceCard({ title, body, iconPaths }) {
   const ref = useScrollReveal();
@@ -24,6 +24,7 @@ function ServiceCard({ title, body, iconPaths }) {
 
 export default function Prestations() {
   const headRef = useScrollReveal();
+  const { prestations, prestationsSection } = useContent();
 
   return (
     <section className="prestations" id="prestations">
