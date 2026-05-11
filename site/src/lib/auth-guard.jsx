@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { me } from './api';
+import NotFound from '../pages/NotFound';
 
 export default function AuthGuard({ children }) {
   const [state, setState] = useState('checking');
@@ -20,6 +20,6 @@ export default function AuthGuard({ children }) {
   }, []);
 
   if (state === 'checking') return <main><p>Vérification de la session…</p></main>;
-  if (state === 'unauth') return <Navigate to="/admin/login" replace />;
+  if (state === 'unauth') return <NotFound />;
   return <>{children}</>;
 }
