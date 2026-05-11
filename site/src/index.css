@@ -9,6 +9,16 @@
     --gutter: 1.5rem;
     --radius: 4px;
     --radius-lg: 10px;
+    --c-bg: #F8F8F6;
+    --c-bg-alt: #FFFFFF;
+    --c-ink: #1A2B4A;
+    --c-ink-soft: #2C3E5E;
+    --c-text: #2C2C2C;
+    --c-muted: #6B6F76;
+    --c-line: #E6E3DE;
+    --c-accent: #6B8F71;
+    --c-accent-soft: #EAF0EC;
+    --c-gold: #B8935A;
   }
 
   *, *::before, *::after { box-sizing: border-box; }

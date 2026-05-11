@@ -4,16 +4,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: '#F8F8F6',
-        'bg-alt': '#FFFFFF',
-        ink: '#1A2B4A',
-        'ink-soft': '#2C3E5E',
-        text: '#2C2C2C',
-        muted: '#6B6F76',
-        line: '#E6E3DE',
-        accent: '#6B8F71',
-        'accent-soft': '#EAF0EC',
-        gold: '#B8935A',
+        bg: 'var(--c-bg)',
+        'bg-alt': 'var(--c-bg-alt)',
+        ink: 'var(--c-ink)',
+        'ink-soft': 'var(--c-ink-soft)',
+        text: 'var(--c-text)',
+        muted: 'var(--c-muted)',
+        line: 'var(--c-line)',
+        accent: 'var(--c-accent)',
+        'accent-soft': 'var(--c-accent-soft)',
+        gold: 'var(--c-gold)',
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],

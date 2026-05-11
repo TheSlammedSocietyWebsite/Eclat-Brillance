@@ -67,11 +67,21 @@ const FIELDS = [
 ];
 
 const COLOR_FIELDS = [
-  { path: 'theme.primary', label: 'Couleur principale' },
-  { path: 'theme.text', label: 'Couleur du texte' },
-  { path: 'theme.bg', label: 'Couleur de fond' },
-  { path: 'theme.muted', label: 'Couleur secondaire' },
-  { path: 'theme.accent', label: "Couleur d'accent" },
+  { path: 'theme.bg', label: 'Fond principal' },
+  { path: 'theme.bgAlt', label: 'Fond secondaire' },
+  { path: 'theme.ink', label: 'Encre principale' },
+  { path: 'theme.inkSoft', label: 'Encre adoucie' },
+  { path: 'theme.text', label: 'Texte' },
+  { path: 'theme.muted', label: 'Texte atténué' },
+  { path: 'theme.line', label: 'Lignes / bordures' },
+  { path: 'theme.accent', label: 'Accent' },
+  { path: 'theme.accentSoft', label: 'Accent léger' },
+  { path: 'theme.gold', label: 'Or' },
+];
+
+const IMAGE_SLOTS = [
+  { path: 'images.apropos1', label: 'Image À propos — Principale' },
+  { path: 'images.apropos2', label: 'Image À propos — Secondaire' },
 ];
 
 function getDeep(obj, path) {
@@ -217,7 +227,7 @@ export default function Admin() {
     deployTimeoutRef.current = setTimeout(() => {
       if (deployPollRef.current) clearInterval(deployPollRef.current);
       if (mountedRef.current) setDeployState('idle');
-    }, 300_000); // 5 minutes max
+    }, 300_000);
   }
 
   async function onSave() {
@@ -315,42 +325,42 @@ export default function Admin() {
           />
         ))}
 
-        <h2>Vidéo</h2>
-        <TextEditor
-          label="URL YouTube ou Vimeo"
-          value={typeof content.video === 'string' ? content.video : ''}
-          onChange={(v) => setContent((c) => ({ ...c, video: v || null }))}
-        />
+        {'video' in content && (
+          <>
+            <h2>Vidéo</h2>
+            <TextEditor
+              label="URL YouTube ou Vimeo"
+              value={typeof content.video === 'string' ? content.video : ''}
+              onChange={(v) => setContent((c) => ({ ...c, video: v || null }))}
+            />
+          </>
+        )}
 
-        <h2>Médias</h2>
-        <MediaUploader
-          onUpload={(url) =>
-            setContent((c) => ({
-              ...c,
-              media: [...(c.media ?? []), url],
-            }))
-          }
-        />
-        {content.media && content.media.length > 0 && (
-          <div className="media-list">
-            {content.media.map((src, i) => (
-              <div key={i} className="media-item">
-                <img src={src} alt="" />
+        <h2>Images</h2>
+        {IMAGE_SLOTS.map((slot) => (
+          <div key={slot.path} className="image-slot">
+            <span className="image-slot-label">{slot.label}</span>
+            {getDeep(content, slot.path) ? (
+              <div className="image-slot-preview">
+                <img src={getDeep(content, slot.path)} alt="" />
                 <button
                   type="button"
                   onClick={() =>
-                    setContent((c) => ({
-                      ...c,
-                      media: (c.media ?? []).filter((_, idx) => idx !== i),
-                    }))
+                    setContent((c) => setDeep(c, slot.path, ''))
                   }
                 >
                   Supprimer
                 </button>
               </div>
-            ))}
+            ) : (
+              <MediaUploader
+                onUpload={(url) =>
+                  setContent((c) => setDeep(c, slot.path, url))
+                }
+              />
+            )}
           </div>
-        )}
+        ))}
 
         <div className="actions">
           <button type="submit" disabled={state === 'saving' || !dirty}>
