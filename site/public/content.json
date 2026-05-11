@@ -8,17 +8,33 @@
     "formId": "YOUR_FORM_ID"
   },
   "nav": [
-    { "label": "À propos", "href": "#apropos", "cta": false },
-    { "label": "Prestations", "href": "#prestations", "cta": false },
-    { "label": "Pourquoi nous", "href": "#atouts", "cta": false },
-    { "label": "Devis gratuit", "href": "#contact", "cta": true }
+    {
+      "label": "À propos",
+      "href": "#apropos",
+      "cta": false
+    },
+    {
+      "label": "Prestations",
+      "href": "#prestations",
+      "cta": false
+    },
+    {
+      "label": "Pourquoi nous",
+      "href": "#atouts",
+      "cta": false
+    },
+    {
+      "label": "Devis gratuit",
+      "href": "#contact",
+      "cta": true
+    }
   ],
   "hero": {
     "eyebrow": "Entreprise locale · Réactivité · Professionnalisme",
     "title": "Des locaux impeccables,",
     "titleEm": "une image professionnelle.",
     "lede": "Nous accompagnons les entreprises dans l'entretien de leurs espaces de travail afin de garantir propreté, hygiène et confort au quotidien.",
-    "primaryCta": "Demander un devis",
+    "primaryCta": "Demander un devis en couniamamanw",
     "proof": [
       "Devis gratuit sous 24h",
       "Essai sans engagement",
@@ -170,7 +186,10 @@
     "description": "Entretien de bureaux et locaux professionnels.\nEntreprise locale, réactive et engagée.",
     "contactHeading": "Contact",
     "infoHeading": "Informations",
-    "infoLines": ["Devis gratuit sous 24h", "Intervention rapide"],
+    "infoLines": [
+      "Devis gratuit sous 24h",
+      "Intervention rapide"
+    ],
     "devisLabel": "Demander un devis",
     "legal": "Tous droits réservés.",
     "mentions": "Mentions légales"
