@@ -1,14 +1,15 @@
-import { siteConfig, footer } from '../data/content.js';
+import { useContent } from '../hooks/useContent.jsx';
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const { site, footer } = useContent();
   const lines = footer.description.split('\n');
 
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="brand-name">{siteConfig.name}</span>
+          <span className="brand-name">{site.name}</span>
           <p>
             {lines.map((line, i) => (
               <span key={i}>{line}{i < lines.length - 1 && <br />}</span>
@@ -18,8 +19,8 @@ export default function Footer() {
         <div className="footer-contact">
           <h4>{footer.contactHeading}</h4>
           <p>
-            <a href={siteConfig.telHref}>{siteConfig.tel}</a><br/>
-            <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+            <a href={site.telHref}>{site.tel}</a><br/>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
         </div>
         <div className="footer-legal">
@@ -34,7 +35,7 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <div className="container">
-          <span>© {year} {siteConfig.name} — {footer.legal}</span>
+          <span>© {year} {site.name} — {footer.legal}</span>
           <span>{footer.mentions}</span>
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
-import { apropos } from '../data/content.js';
+import { useContent } from '../hooks/useContent.jsx';
 
 export default function Apropos() {
   const copyRef = useScrollReveal();
   const figureRef = useScrollReveal();
+  const { apropos } = useContent();
 
   return (
     <section className="apropos" id="apropos">

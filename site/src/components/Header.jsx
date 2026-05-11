@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { siteConfig, nav } from '../data/content.js';
+import { useContent } from '../hooks/useContent.jsx';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const content = useContent();
+  const { site, nav } = content;
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 8);
@@ -17,7 +19,7 @@ export default function Header() {
   return (
     <header className={`site-header${isScrolled ? ' is-scrolled' : ''}`} id="top">
       <div className="header-inner">
-        <a href="#top" className="brand" aria-label="Éclat Brillance — accueil">
+        <a href="#top" className="brand" aria-label={`${site.name} — accueil`}>
           <span className="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 4 C14 14, 8 20, 8 26 a12 12 0 0 0 24 0 C32 20, 26 14, 20 4 Z" fill="currentColor"/>
@@ -25,8 +27,8 @@ export default function Header() {
             </svg>
           </span>
           <span className="brand-text">
-            <span className="brand-name">{siteConfig.name}</span>
-            <span className="brand-tag">{siteConfig.tagline}</span>
+            <span className="brand-name">{site.name}</span>
+            <span className="brand-tag">{site.tagline}</span>
           </span>
         </a>
 

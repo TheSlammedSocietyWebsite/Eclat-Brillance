@@ -143,6 +143,36 @@ export const contact = {
   ],
 };
 
+export const testimonialsSection = {
+  kicker: 'Ils nous font confiance',
+  title: 'Des clients satisfaits, des locaux impeccables.',
+};
+
+export const testimonials = [
+  {
+    quote: "Éclat Brillance intervient dans nos bureaux depuis plus d'un an. Propreté irréprochable, équipe discrète et toujours à l'heure. Un vrai partenaire.",
+    author: 'Marie L.',
+    role: 'Directrice administrative, cabinet de conseil',
+  },
+  {
+    quote: "Après des travaux importants, nous avions besoin d'une remise en état rapide. En 24h, les locaux étaient nickel. Service réactif et de qualité.",
+    author: 'Thomas D.',
+    role: 'Gérant, agence immobilière',
+  },
+  {
+    quote: "Nos clients passent par notre hall d'accueil tous les jours. La propreté est notre première image. Éclat Brillance comprend ça.",
+    author: 'Sophie R.',
+    role: 'Office manager, agence de communication',
+  },
+];
+
+export const ctaBanner = {
+  title: 'Prêt à transformer vos locaux ?',
+  body: 'Demandez un devis gratuit et personnalisé. Nous vous répondons sous 24h.',
+  primaryCta: 'Demander un devis',
+  secondaryCta: 'Appeler maintenant',
+};
+
 export const footer = {
   description: "Entretien de bureaux et locaux professionnels.\nEntreprise locale, réactive et engagée.",
   contactHeading: 'Contact',
