@@ -226,3 +226,40 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.image-slot {
+  margin-bottom: 1.25rem;
+}
+
+.image-slot-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.image-slot-preview {
+  position: relative;
+  display: inline-block;
+  max-width: 320px;
+}
+
+.image-slot-preview img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+}
+
+.image-slot-preview button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+}

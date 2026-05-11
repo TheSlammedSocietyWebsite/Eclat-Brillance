@@ -1,4 +1,20 @@
 {
+  "theme": {
+    "bg": "#F8F8F6",
+    "bgAlt": "#FFFFFF",
+    "ink": "#1A2B4A",
+    "inkSoft": "#2C3E5E",
+    "text": "#2C2C2C",
+    "muted": "#6B6F76",
+    "line": "#E6E3DE",
+    "accent": "#6B8F71",
+    "accentSoft": "#EAF0EC",
+    "gold": "#B8935A"
+  },
+  "images": {
+    "apropos1": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80",
+    "apropos2": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=800&q=80"
+  },
   "site": {
     "name": "Éclat Brillance",
     "tagline": "Entretien professionnel",
