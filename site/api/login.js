@@ -1,10 +1,10 @@
-import bcrypt from 'bcryptjs';
+import { verifyPassword } from './_lib/crypto';
 import { signSession, buildCookie } from './_lib/session';
 
 export const config = { runtime: 'edge' };
 
 const MAX_BODY_BYTES = 4096;
-const BCRYPT_MAX_PASSWORD_BYTES = 72;
+const MAX_PASSWORD_BYTES = 256;
 
 function json(body, status, extraHeaders) {
   return new Response(JSON.stringify(body), {
@@ -32,13 +32,13 @@ export default async function handler(req) {
   }
   const pw = body.password;
   if (typeof pw !== 'string' || pw.length === 0) return json({ error: 'bad_request' }, 400);
-  if (new TextEncoder().encode(pw).length > BCRYPT_MAX_PASSWORD_BYTES) {
+  if (new TextEncoder().encode(pw).length > MAX_PASSWORD_BYTES) {
     return json({ error: 'bad_request' }, 400);
   }
 
   let ok;
   try {
-    ok = bcrypt.compareSync(pw, hash);
+    ok = await verifyPassword(pw, hash);
   } catch {
     return json({ error: 'server_misconfig' }, 500);
   }
