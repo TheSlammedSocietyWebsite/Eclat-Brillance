@@ -289,40 +289,6 @@
   cursor: pointer;
 }
 
-.mu-preview {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mu-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.mu-preview-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 6px;
-}
-
-.mu-preview-overlay .mu-label,
-.mu-preview-overlay .mu-hint {
-  color: white;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
 .mu-file-preview {
   display: block;
   max-width: 120px;

@@ -348,13 +348,17 @@ export default function Admin() {
           return (
             <div key={slot.path} className="image-slot">
               <span className="image-slot-label">{slot.label}</span>
-              <MediaUploader
-                previewUrl={previewUrl}
-                onUpload={(url) =>
-                  setContent((c) => setDeep(c, slot.path, url))
-                }
-              />
+              <div className="image-slot-preview">
+                <img src={previewUrl} alt="" />
+              </div>
               <div className="image-slot-actions">
+                <MediaUploader
+                  asButton
+                  buttonLabel="Remplacer l'image"
+                  onUpload={(url) =>
+                    setContent((c) => setDeep(c, slot.path, url))
+                  }
+                />
                 <button
                   type="button"
                   className="btn-remove"
