@@ -16,9 +16,9 @@ const THEME_VARS = {
   gold: '--c-gold',
 };
 
-function applyTheme(theme) {
+export function applyTheme(theme, targetElement = null) {
   if (!theme) return;
-  const root = document.documentElement;
+  const root = targetElement || document.documentElement;
   Object.entries(theme).forEach(([key, value]) => {
     const cssVar = THEME_VARS[key];
     if (cssVar && typeof value === 'string') {
@@ -47,6 +47,20 @@ export function ContentProvider({ children }) {
       .catch(() => {});
     return () => { cancelled = true; };
   }, []);
+
+  return (
+    <ContentContext.Provider value={content}>
+      {children}
+    </ContentContext.Provider>
+  );
+}
+
+export function DraftContentProvider({ children, content, targetElement }) {
+  useEffect(() => {
+    if (targetElement) {
+      applyTheme(content.theme, targetElement);
+    }
+  }, [content.theme, targetElement]);
 
   return (
     <ContentContext.Provider value={content}>

@@ -1,6 +1,9 @@
 import { useState, useRef, useId } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
+import { useEditMode } from '../hooks/useEditMode.jsx';
+import EditableText from './edit/EditableText.jsx';
+import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
 const PhoneIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -29,6 +32,7 @@ export default function Contact() {
   const [status, setStatus] = useState({ msg: '', type: null });
   const statusId = useId();
   const { contact, site, hero } = useContent();
+  const isEditMode = useEditMode();
 
   const { formLabels, formPlaceholder, formSelectDefault, submitLabel, submitLoading, statusMessages, prestationOptions } = contact;
 
@@ -36,6 +40,10 @@ export default function Contact() {
   const useFormspree = site.formId && site.formId !== 'YOUR_FORM_ID';
 
   const handleSubmit = async (e) => {
+    if (isEditMode) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     const form = formEl.current;
 
@@ -93,34 +101,47 @@ export default function Contact() {
     <section className="contact" id="contact">
       <div className="container contact-inner">
         <div className="contact-copy" ref={copyRef}>
-          <span className="section-kicker">{contact.kicker}</span>
-          <h2>{contact.title}</h2>
-          <p>{contact.body}</p>
+          <span className="section-kicker">
+            <EditableText path="contact.kicker">{contact.kicker}</EditableText>
+          </span>
+          <h2>
+            <EditableText path="contact.title" tag="span">{contact.title}</EditableText>
+          </h2>
+          <p>
+            <EditableText path="contact.body" multiline tag="span">{contact.body}</EditableText>
+          </p>
           <ul className="contact-direct">
             <li>
               <PhoneIcon />
-              <a href={site.telHref}>{site.tel}</a>
+              <a href={site.telHref}>
+                <EditableText path="site.tel" tag="span">{site.tel}</EditableText>
+              </a>
             </li>
             <li>
               <MailIcon />
-              <a href={`mailto:${site.email}`}>{site.email}</a>
+              <a href={`mailto:${site.email}`}>
+                <EditableText path="site.email" tag="span">{site.email}</EditableText>
+              </a>
             </li>
           </ul>
           <div className="contact-proof" aria-label="Garanties">
             {hero.proof.map((item, i) => (
-              <span key={item} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                 <CheckIcon />
-                {item}
+                <EditableText path={`hero.proof.${i}`} tag="span">{item}</EditableText>
               </span>
             ))}
           </div>
           <p className="contact-note">
-            {contact.notePrefix} <strong>{contact.note}</strong>
+            <EditableText path="contact.notePrefix" tag="span">{contact.notePrefix}</EditableText>{' '}
+            <strong>
+              <EditableText path="contact.note" tag="span">{contact.note}</EditableText>
+            </strong>
           </p>
         </div>
 
         <form
-          className="contact-form"
+          className={`contact-form${isEditMode ? ' is-editing' : ''}`}
           id="devis-form"
           ref={(el) => { formEl.current = el; formScrollRef.current = el; }}
           action={action}
@@ -131,43 +152,65 @@ export default function Contact() {
         >
           <div className="form-row">
             <label>
-              <span>{formLabels.nom} <em aria-hidden="true">*</em></span>
-              <input type="text" name="nom" required autoComplete="name" aria-required="true" />
+              <span>
+                <EditableText path="contact.formLabels.nom" tag="span">{formLabels.nom}</EditableText>
+                <em aria-hidden="true">*</em>
+              </span>
+              <input type="text" name="nom" required autoComplete="name" aria-required="true" tabIndex={isEditMode ? -1 : 0} />
             </label>
             <label>
-              <span>{formLabels.societe}</span>
-              <input type="text" name="societe" autoComplete="organization" />
+              <span>
+                <EditableText path="contact.formLabels.societe" tag="span">{formLabels.societe}</EditableText>
+              </span>
+              <input type="text" name="societe" autoComplete="organization" tabIndex={isEditMode ? -1 : 0} />
             </label>
           </div>
           <div className="form-row">
             <label>
-              <span>{formLabels.email} <em aria-hidden="true">*</em></span>
-              <input type="email" name="email" required autoComplete="email" aria-required="true" />
+              <span>
+                <EditableText path="contact.formLabels.email" tag="span">{formLabels.email}</EditableText>
+                <em aria-hidden="true">*</em>
+              </span>
+              <input type="email" name="email" required autoComplete="email" aria-required="true" tabIndex={isEditMode ? -1 : 0} />
             </label>
             <label>
-              <span>{formLabels.tel} <em aria-hidden="true">*</em></span>
-              <input type="tel" name="telephone" required autoComplete="tel" aria-required="true" />
+              <span>
+                <EditableText path="contact.formLabels.tel" tag="span">{formLabels.tel}</EditableText>
+                <em aria-hidden="true">*</em>
+              </span>
+              <input type="tel" name="telephone" required autoComplete="tel" aria-required="true" tabIndex={isEditMode ? -1 : 0} />
             </label>
           </div>
           <label>
-            <span>{formLabels.prestation} <em aria-hidden="true">*</em></span>
-            <select name="prestation" required aria-required="true">
+            <span>
+              <EditableText path="contact.formLabels.prestation" tag="span">{formLabels.prestation}</EditableText>
+              <em aria-hidden="true">*</em>
+            </span>
+            <select name="prestation" required aria-required="true" tabIndex={isEditMode ? -1 : 0}>
               <option value="">{formSelectDefault}</option>
-              {prestationOptions.map(opt => (
-                <option key={opt}>{opt}</option>
+              {prestationOptions.map((opt, i) => (
+                <option key={i} value={opt}>
+                  {opt}
+                </option>
               ))}
             </select>
           </label>
           <label>
-            <span>{formLabels.message}</span>
-            <textarea name="message" rows="5" placeholder={formPlaceholder}></textarea>
+            <span>
+              <EditableText path="contact.formLabels.message" tag="span">{formLabels.message}</EditableText>
+            </span>
+            <textarea name="message" rows="5" placeholder={formPlaceholder} tabIndex={isEditMode ? -1 : 0}></textarea>
           </label>
 
           <input type="text" name="_gotcha" tabIndex="-1" autoComplete="off" style={{ position: 'absolute', left: '-9999px' }} aria-hidden="true" />
 
-          <button type="submit" className={`btn btn-primary btn-block${loading ? ' is-loading' : ''}`} disabled={loading}>
-            <span className="btn-label">{submitLabel}</span>
-            <span className="btn-loading" aria-hidden="true">{submitLoading}</span>
+          <button type="submit" className={`btn btn-primary btn-block${loading ? ' is-loading' : ''}`} disabled={loading || isEditMode} tabIndex={isEditMode ? -1 : 0}>
+            <span className="btn-label">
+              <EditableText path="contact.submitLabel" tag="span">{submitLabel}</EditableText>
+            </span>
+            <span className="btn-loading" aria-hidden="true">
+              <EditableText path="contact.submitLoading" tag="span">{submitLoading}</EditableText>
+            </span>
           </button>
 
           {status.msg && (

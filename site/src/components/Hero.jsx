@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
+import EditableText from './edit/EditableText.jsx';
+import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
 const PhoneIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -17,35 +19,54 @@ export default function Hero() {
     <section className="hero">
       <div className="container hero-inner">
         <div className="hero-content" ref={contentRef}>
-          <span className="eyebrow">{hero.eyebrow}</span>
-          <h1>{hero.title}<br/><em>{hero.titleEm}</em></h1>
-          <p className="lede">{hero.lede}</p>
+          <span className="eyebrow">
+            <EditableText path="hero.eyebrow">{hero.eyebrow}</EditableText>
+          </span>
+          <h1>
+            <EditableText path="hero.title" tag="span">{hero.title}</EditableText>
+            <br/>
+            <EditableText path="hero.titleEm" tag="em">{hero.titleEm}</EditableText>
+          </h1>
+          <p className="lede">
+            <EditableText path="hero.lede" multiline tag="span">{hero.lede}</EditableText>
+          </p>
           <div className="hero-ctas">
-            <a href="#contact" className="btn btn-primary">{hero.primaryCta}</a>
+            <a href="#contact" className="btn btn-primary">
+              <EditableText path="hero.primaryCta" tag="span">{hero.primaryCta}</EditableText>
+            </a>
             <a href={site.telHref} className="btn btn-ghost">
               <PhoneIcon />
-              {site.tel}
+              <EditableText path="site.tel" tag="span">{site.tel}</EditableText>
             </a>
           </div>
           <div className="hero-proof">
             {hero.proof.map((item, i) => (
-              <Fragment key={item}>
-                <span>{item}</span>
+              <Fragment key={i}>
+                <span>
+                  <EditableText path={`hero.proof.${i}`} tag="span">{item}</EditableText>
+                  <EditableArrayControls path="hero.proof" index={i} items={hero.proof} itemLabel="Preuve" />
+                </span>
                 {i < hero.proof.length - 1 && (
                   <span className="dot" aria-hidden="true"></span>
                 )}
               </Fragment>
             ))}
+            <EditableArrayControls path="hero.proof" itemLabel="Preuve" />
           </div>
         </div>
 
         <aside className="hero-badge" ref={badgeRef} aria-label="Offre de bienvenue">
           <div className="badge-card">
-            <span className="badge-kicker">{hero.badge.kicker}</span>
+            <span className="badge-kicker">
+              <EditableText path="hero.badge.kicker">{hero.badge.kicker}</EditableText>
+            </span>
             <strong className="badge-number">
-              {hero.badge.number}<span>{hero.badge.unit}</span>
+              <EditableText path="hero.badge.number" tag="span">{hero.badge.number}</EditableText>
+              <EditableText path="hero.badge.unit" tag="span">{hero.badge.unit}</EditableText>
             </strong>
-            <span className="badge-sub">{hero.badge.sub}</span>
+            <span className="badge-sub">
+              <EditableText path="hero.badge.sub">{hero.badge.sub}</EditableText>
+            </span>
           </div>
         </aside>
       </div>

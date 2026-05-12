@@ -772,3 +772,270 @@
   font-size: 0.9rem;
   font-weight: 500;
 }
+
+/* ------------------------------------------------------------------
+   Admin Edit (WYSIWYG)
+   ------------------------------------------------------------------ */
+.admin-edit-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-edit-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: #1a2b4a;
+  color: #fff;
+  overflow-y: auto;
+  z-index: 100;
+  padding: 0;
+}
+
+.admin-edit-sidebar-inner {
+  padding: 1.25rem;
+}
+
+.admin-edit-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-edit-sidebar-header h1 {
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.admin-edit-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8a9ab0;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+.admin-edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.admin-edit-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.admin-edit-dirty {
+  margin-bottom: 1rem;
+}
+
+.admin-edit-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-edit-section h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8a9ab0;
+  margin: 0 0 0.75rem;
+}
+
+.admin-edit-sidebar .text-editor-label,
+.admin-edit-sidebar .color-editor > span {
+  color: #cbd5e1;
+  font-size: 0.85rem;
+}
+
+.admin-edit-sidebar .text-editor input[type="text"],
+.admin-edit-sidebar .text-editor textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.admin-edit-sidebar .text-editor input[type="text"]::placeholder,
+.admin-edit-sidebar .text-editor textarea::placeholder {
+  color: #8a9ab0;
+}
+
+.admin-edit-sidebar .color-input-row input[type="text"] {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.admin-edit-sidebar .success {
+  color: #6b8f71;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.admin-edit-sidebar .error {
+  color: #f87171;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.admin-edit-preview {
+  flex: 1;
+  margin-left: 280px;
+  min-height: 100vh;
+  background: #f0f0f0;
+  overflow-y: auto;
+}
+
+.admin-edit-preview-inner {
+  background: var(--c-bg, #F8F8F6);
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .admin-edit-sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+  }
+  .admin-edit-preview {
+    margin-left: 0;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Editable elements
+   ------------------------------------------------------------------ */
+.editable-text {
+  border-bottom: 2px dotted transparent;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.editable-text:hover {
+  border-bottom-color: #6b8f71;
+  background: rgba(107, 143, 113, 0.08);
+}
+
+.editable-image {
+  position: relative;
+}
+
+.editable-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 43, 74, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.editable-image-label {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.editable-array-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.editable-array-btn {
+  padding: 0.1rem 0.3rem;
+  font-size: 0.75rem;
+  background: rgba(26, 43, 74, 0.8);
+  color: #fff;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.editable-array-btn:hover:not(:disabled) {
+  background: rgba(26, 43, 74, 1);
+}
+
+.editable-array-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.editable-array-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  background: #6b8f71;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.editable-array-add:hover {
+  background: #5a7a5f;
+}
+
+.editable-array-item-toolbar {
+  position: absolute;
+  top: -28px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #1a2b4a;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.editable-array-item-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #8a9ab0;
+  margin-right: 0.25rem;
+}
+
+/* ------------------------------------------------------------------
+   Contact form in edit mode
+   ------------------------------------------------------------------ */
+.contact-form.is-editing input,
+.contact-form.is-editing select,
+.contact-form.is-editing textarea {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.contact-form.is-editing button[type="submit"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
