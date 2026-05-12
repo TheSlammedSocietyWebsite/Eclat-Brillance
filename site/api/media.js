@@ -56,7 +56,7 @@ export default async function handler(req) {
 
   try {
     const sha = await getFileSha(mediaPath, branch);
-    const result = await putFile(mediaPath, branch, content, sha, `NovaCMS: upload media ${filename}`);
+    const result = await putFile(mediaPath, branch, content, sha, `NovaCMS: upload media ${filename}`, true);
 
     if (!result.ok) {
       if (result.status >= 500 || result.status === 408) {

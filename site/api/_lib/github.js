@@ -56,11 +56,11 @@ export async function getFileSha(path, branch) {
   return null;
 }
 
-export async function putFile(path, branch, content, sha, message) {
+export async function putFile(path, branch, content, sha, message, alreadyBase64 = false) {
   const url = `${repoBase()}/contents/${encodeURIComponent(path)}`;
   const body = {
     message,
-    content: utf8ToBase64(content),
+    content: alreadyBase64 ? content : utf8ToBase64(content),
     branch,
   };
   if (sha) body.sha = sha;
