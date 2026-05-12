@@ -274,7 +274,7 @@ export default function AdminEdit() {
 
           <div className="admin-edit-actions">
             <Link to="/admin" className="btn-secondary btn-sm">
-              ← Retour admin
+              ← Dashboard
             </Link>
             <a href="/" target="_blank" rel="noreferrer" className="btn-view-site btn-sm">
               Voir le site
