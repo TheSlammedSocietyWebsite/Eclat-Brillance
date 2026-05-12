@@ -33,8 +33,7 @@ export default function EditableImage({ path, children }) {
     <>
       {cloneElement(child, {
         ref: triggerRef,
-        className: [child.props.className, 'editable-image'].filter(Boolean).join(' '),
-        'data-path': path,
+        'data-editable-image': path,
         onClick: (e) => {
           e.preventDefault();
           e.stopPropagation();
