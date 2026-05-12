@@ -9,20 +9,21 @@ const PRESTATION_FIELDS = [
   { path: 'iconPaths', label: 'Icônes SVG', multiline: true },
 ];
 
-function ServiceIcon({ iconPaths }) {
-  const trimmed = (iconPaths || '').trim();
-  const isFullSvg = trimmed.toLowerCase().startsWith('<svg');
-  const html = isFullSvg
-    ? trimmed
-    : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${trimmed}</svg>`;
-  return <span className="service-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: html }} />;
-}
-
 function ServiceCard({ title, body, iconPaths, index, prestations }) {
   const ref = useScrollReveal();
   return (
     <article className="service-card" ref={ref} style={{ position: 'relative' }}>
-      <ServiceIcon iconPaths={iconPaths} />
+      <span className="service-icon" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          dangerouslySetInnerHTML={{ __html: iconPaths }}
+        />
+      </span>
       <h3>
         <EditableText path={`prestations.${index}.title`} tag="span">{title}</EditableText>
       </h3>
