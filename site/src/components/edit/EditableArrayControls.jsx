@@ -20,7 +20,6 @@ export default function EditableArrayControls({
   const isEditMode = useEditMode();
   const updateDraft = useDraftActions();
   const content = useContent();
-  const [isHovered, setIsHovered] = useState(false);
 
   const [isAdding, setIsAdding] = useState(false);
   const addButtonRef = useRef(null);
@@ -227,60 +226,53 @@ export default function EditableArrayControls({
     );
   }
 
-  // Existing item controls (move / remove on hover)
+  // Existing item controls (always visible)
   return (
     <span
       className="editable-array-controls"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       style={{
-        position: 'relative',
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '0.25rem',
-        marginLeft: '0.25rem',
+        gap: '0.35rem',
+        marginTop: '0.4rem',
       }}
     >
-      {isHovered && (
-        <>
-          <button
-            type="button"
-            className="editable-array-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleMove(-1);
-            }}
-            disabled={index === 0}
-            title="Monter"
-          >
-            ↑
-          </button>
-          <button
-            type="button"
-            className="editable-array-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleMove(1);
-            }}
-            disabled={index === arrayItems.length - 1}
-            title="Descendre"
-          >
-            ↓
-          </button>
-          <button
-            type="button"
-            className="editable-array-btn btn-remove-array"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleRemove();
-            }}
-            disabled={arrayItems.length <= minItems}
-            title="Supprimer"
-          >
-            ×
-          </button>
-        </>
-      )}
+      <button
+        type="button"
+        className="editable-array-btn"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleMove(-1);
+        }}
+        disabled={index === 0}
+        title="Monter"
+      >
+        ↑
+      </button>
+      <button
+        type="button"
+        className="editable-array-btn"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleMove(1);
+        }}
+        disabled={index === arrayItems.length - 1}
+        title="Descendre"
+      >
+        ↓
+      </button>
+      <button
+        type="button"
+        className="editable-array-btn btn-remove-array"
+        onClick={(e) => {
+          e.stopPropagation();
+          handleRemove();
+        }}
+        disabled={arrayItems.length <= minItems}
+        title="Supprimer"
+      >
+        Supprimer
+      </button>
     </span>
   );
 }
