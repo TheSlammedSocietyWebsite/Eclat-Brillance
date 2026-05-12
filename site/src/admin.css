@@ -1240,6 +1240,14 @@
   margin-top: 0.2rem;
 }
 
+.dash-card-muted .dash-card-value {
+  color: #a0a0a0;
+}
+
+.dash-card-muted .dash-card-label {
+  color: #a0a0a0;
+}
+
 .dash-columns {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
