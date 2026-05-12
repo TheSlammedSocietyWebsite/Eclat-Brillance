@@ -1,10 +1,19 @@
-export default function TextEditor({ label, value, onChange, multiline, maxLength = 50000 }) {
+export default function TextEditor({ label, value, onChange, multiline, maxLength = 50000, showCount, rows = 4 }) {
+  const length = (value ?? '').length;
   return (
     <label className="text-editor">
-      <span>{label}</span>
+      <span className="text-editor-label">
+        {label}
+        {showCount && (
+          <span className="char-count">
+            {length}
+            {maxLength < 50000 && ` / ${maxLength}`}
+          </span>
+        )}
+      </span>
       {multiline ? (
         <textarea
-          rows={4}
+          rows={rows}
           maxLength={maxLength}
           value={value ?? ''}
           onChange={(e) => onChange(e.target.value)}
