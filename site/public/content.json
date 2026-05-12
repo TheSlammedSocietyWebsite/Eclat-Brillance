@@ -94,11 +94,6 @@
       "iconPaths": "<path d=\"M3 7h18l-2 13H5L3 7z\"/><path d=\"M8 7V4a4 4 0 0 1 8 0v3\"/>"
     },
     {
-      "title": "Après travaux & chantiers",
-      "body": "Dépoussiérage, dégraissage, évacuation des résidus — vos locaux livrés prêts à l'emploi.",
-      "iconPaths": "<path d=\"M14 3l7 7-11 11H3v-7L14 3z\"/><path d=\"M13 4l7 7\"/>"
-    },
-    {
       "title": "Vitres & surfaces vitrées",
       "body": "Façades, baies, verrières : transparence totale grâce à un matériel et des techniques professionnels.",
       "iconPaths": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M4 9h16\"/><path d=\"M4 15h16\"/><path d=\"M12 3v18\"/>"
@@ -107,11 +102,6 @@
       "title": "Remise en état complète",
       "body": "Pour un local vieilli, un changement d'occupant ou une fin de bail — on repart sur une base saine.",
       "iconPaths": "<path d=\"M3 12l4-8 5 8 5-8 4 8\"/><path d=\"M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/>"
-    },
-    {
-      "title": "Connard de merde",
-      "body": "Bonjour moi c'est moufasa",
-      "iconPaths": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M4 9h16\"/><path d=\"M4 15h16\"/><path d=\"M12 3v18\"/>"
     }
   ],
   "atoutsSection": {
