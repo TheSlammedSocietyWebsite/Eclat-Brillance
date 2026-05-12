@@ -19,7 +19,7 @@ export default async function handler(req) {
     try {
       const from = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
       const to = new Date().toISOString().split('T')[0];
-      const url = `https://api.vercel.com/v6/web-analytics?projectId=${encodeURIComponent(projectId)}&from=${from}&to=${to}`;
+      const url = `https://api.vercel.com/v6/analytics?projectId=${encodeURIComponent(projectId)}&from=${from}&to=${to}`;
 
       const res = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` },
