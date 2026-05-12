@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, Children, cloneElement } from 'react';
 import { useEditMode } from '../../hooks/useEditMode.jsx';
 import { useDraftActions } from '../../hooks/useDraftActions.jsx';
 import { useContent } from '../../hooks/useContent.jsx';
@@ -27,28 +27,40 @@ export default function EditableImage({ path, children }) {
     return children;
   }
 
+  const child = Children.only(children);
+
   return (
     <>
-      <div
-        ref={triggerRef}
-        className="editable-image"
-        data-path={path}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onClick={(e) => {
+      {cloneElement(child, {
+        ref: triggerRef,
+        className: [child.props.className, 'editable-image'].filter(Boolean).join(' '),
+        'data-path': path,
+        onClick: (e) => {
           e.preventDefault();
           e.stopPropagation();
           setIsOpen(true);
-        }}
-        style={{ position: 'relative', cursor: 'pointer' }}
-      >
-        {children}
-        {isHovered && (
-          <div className="editable-image-overlay">
-            <span className="editable-image-label">✎ Modifier l'image</span>
-          </div>
-        )}
-      </div>
+          child.props.onClick?.(e);
+        },
+        onMouseEnter: (e) => {
+          setIsHovered(true);
+          child.props.onMouseEnter?.(e);
+        },
+        onMouseLeave: (e) => {
+          setIsHovered(false);
+          child.props.onMouseLeave?.(e);
+        },
+        style: { ...child.props.style, cursor: 'pointer' },
+        children: (
+          <>
+            {child.props.children}
+            {isHovered && (
+              <div className="editable-image-overlay">
+                <span className="editable-image-label">Modifier l'image</span>
+              </div>
+            )}
+          </>
+        ),
+      })}
       {isOpen && (
         <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)}>
           <div style={{ minWidth: '320px' }}>
