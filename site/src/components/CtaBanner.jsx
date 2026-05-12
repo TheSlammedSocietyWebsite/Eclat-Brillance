@@ -1,5 +1,6 @@
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
+import EditableText from './edit/EditableText.jsx';
 
 const PhoneIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -14,13 +15,19 @@ export default function CtaBanner() {
   return (
     <section className="cta-banner" ref={ref}>
       <div className="container cta-banner-inner">
-        <h2>{ctaBanner.title}</h2>
-        <p>{ctaBanner.body}</p>
+        <h2>
+          <EditableText path="ctaBanner.title" tag="span">{ctaBanner.title}</EditableText>
+        </h2>
+        <p>
+          <EditableText path="ctaBanner.body" multiline tag="span">{ctaBanner.body}</EditableText>
+        </p>
         <div className="cta-banner-actions">
-          <a href="#contact" className="btn btn-primary">{ctaBanner.primaryCta}</a>
+          <a href="#contact" className="btn btn-primary">
+            <EditableText path="ctaBanner.primaryCta" tag="span">{ctaBanner.primaryCta}</EditableText>
+          </a>
           <a href={site.telHref} className="btn btn-ghost">
             <PhoneIcon />
-            {site.tel}
+            <EditableText path="site.tel" tag="span">{site.tel}</EditableText>
           </a>
         </div>
       </div>

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useContent } from '../hooks/useContent.jsx';
+import EditableText from './edit/EditableText.jsx';
+import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,8 +29,12 @@ export default function Header() {
             </svg>
           </span>
           <span className="brand-text">
-            <span className="brand-name">{site.name}</span>
-            <span className="brand-tag">{site.tagline}</span>
+            <span className="brand-name">
+              <EditableText path="site.name" tag="span">{site.name}</EditableText>
+            </span>
+            <span className="brand-tag">
+              <EditableText path="site.tagline" tag="span">{site.tagline}</EditableText>
+            </span>
           </span>
         </a>
 
@@ -47,11 +53,13 @@ export default function Header() {
           id="primary-nav"
           aria-label="Navigation principale"
         >
-          {nav.map(({ label, href, cta }) => (
-            <a key={href} href={href} className={cta ? 'nav-cta' : undefined} onClick={closeNav}>
-              {label}
+          {nav.map(({ label, href, cta }, i) => (
+            <a key={i} href={href} className={cta ? 'nav-cta' : undefined} onClick={closeNav} style={{ position: 'relative' }}>
+              <EditableText path={`nav.${i}.label`} tag="span">{label}</EditableText>
+              <EditableArrayControls path="nav" index={i} items={nav} itemLabel="Lien" />
             </a>
           ))}
+          <EditableArrayControls path="nav" itemLabel="Lien" />
         </nav>
       </div>
     </header>

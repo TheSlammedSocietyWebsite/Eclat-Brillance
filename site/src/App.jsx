@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Site from './pages/Site.jsx';
 import Login from './pages/Login.jsx';
 import Admin from './pages/Admin.jsx';
+import AdminEdit from './pages/AdminEdit.jsx';
 import NotFound from './pages/NotFound.jsx';
 import AuthGuard from './lib/auth-guard.jsx';
 
@@ -16,6 +17,14 @@ export default function App() {
         element={
           <AuthGuard>
             <Admin />
+          </AuthGuard>
+        }
+      />
+      <Route
+        path="/admin/edit"
+        element={
+          <AuthGuard>
+            <AdminEdit />
           </AuthGuard>
         }
       />
