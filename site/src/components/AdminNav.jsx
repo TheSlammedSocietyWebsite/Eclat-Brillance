@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 
 const SECTIONS = [
-  { id: 'site', label: 'Site \u0026 Nav' },
+  { id: 'site', label: 'Site & Nav' },
   { id: 'hero', label: 'Hero' },
-  { id: 'apropos', label: '\u00c0 propos' },
+  { id: 'apropos', label: 'À propos' },
   { id: 'prestations', label: 'Prestations' },
   { id: 'atouts', label: 'Atouts' },
-  { id: 'testimonials', label: 'T\u00e9moignages' },
-  { id: 'ctaBanner', label: 'Banni\u00e8re CTA' },
+  { id: 'testimonials', label: 'Témoignages' },
+  { id: 'ctaBanner', label: 'Bannière CTA' },
   { id: 'contact', label: 'Contact' },
   { id: 'footer', label: 'Footer' },
-  { id: 'theme', label: 'Th\u00e8me' },
+  { id: 'theme', label: 'Thème' },
   { id: 'images', label: 'Images' },
-  { id: 'video', label: 'Vid\u00e9o' },
+  { id: 'video', label: 'Vidéo' },
 ];
 
 export default function AdminNav({ activeId, onNavigate, dirty }) {
@@ -43,7 +43,7 @@ export default function AdminNav({ activeId, onNavigate, dirty }) {
         onClick={() => setMobileOpen((v) => !v)}
         aria-label="Menu sections"
       >
-        <span>\u2630</span> Sections
+        <span>☰</span> Sections
         {dirty && <span className="nav-dirty-dot" />}
       </button>
       <nav className={`admin-nav ${mobileOpen ? 'open' : ''}`} aria-label="Sections">

@@ -5,7 +5,7 @@ export default function ArrayEditor({
   items,
   onChange,
   fields,
-  itemLabel = '\u00c9l\u00e9ment',
+  itemLabel = 'Élément',
   maxItems,
   minItems = 0,
 }) {
@@ -82,7 +82,7 @@ export default function ArrayEditor({
                   disabled={index === 0}
                   title="Monter"
                 >
-                  \u2191
+                  ↑
                 </button>
                 <button
                   type="button"
@@ -90,7 +90,7 @@ export default function ArrayEditor({
                   disabled={index === items.length - 1}
                   title="Descendre"
                 >
-                  \u2193
+                  ↓
                 </button>
                 <button
                   type="button"
@@ -99,7 +99,7 @@ export default function ArrayEditor({
                   disabled={items.length <= minItems}
                   title="Supprimer"
                 >
-                  \u00d7
+                  ×
                 </button>
               </div>
             </div>
