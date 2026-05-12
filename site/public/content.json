@@ -12,11 +12,11 @@
     "gold": "#B8935A"
   },
   "images": {
-    "apropos1": "https://raw.githubusercontent.com/TheSlammedSocietyWebsite/Eclat-Brillance/master/public/media/Screenshot_2025-11-25_131347.png",
+    "apropos1": "https://raw.githubusercontent.com/TheSlammedSocietyWebsite/Eclat-Brillance/master/public/media/Screenshot_2026-02-11_224652.png",
     "apropos2": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=800&q=80"
   },
   "site": {
-    "name": "Éclat Brillance",
+    "name": "Ãclat Brillance",
     "tagline": "Entretien professionnel",
     "tel": "06 98 61 36 83",
     "telHref": "tel:+33698613683",
@@ -25,7 +25,7 @@
   },
   "nav": [
     {
-      "label": "À propos",
+      "label": "Ã propos",
       "href": "#apropos",
       "cta": false
     },
@@ -46,42 +46,42 @@
     }
   ],
   "hero": {
-    "eyebrow": "Entreprise locale · Réactivité · Professionnalisme",
+    "eyebrow": "Entreprise locale Â· RÃ©activitÃ© Â· Professionnalisme",
     "title": "Des locaux impeccables,",
     "titleEm": "une image professionnelle.",
-    "lede": "Nous accompagnons les entreprises dans l'entretien de leurs espaces de travail afin de garantir propreté, hygiène et confort au quotidien.",
+    "lede": "Nous accompagnons les entreprises dans l'entretien de leurs espaces de travail afin de garantir propretÃ©, hygiÃ¨ne et confort au quotidien.",
     "primaryCta": "Demander un devis",
     "proof": [
       "Devis gratuit sous 24h",
       "Essai sans engagement",
-      "Qualité garantie"
+      "QualitÃ© garantie"
     ],
     "badge": {
       "kicker": "Offre de bienvenue",
-      "number": "−15",
+      "number": "â15",
       "unit": "%",
-      "sub": "sur votre première prestation"
+      "sub": "sur votre premiÃ¨re prestation"
     }
   },
   "apropos": {
-    "kicker": "À propos",
+    "kicker": "Ã propos",
     "title": "Un partenaire d'entretien discret et exigeant.",
-    "body": "Chez Éclat Brillance, nous considérons que la propreté de vos locaux reflète directement le sérieux de votre activité. C'est pourquoi nous mettons à votre disposition une équipe formée, des produits efficaces et respectueux de l'environnement, et un service pensé pour s'adapter à votre rythme — en ponctuel comme en contrat.",
+    "body": "Chez Ãclat Brillance, nous considÃ©rons que la propretÃ© de vos locaux reflÃ¨te directement le sÃ©rieux de votre activitÃ©. C'est pourquoi nous mettons Ã  votre disposition une Ã©quipe formÃ©e, des produits efficaces et respectueux de l'environnement, et un service pensÃ© pour s'adapter Ã  votre rythme â en ponctuel comme en contrat.",
     "highlights": [
       "Prestations ponctuelles ou contrats d'entretien sur-mesure",
       "Intervention rapide partout dans votre zone",
-      "Interlocuteur dédié, disponible et transparent"
+      "Interlocuteur dÃ©diÃ©, disponible et transparent"
     ]
   },
   "prestationsSection": {
     "kicker": "Nos prestations",
     "title": "Un service complet pour chaque espace.",
-    "lead": "Six expertises pour maintenir vos locaux en état impeccable, du quotidien aux remises en état les plus exigeantes."
+    "lead": "Six expertises pour maintenir vos locaux en Ã©tat impeccable, du quotidien aux remises en Ã©tat les plus exigeantes."
   },
   "prestations": [
     {
       "title": "Entretien de bureaux",
-      "body": "Nettoyage régulier ou ponctuel de vos espaces de travail : postes, sols, sanitaires, espaces communs.",
+      "body": "Nettoyage rÃ©gulier ou ponctuel de vos espaces de travail : postes, sols, sanitaires, espaces communs.",
       "iconPaths": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"M3 9h18\"/><path d=\"M8 14h2\"/><path d=\"M14 14h2\"/>"
     },
     {
@@ -91,49 +91,49 @@
     },
     {
       "title": "Commerces & locaux",
-      "body": "Des boutiques et espaces recevant du public toujours prêts à accueillir vos clients.",
+      "body": "Des boutiques et espaces recevant du public toujours prÃªts Ã  accueillir vos clients.",
       "iconPaths": "<path d=\"M3 7h18l-2 13H5L3 7z\"/><path d=\"M8 7V4a4 4 0 0 1 8 0v3\"/>"
     },
     {
-      "title": "Après travaux & chantiers",
-      "body": "Dépoussiérage, dégraissage, évacuation des résidus — vos locaux livrés prêts à l'emploi.",
+      "title": "AprÃ¨s travaux & chantiers",
+      "body": "DÃ©poussiÃ©rage, dÃ©graissage, Ã©vacuation des rÃ©sidus â vos locaux livrÃ©s prÃªts Ã  l'emploi.",
       "iconPaths": "<path d=\"M14 3l7 7-11 11H3v-7L14 3z\"/><path d=\"M13 4l7 7\"/>"
     },
     {
-      "title": "Vitres & surfaces vitrées",
-      "body": "Façades, baies, verrières : transparence totale grâce à un matériel et des techniques professionnels.",
+      "title": "Vitres & surfaces vitrÃ©es",
+      "body": "FaÃ§ades, baies, verriÃ¨res : transparence totale grÃ¢ce Ã  un matÃ©riel et des techniques professionnels.",
       "iconPaths": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M4 9h16\"/><path d=\"M4 15h16\"/><path d=\"M12 3v18\"/>"
     },
     {
-      "title": "Remise en état complète",
-      "body": "Pour un local vieilli, un changement d'occupant ou une fin de bail — on repart sur une base saine.",
+      "title": "Remise en Ã©tat complÃ¨te",
+      "body": "Pour un local vieilli, un changement d'occupant ou une fin de bail â on repart sur une base saine.",
       "iconPaths": "<path d=\"M3 12l4-8 5 8 5-8 4 8\"/><path d=\"M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/>"
     }
   ],
   "atoutsSection": {
     "kicker": "Pourquoi nous choisir",
-    "title": "Le détail qui fait la différence."
+    "title": "Le dÃ©tail qui fait la diffÃ©rence."
   },
   "atouts": [
     {
       "num": "01",
-      "title": "Équipe sérieuse et discrète",
-      "body": "Des intervenants formés, stables et respectueux de vos espaces et de vos collaborateurs."
+      "title": "Ãquipe sÃ©rieuse et discrÃ¨te",
+      "body": "Des intervenants formÃ©s, stables et respectueux de vos espaces et de vos collaborateurs."
     },
     {
       "num": "02",
-      "title": "Produits écologiques",
-      "body": "Une propreté efficace sans compromis sur la santé de vos équipes ni sur l'environnement."
+      "title": "Produits Ã©cologiques",
+      "body": "Une propretÃ© efficace sans compromis sur la santÃ© de vos Ã©quipes ni sur l'environnement."
     },
     {
       "num": "03",
       "title": "Service fiable",
-      "body": "Un interlocuteur unique, des plannings tenus et une qualité contrôlée à chaque passage."
+      "body": "Un interlocuteur unique, des plannings tenus et une qualitÃ© contrÃ´lÃ©e Ã  chaque passage."
     },
     {
       "num": "04",
       "title": "Intervention rapide",
-      "body": "Besoin urgent ? Nous répondons sous 24h et nous adaptons à vos contraintes horaires."
+      "body": "Besoin urgent ? Nous rÃ©pondons sous 24h et nous adaptons Ã  vos contraintes horaires."
     }
   ],
   "testimonialsSection": {
@@ -142,64 +142,64 @@
   },
   "testimonials": [
     {
-      "quote": "Éclat Brillance intervient dans nos bureaux depuis plus d'un an. Propreté irréprochable, équipe discrète et toujours à l'heure. Un vrai partenaire.",
+      "quote": "Ãclat Brillance intervient dans nos bureaux depuis plus d'un an. PropretÃ© irrÃ©prochable, Ã©quipe discrÃ¨te et toujours Ã  l'heure. Un vrai partenaire.",
       "author": "Marie L.",
       "role": "Directrice administrative, cabinet de conseil"
     },
     {
-      "quote": "Après des travaux importants, nous avions besoin d'une remise en état rapide. En 24h, les locaux étaient nickel. Service réactif et de qualité.",
+      "quote": "AprÃ¨s des travaux importants, nous avions besoin d'une remise en Ã©tat rapide. En 24h, les locaux Ã©taient nickel. Service rÃ©actif et de qualitÃ©.",
       "author": "Thomas D.",
-      "role": "Gérant, agence immobilière"
+      "role": "GÃ©rant, agence immobiliÃ¨re"
     },
     {
-      "quote": "Nos clients passent par notre hall d'accueil tous les jours. La propreté est notre première image. Éclat Brillance comprend ça.",
+      "quote": "Nos clients passent par notre hall d'accueil tous les jours. La propretÃ© est notre premiÃ¨re image. Ãclat Brillance comprend Ã§a.",
       "author": "Sophie R.",
       "role": "Office manager, agence de communication"
     }
   ],
   "ctaBanner": {
-    "title": "Prêt à transformer vos locaux ?",
-    "body": "Demandez un devis gratuit et personnalisé. Nous vous répondons sous 24h.",
+    "title": "PrÃªt Ã  transformer vos locaux ?",
+    "body": "Demandez un devis gratuit et personnalisÃ©. Nous vous rÃ©pondons sous 24h.",
     "primaryCta": "Demander un devis",
     "secondaryCta": "Appeler maintenant"
   },
   "contact": {
     "kicker": "Contact & devis",
     "title": "Parlons de vos besoins.",
-    "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Vous pouvez aussi nous joindre directement :",
+    "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisÃ© sous 24h. Vous pouvez aussi nous joindre directement :",
     "notePrefix": "Offre de bienvenue :",
-    "note": "−15 % sur votre première prestation.",
+    "note": "â15 % sur votre premiÃ¨re prestation.",
     "formLabels": {
       "nom": "Nom complet",
-      "societe": "Société",
+      "societe": "SociÃ©tÃ©",
       "email": "Email",
-      "tel": "Téléphone",
+      "tel": "TÃ©lÃ©phone",
       "prestation": "Type de prestation",
       "message": "Votre message"
     },
-    "formPlaceholder": "Surface, fréquence, contraintes horaires…",
-    "formSelectDefault": "— Sélectionnez —",
+    "formPlaceholder": "Surface, frÃ©quence, contraintes horairesâ¦",
+    "formSelectDefault": "â SÃ©lectionnez â",
     "submitLabel": "Envoyer ma demande",
-    "submitLoading": "Envoi…",
+    "submitLoading": "Envoiâ¦",
     "statusMessages": {
-      "validationError": "Merci de compléter les champs obligatoires.",
+      "validationError": "Merci de complÃ©ter les champs obligatoires.",
       "mailtoSuccess": "Votre client mail va s'ouvrir pour finaliser l'envoi.",
-      "formspreeSuccess": "Merci ! Votre demande a bien été envoyée. Nous revenons vers vous sous 24 h.",
-      "formspreeError": "Une erreur est survenue. Merci de réessayer ou de nous appeler directement.",
-      "networkError": "Connexion impossible. Merci de nous contacter par téléphone ou email."
+      "formspreeSuccess": "Merci ! Votre demande a bien Ã©tÃ© envoyÃ©e. Nous revenons vers vous sous 24 h.",
+      "formspreeError": "Une erreur est survenue. Merci de rÃ©essayer ou de nous appeler directement.",
+      "networkError": "Connexion impossible. Merci de nous contacter par tÃ©lÃ©phone ou email."
     },
     "prestationOptions": [
       "Entretien de bureaux",
       "Nettoyage d'immeubles et parties communes",
       "Nettoyage de commerces et locaux professionnels",
-      "Nettoyage après travaux et chantiers",
-      "Nettoyage de vitres et surfaces vitrées",
-      "Remise en état complète",
+      "Nettoyage aprÃ¨s travaux et chantiers",
+      "Nettoyage de vitres et surfaces vitrÃ©es",
+      "Remise en Ã©tat complÃ¨te",
       "Autre / Je ne sais pas"
     ]
   },
   "footer": {
-    "description": "Entretien de bureaux et locaux professionnels.\nEntreprise locale, réactive et engagée.",
+    "description": "Entretien de bureaux et locaux professionnels.\nEntreprise locale, rÃ©active et engagÃ©e.",
     "contactHeading": "Contact",
     "infoHeading": "Informations",
     "infoLines": [
@@ -207,8 +207,8 @@
       "Intervention rapide"
     ],
     "devisLabel": "Demander un devis",
-    "legal": "Tous droits réservés.",
-    "mentions": "Mentions légales"
+    "legal": "Tous droits rÃ©servÃ©s.",
+    "mentions": "Mentions lÃ©gales"
   },
   "media": [
     "https://raw.githubusercontent.com/TheSlammedSocietyWebsite/Eclat-Brillance/master/public/media/Gemini_Generated_Image___1_.png"
