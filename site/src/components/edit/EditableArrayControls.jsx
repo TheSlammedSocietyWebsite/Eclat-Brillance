@@ -1,30 +1,80 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useEditMode } from '../../hooks/useEditMode.jsx';
 import { useDraftActions } from '../../hooks/useDraftActions.jsx';
 import { useContent } from '../../hooks/useContent.jsx';
+import TextEditor from '../TextEditor';
+import EditPopover from './EditPopover';
 
-export default function EditableArrayControls({ path, index, items, itemLabel = 'Élément', minItems = 0, maxItems, onAdd, onRemove, onMove }) {
+export default function EditableArrayControls({
+  path,
+  index,
+  items,
+  itemLabel = 'Élément',
+  minItems = 0,
+  maxItems,
+  onAdd,
+  onRemove,
+  onMove,
+  fields,
+}) {
   const isEditMode = useEditMode();
   const updateDraft = useDraftActions();
   const content = useContent();
   const [isHovered, setIsHovered] = useState(false);
 
+  const [isAdding, setIsAdding] = useState(false);
+  const addButtonRef = useRef(null);
+  const [newItemValues, setNewItemValues] = useState({});
+
   if (!isEditMode) return null;
 
-  const arrayItems = items || path.split('.').reduce((acc, key) => {
-    if (acc == null) return [];
-    const idx = Number(key);
-    return !Number.isNaN(idx) && Array.isArray(acc) ? acc[idx] : acc[key];
-  }, content);
+  const arrayItems =
+    items ||
+    path.split('.').reduce((acc, key) => {
+      if (acc == null) return [];
+      const idx = Number(key);
+      return !Number.isNaN(idx) && Array.isArray(acc) ? acc[idx] : acc[key];
+    }, content);
 
-  const handleAdd = () => {
+  const handleAddClick = () => {
+    if (fields) {
+      const initial = {};
+      fields.forEach((f) => {
+        initial[f.path] = f.type === 'checkbox' ? false : '';
+      });
+      setNewItemValues(initial);
+    } else {
+      setNewItemValues({ __value: '' });
+    }
+    setIsAdding(true);
+  };
+
+  const handleConfirmAdd = () => {
     if (!updateDraft && !onAdd) return;
     if (maxItems && arrayItems.length >= maxItems) return;
-    if (onAdd) {
-      onAdd();
+
+    if (fields) {
+      const newItem = { ...newItemValues };
+      if (onAdd) {
+        onAdd(newItem);
+      } else {
+        updateDraft(path, [...arrayItems, newItem]);
+      }
     } else {
-      updateDraft(path, [...arrayItems, '']);
+      const value = newItemValues.__value || '';
+      if (onAdd) {
+        onAdd(value);
+      } else {
+        updateDraft(path, [...arrayItems, value]);
+      }
     }
+    setIsAdding(false);
+    setNewItemValues({});
+  };
+
+  const handleCancelAdd = () => {
+    setIsAdding(false);
+    setNewItemValues({});
   };
 
   const handleRemove = () => {
@@ -53,37 +103,153 @@ export default function EditableArrayControls({ path, index, items, itemLabel = 
     }
   };
 
-  // If index is undefined, render the "Add" button only
+  // Add button (no index) — opens popup
   if (index === undefined) {
     if (maxItems && arrayItems.length >= maxItems) return null;
     return (
-      <button
-        type="button"
-        className="editable-array-add"
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleAdd();
-        }}
-      >
-        + Ajouter {itemLabel.toLowerCase()}
-      </button>
+      <>
+        <button
+          type="button"
+          ref={addButtonRef}
+          className="editable-array-add"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleAddClick();
+          }}
+        >
+          + Ajouter {itemLabel.toLowerCase()}
+        </button>
+        {isAdding && addButtonRef.current && (
+          <EditPopover targetRef={addButtonRef} onClose={handleCancelAdd}>
+            <div className="edit-popover-form" style={{ minWidth: '280px' }}>
+              <h4
+                style={{
+                  margin: '0 0 0.75rem',
+                  fontSize: '0.95rem',
+                  fontWeight: 600,
+                  color: '#1a2b4a',
+                }}
+              >
+                Ajouter {itemLabel.toLowerCase()}
+              </h4>
+              {fields ? (
+                fields.map((f) => {
+                  if (f.type === 'checkbox') {
+                    return (
+                      <label
+                        key={f.path}
+                        className="checkbox-editor"
+                        style={{
+                          marginBottom: '0.75rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          fontSize: '0.9rem',
+                          color: '#2c2c2c',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={!!newItemValues[f.path]}
+                          onChange={(e) =>
+                            setNewItemValues((v) => ({
+                              ...v,
+                              [f.path]: e.target.checked,
+                            }))
+                          }
+                          style={{
+                            width: '18px',
+                            height: '18px',
+                            accentColor: '#1a2b4a',
+                            cursor: 'pointer',
+                          }}
+                        />
+                        <span>{f.label}</span>
+                      </label>
+                    );
+                  }
+                  return (
+                    <TextEditor
+                      key={f.path}
+                      label={f.label}
+                      value={newItemValues[f.path] ?? ''}
+                      onChange={(v) =>
+                        setNewItemValues((val) => ({ ...val, [f.path]: v }))
+                      }
+                      multiline={f.multiline}
+                      rows={f.rows}
+                    />
+                  );
+                })
+              ) : (
+                <TextEditor
+                  label={`Nouveau ${itemLabel.toLowerCase()}`}
+                  value={newItemValues.__value ?? ''}
+                  onChange={(v) =>
+                    setNewItemValues((val) => ({ ...val, __value: v }))
+                  }
+                />
+              )}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.5rem',
+                  marginTop: '1rem',
+                }}
+              >
+                <button
+                  type="button"
+                  className="btn-primary btn-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleConfirmAdd();
+                  }}
+                >
+                  Ajouter
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary btn-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCancelAdd();
+                  }}
+                >
+                  Annuler
+                </button>
+              </div>
+            </div>
+          </EditPopover>
+        )}
+      </>
     );
   }
 
+  // Existing item controls (move / remove on hover)
   return (
     <span
       className="editable-array-controls"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginLeft: '0.25rem' }}
+      style={{
+        position: 'relative',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '0.25rem',
+        marginLeft: '0.25rem',
+      }}
     >
       {isHovered && (
         <>
           <button
             type="button"
             className="editable-array-btn"
-            onClick={(e) => { e.stopPropagation(); handleMove(-1); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleMove(-1);
+            }}
             disabled={index === 0}
             title="Monter"
           >
@@ -92,7 +258,10 @@ export default function EditableArrayControls({ path, index, items, itemLabel = 
           <button
             type="button"
             className="editable-array-btn"
-            onClick={(e) => { e.stopPropagation(); handleMove(1); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleMove(1);
+            }}
             disabled={index === arrayItems.length - 1}
             title="Descendre"
           >
@@ -101,7 +270,10 @@ export default function EditableArrayControls({ path, index, items, itemLabel = 
           <button
             type="button"
             className="editable-array-btn btn-remove-array"
-            onClick={(e) => { e.stopPropagation(); handleRemove(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRemove();
+            }}
             disabled={arrayItems.length <= minItems}
             title="Supprimer"
           >

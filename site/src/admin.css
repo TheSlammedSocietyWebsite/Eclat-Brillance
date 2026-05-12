@@ -801,6 +801,7 @@
 .admin-edit-sidebar-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
@@ -882,6 +883,26 @@
   color: #fff;
 }
 
+.admin-edit-sidebar .btn-secondary,
+.admin-edit-sidebar .btn-view-site {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.admin-edit-sidebar .btn-secondary:hover:not(:disabled),
+.admin-edit-sidebar .btn-view-site:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.admin-edit-sidebar .btn-logout {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.admin-edit-sidebar .btn-logout:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .admin-edit-sidebar .success {
   color: #6b8f71;
   font-size: 0.8rem;
@@ -910,6 +931,40 @@
 .admin-edit-preview-inner {
   background: var(--c-bg, #F8F8F6);
   min-height: 100vh;
+}
+
+/* ------------------------------------------------------------------
+   Popover form inputs (used by EditPopover in WYSIWYG mode)
+   ------------------------------------------------------------------ */
+.edit-popover-form input[type="text"],
+.edit-popover-form textarea {
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  color: #2c2c2c;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.edit-popover-form input[type="text"]:focus,
+.edit-popover-form textarea:focus {
+  outline: none;
+  border-color: #1a2b4a;
+  box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.08);
+}
+
+.edit-popover-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.edit-popover-form .text-editor-label {
+  color: #2c2c2c;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {

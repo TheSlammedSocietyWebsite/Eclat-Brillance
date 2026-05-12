@@ -3,6 +3,12 @@ import { useContent } from '../hooks/useContent.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
+const TESTIMONIAL_FIELDS = [
+  { path: 'quote', label: 'Citation', multiline: true },
+  { path: 'author', label: 'Auteur' },
+  { path: 'role', label: 'Rôle' },
+];
+
 function TestimonialCard({ quote, author, role, index, testimonials }) {
   const ref = useScrollReveal();
   return (
@@ -21,7 +27,7 @@ function TestimonialCard({ quote, author, role, index, testimonials }) {
         </cite>
       </footer>
       <div style={{ marginTop: '0.5rem' }}>
-        <EditableArrayControls path="testimonials" index={index} items={testimonials} itemLabel="Témoignage" />
+        <EditableArrayControls path="testimonials" index={index} items={testimonials} itemLabel="Témoignage" fields={TESTIMONIAL_FIELDS} />
       </div>
     </blockquote>
   );
@@ -46,7 +52,7 @@ export default function Testimonials() {
           {testimonials.map((t, i) => (
             <TestimonialCard key={i} {...t} index={i} testimonials={testimonials} />
           ))}
-          <EditableArrayControls path="testimonials" itemLabel="Témoignage" />
+          <EditableArrayControls path="testimonials" itemLabel="Témoignage" fields={TESTIMONIAL_FIELDS} />
         </div>
       </div>
     </section>
