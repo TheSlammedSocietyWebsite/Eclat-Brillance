@@ -1,5 +1,6 @@
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
+import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
@@ -11,6 +12,7 @@ const PRESTATION_FIELDS = [
 
 function ServiceCard({ title, body, iconPaths, index, prestations }) {
   const ref = useScrollReveal();
+  const isEditMode = useEditMode();
   return (
     <article className="service-card" ref={ref} style={{ position: 'relative' }}>
       <span className="service-icon" aria-hidden="true">
@@ -30,10 +32,12 @@ function ServiceCard({ title, body, iconPaths, index, prestations }) {
       <p>
         <EditableText path={`prestations.${index}.body`} multiline tag="span">{body}</EditableText>
       </p>
-      <div style={{ marginTop: '0.5rem' }}>
-        <EditableText path={`prestations.${index}.iconPaths`} multiline tag="span">{iconPaths}</EditableText>
-        <EditableArrayControls path="prestations" index={index} items={prestations} itemLabel="Prestation" fields={PRESTATION_FIELDS} />
-      </div>
+      {isEditMode && (
+        <div style={{ marginTop: '0.5rem' }}>
+          <EditableText path={`prestations.${index}.iconPaths`} multiline tag="span">{iconPaths}</EditableText>
+          <EditableArrayControls path="prestations" index={index} items={prestations} itemLabel="Prestation" fields={PRESTATION_FIELDS} />
+        </div>
+      )}
     </article>
   );
 }
