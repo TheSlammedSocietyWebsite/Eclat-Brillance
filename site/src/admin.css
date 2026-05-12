@@ -1023,23 +1023,44 @@
 }
 
 .editable-array-btn {
-  padding: 0.1rem 0.3rem;
-  font-size: 0.75rem;
-  background: rgba(26, 43, 74, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: #1a2b4a;
   color: #fff;
   border: 0;
-  border-radius: 3px;
+  border-radius: 6px;
   cursor: pointer;
   line-height: 1;
+  transition: transform 0.1s, background 0.15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .editable-array-btn:hover:not(:disabled) {
-  background: rgba(26, 43, 74, 1);
+  background: #243b5a;
+  transform: translateY(-1px);
+}
+
+.editable-array-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .editable-array-btn:disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+  background: #8a9ab0;
+}
+
+.editable-array-btn.btn-remove-array {
+  background: #b00020;
+}
+
+.editable-array-btn.btn-remove-array:hover:not(:disabled) {
+  background: #8b001a;
 }
 
 .editable-array-add {
