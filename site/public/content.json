@@ -107,6 +107,11 @@
       "title": "Remise en état complète",
       "body": "Pour un local vieilli, un changement d'occupant ou une fin de bail — on repart sur une base saine.",
       "iconPaths": "<path d=\"M3 12l4-8 5 8 5-8 4 8\"/><path d=\"M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/>"
+    },
+    {
+      "title": "Connard de merde",
+      "body": "Bonjour moi c'est moufasa",
+      "iconPaths": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M4 9h16\"/><path d=\"M4 15h16\"/><path d=\"M12 3v18\"/>"
     }
   ],
   "atoutsSection": {
