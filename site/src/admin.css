@@ -1008,10 +1008,6 @@
   background: rgba(107, 143, 113, 0.08);
 }
 
-.editable-image {
-  position: relative;
-}
-
 .editable-image-overlay {
   position: absolute;
   inset: 0;
