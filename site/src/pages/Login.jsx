@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../lib/api';
+import { useAuth } from '../hooks/useAuth';
 import '../admin.css';
 
 export default function Login() {
@@ -8,17 +9,20 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+  const { checkAuth } = useAuth();
 
   async function onSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setError(null);
     const res = await login(password);
-    setLoading(false);
     if (res.ok) {
+      await checkAuth();
+      setLoading(false);
       nav('/admin', { replace: true });
       return;
     }
+    setLoading(false);
     setError(res.error === 'invalid_credentials' ? 'Mot de passe incorrect.' : 'Erreur de connexion.');
   }
 

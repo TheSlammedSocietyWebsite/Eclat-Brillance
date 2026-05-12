@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
 import TextEditor from '../components/TextEditor';
 import ColorEditor from '../components/ColorEditor';
@@ -555,6 +556,9 @@ export default function Admin() {
             )}
           </div>
           <div className="admin-header-right">
+            <Link to="/admin/edit" className="btn-view-site">
+              Édition visuelle
+            </Link>
             <a href="/" target="_blank" rel="noreferrer" className="btn-view-site">
               Voir le site
             </a>

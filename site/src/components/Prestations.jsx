@@ -3,6 +3,12 @@ import { useContent } from '../hooks/useContent.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
+const PRESTATION_FIELDS = [
+  { path: 'title', label: 'Titre' },
+  { path: 'body', label: 'Description', multiline: true },
+  { path: 'iconPaths', label: 'Icônes SVG', multiline: true },
+];
+
 function ServiceCard({ title, body, iconPaths, index, prestations }) {
   const ref = useScrollReveal();
   return (
@@ -26,7 +32,7 @@ function ServiceCard({ title, body, iconPaths, index, prestations }) {
       </p>
       <div style={{ marginTop: '0.5rem' }}>
         <EditableText path={`prestations.${index}.iconPaths`} multiline tag="span">{iconPaths}</EditableText>
-        <EditableArrayControls path="prestations" index={index} items={prestations} itemLabel="Prestation" />
+        <EditableArrayControls path="prestations" index={index} items={prestations} itemLabel="Prestation" fields={PRESTATION_FIELDS} />
       </div>
     </article>
   );
@@ -54,7 +60,7 @@ export default function Prestations() {
           {prestations.map((p, i) => (
             <ServiceCard key={i} {...p} index={i} prestations={prestations} />
           ))}
-          <EditableArrayControls path="prestations" itemLabel="Prestation" />
+          <EditableArrayControls path="prestations" itemLabel="Prestation" fields={PRESTATION_FIELDS} />
         </div>
       </div>
     </section>

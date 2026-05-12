@@ -3,6 +3,12 @@ import { useContent } from '../hooks/useContent.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
+const ATOUT_FIELDS = [
+  { path: 'num', label: 'Numéro' },
+  { path: 'title', label: 'Titre' },
+  { path: 'body', label: 'Description', multiline: true },
+];
+
 function AtoutItem({ num, title, body, index, atouts }) {
   const ref = useScrollReveal();
   return (
@@ -17,7 +23,7 @@ function AtoutItem({ num, title, body, index, atouts }) {
         <EditableText path={`atouts.${index}.body`} multiline tag="span">{body}</EditableText>
       </p>
       <div style={{ marginTop: '0.5rem' }}>
-        <EditableArrayControls path="atouts" index={index} items={atouts} itemLabel="Atout" />
+        <EditableArrayControls path="atouts" index={index} items={atouts} itemLabel="Atout" fields={ATOUT_FIELDS} />
       </div>
     </div>
   );
@@ -42,7 +48,7 @@ export default function Atouts() {
           {atouts.map((a, i) => (
             <AtoutItem key={i} {...a} index={i} atouts={atouts} />
           ))}
-          <EditableArrayControls path="atouts" itemLabel="Atout" />
+          <EditableArrayControls path="atouts" itemLabel="Atout" fields={ATOUT_FIELDS} />
         </div>
       </div>
     </section>

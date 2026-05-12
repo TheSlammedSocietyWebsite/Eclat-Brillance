@@ -3,6 +3,12 @@ import { useContent } from '../hooks/useContent.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
+const NAV_FIELDS = [
+  { path: 'label', label: 'Label' },
+  { path: 'href', label: 'Lien (href)' },
+  { path: 'cta', label: 'Style CTA', type: 'checkbox' },
+];
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -56,10 +62,10 @@ export default function Header() {
           {nav.map(({ label, href, cta }, i) => (
             <a key={i} href={href} className={cta ? 'nav-cta' : undefined} onClick={closeNav} style={{ position: 'relative' }}>
               <EditableText path={`nav.${i}.label`} tag="span">{label}</EditableText>
-              <EditableArrayControls path="nav" index={i} items={nav} itemLabel="Lien" />
+              <EditableArrayControls path="nav" index={i} items={nav} itemLabel="Lien" fields={NAV_FIELDS} />
             </a>
           ))}
-          <EditableArrayControls path="nav" itemLabel="Lien" />
+          <EditableArrayControls path="nav" itemLabel="Lien" fields={NAV_FIELDS} />
         </nav>
       </div>
     </header>
