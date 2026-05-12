@@ -1,40 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
-import { fetchContent, rollback } from '../lib/api';
+import { fetchContent, rollback, fetchStats } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import '../admin.css';
-
-/* ------------------------------------------------------------------ */
-/*  Utils                                                              */
-/* ------------------------------------------------------------------ */
-
-function formatBytes(bytes) {
-  if (bytes === 0) return '0 B';
-  const k = 1024;
-  const sizes = ['B', 'KB', 'MB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-}
-
-function countDeepStrings(obj) {
-  let count = 0;
-  function walk(v) {
-    if (typeof v === 'string') count += v.length;
-    else if (Array.isArray(v)) v.forEach(walk);
-    else if (v && typeof v === 'object') Object.values(v).forEach(walk);
-  }
-  walk(obj);
-  return count;
-}
 
 /* ------------------------------------------------------------------ */
 /*  Sub-components                                                     */
 /* ------------------------------------------------------------------ */
 
-function StatCard({ label, value, sub }) {
+function StatCard({ label, value, sub, muted }) {
   return (
-    <div className="dash-card">
+    <div className={`dash-card ${muted ? 'dash-card-muted' : ''}`}>
       <div className="dash-card-value">{value}</div>
       <div className="dash-card-label">{label}</div>
       {sub && <div className="dash-card-sub">{sub}</div>}
@@ -48,6 +25,7 @@ function StatCard({ label, value, sub }) {
 
 export default function Admin() {
   const [content, setContent] = useState(bundledContent);
+  const [stats, setStats] = useState(null);
   const [rollbackState, setRollbackState] = useState('idle');
   const { logoutAndRedirect } = useAuth();
   const mountedRef = useRef(true);
@@ -57,6 +35,11 @@ export default function Admin() {
     fetchContent()
       .then((latest) => {
         if (!cancelled && latest) setContent(latest);
+      })
+      .catch(() => {});
+    fetchStats()
+      .then((data) => {
+        if (!cancelled) setStats(data);
       })
       .catch(() => {});
     return () => {
@@ -94,18 +77,6 @@ export default function Admin() {
     await logoutAndRedirect();
   }
 
-  const stats = [
-    { label: 'Prestations', value: content.prestations?.length ?? 0 },
-    { label: 'Témoignages', value: content.testimonials?.length ?? 0 },
-    { label: 'Atouts', value: content.atouts?.length ?? 0 },
-    { label: 'Liens nav', value: content.nav?.length ?? 0 },
-    { label: 'Images uploadées', value: content.media?.length ?? 0 },
-    { label: 'Options devis', value: content.contact?.prestationOptions?.length ?? 0 },
-  ];
-
-  const jsonSize = formatBytes(new Blob([JSON.stringify(content)]).size);
-  const textChars = countDeepStrings(content).toLocaleString();
-
   const siteInfo = [
     { label: 'Nom du site', value: content.site?.name || '—' },
     { label: 'Slogan', value: content.site?.tagline || '—' },
@@ -121,6 +92,15 @@ export default function Admin() {
     { label: 'Image À propos secondaire', ok: !!content.images?.apropos2 },
     { label: 'Formulaire Formspree configuré', ok: content.site?.formId && content.site.formId !== 'YOUR_FORM_ID' },
   ];
+
+  const visitsValue = stats?.visits != null ? stats.visits.toLocaleString() : '—';
+  const visitsSub = stats?.visits != null
+    ? '30 derniers jours (Vercel)'
+    : stats?.vercelConfigured === false
+      ? 'Ajoutez VERCEL_TOKEN et VERCEL_PROJECT_ID'
+      : stats?.vercelError
+        ? `Erreur Vercel : ${stats.vercelError}`
+        : 'Chargement…';
 
   return (
     <div className="admin-page dash-layout">
@@ -144,13 +124,31 @@ export default function Admin() {
 
       <main className="dash-main">
         <section className="dash-section">
-          <h2>Vue d'ensemble</h2>
+          <h2>Analytics</h2>
           <div className="dash-stats-grid">
-            {stats.map((s) => (
-              <StatCard key={s.label} label={s.label} value={s.value} />
-            ))}
-            <StatCard label="Taille JSON" value={jsonSize} />
-            <StatCard label="Caractères" value={textChars} />
+            <StatCard
+              label="Visites"
+              value={visitsValue}
+              sub={visitsSub}
+            />
+            <StatCard
+              label="Devis reçus"
+              value={stats?.leads ?? 0}
+              sub={stats?.leadsNote ?? 'À venir'}
+              muted
+            />
+            <StatCard
+              label="Pages vues / mois"
+              value="—"
+              sub="À venir"
+              muted
+            />
+            <StatCard
+              label="Taux de conversion"
+              value="—"
+              sub="À venir"
+              muted
+            />
           </div>
         </section>
 

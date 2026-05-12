@@ -70,3 +70,9 @@ export async function rollback() {
   if (res.ok && j.commitSha) return { ok: true, commitSha: j.commitSha };
   return { ok: false, error: j.error ?? 'unknown' };
 }
+
+export async function fetchStats() {
+  const res = await safeFetch('/api/stats');
+  if (!res || !res.ok) return null;
+  return await res.json().catch(() => null);
+}
