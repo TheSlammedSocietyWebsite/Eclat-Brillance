@@ -30,6 +30,16 @@ function repoBase() {
   return `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
 }
 
+// atob() decodes to Latin1, not UTF-8. This helper properly decodes base64 → UTF-8.
+function base64ToUtf8(s) {
+  const binary = atob(s);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder().decode(bytes);
+}
+
 export default async function handler(req) {
   if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
 
@@ -73,7 +83,7 @@ export default async function handler(req) {
     if (!contentJson.content || contentJson.encoding !== 'base64') {
       return json({ error: 'github_error' }, 502);
     }
-    const previousContent = atob(contentJson.content.replace(/\n/g, ''));
+    const previousContent = base64ToUtf8(contentJson.content.replace(/\n/g, ''));
 
     // 3. Get current file sha for the branch
     const currentSha = await getFileSha(path, branch);
