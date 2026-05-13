@@ -94,13 +94,7 @@ export default function Admin() {
   ];
 
   const visitsValue = stats?.visits != null ? stats.visits.toLocaleString() : '—';
-  const visitsSub = stats?.visits != null
-    ? '30 derniers jours (Vercel)'
-    : stats?.vercelConfigured === false
-      ? 'Ajoutez VERCEL_TOKEN et VERCEL_PROJECT_ID'
-      : stats?.vercelError
-        ? `Erreur Vercel : ${stats.vercelError}`
-        : 'Chargement…';
+  const visitsSub = stats?.visits != null ? 'Visites uniques' : 'Chargement…';
 
   return (
     <div className="admin-page dash-layout">
