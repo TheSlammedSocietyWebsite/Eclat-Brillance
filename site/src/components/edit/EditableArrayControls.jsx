@@ -3,6 +3,7 @@ import { useEditMode } from '../../hooks/useEditMode.jsx';
 import { useDraftActions } from '../../hooks/useDraftActions.jsx';
 import { useContent } from '../../hooks/useContent.jsx';
 import TextEditor from '../TextEditor';
+import IconPicker from '../IconPicker.jsx';
 import EditPopover from './EditPopover';
 
 export default function EditableArrayControls({
@@ -167,6 +168,18 @@ export default function EditableArrayControls({
                         />
                         <span>{f.label}</span>
                       </label>
+                    );
+                  }
+                  if (f.type === 'icon') {
+                    return (
+                      <IconPicker
+                        key={f.path}
+                        label={f.label}
+                        value={newItemValues[f.path] ?? ''}
+                        onChange={(v) =>
+                          setNewItemValues((val) => ({ ...val, [f.path]: v }))
+                        }
+                      />
                     );
                   }
                   return (

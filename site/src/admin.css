@@ -1513,3 +1513,109 @@
     grid-column: auto;
   }
 }
+
+/* ------------------------------------------------------------------
+   Icon Picker
+   ------------------------------------------------------------------ */
+.icon-picker {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+.icon-picker-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  color: #2c2c2c;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.icon-picker-trigger:hover {
+  border-color: #1a2b4a;
+}
+.icon-picker-trigger:focus {
+  outline: none;
+  border-color: #1a2b4a;
+  box-shadow: 0 0 0 3px rgba(26, 43, 74, 0.08);
+}
+.icon-picker-selected {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #1a2b4a;
+  font-weight: 500;
+}
+.icon-picker-selected svg {
+  color: #1a2b4a;
+}
+.icon-picker-placeholder {
+  color: #888;
+}
+.icon-picker-chevron {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  color: #888;
+}
+.icon-picker-chevron.open {
+  transform: rotate(180deg);
+}
+.icon-picker-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  padding: 0.35rem;
+}
+.icon-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #2c2c2c;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s, border-color 0.1s;
+}
+.icon-picker-option:hover {
+  background: #f5f5f5;
+}
+.icon-picker-option.selected {
+  background: #eaf0ec;
+  border-color: #6b8f71;
+}
+.icon-picker-option-preview {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #f5f5f5;
+  flex-shrink: 0;
+  color: #1a2b4a;
+}
+.icon-picker-option.selected .icon-picker-option-preview {
+  background: #d4e4d7;
+}
+.icon-picker-option-name {
+  font-weight: 500;
+}

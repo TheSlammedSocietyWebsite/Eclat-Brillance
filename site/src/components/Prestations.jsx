@@ -7,6 +7,7 @@ import EditableArrayControls from './edit/EditableArrayControls.jsx';
 const PRESTATION_FIELDS = [
   { path: 'title', label: 'Titre' },
   { path: 'body', label: 'Description', multiline: true },
+  { path: 'iconPaths', label: 'Icône', type: 'icon' },
 ];
 
 function ServiceCard({ title, body, iconPaths, index, prestations }) {
