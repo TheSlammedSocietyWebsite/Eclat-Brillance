@@ -12,11 +12,11 @@
     "gold": "#B8935A"
   },
   "images": {
-    "apropos1": "",
+    "apropos1": "https://raw.githubusercontent.com/TheSlammedSocietyWebsite/Eclat-Brillance/master/public/media/Screenshot_2025-11-16_203035.png",
     "apropos2": "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=800&q=80"
   },
   "site": {
-    "name": "Éclat Brillance",
+    "name": "Éclat Brillance _ TEST",
     "tagline": "Entretien professionnel",
     "tel": "06 98 61 36 83",
     "telHref": "tel:+33698613683",
@@ -57,7 +57,7 @@
     ],
     "badge": {
       "kicker": "Offre de bienvenue",
-      "number": "−15",
+      "number": "−25",
       "unit": "%",
       "sub": "sur votre première prestation"
     }
@@ -99,16 +99,6 @@
       "title": "Après travaux & chantiers",
       "body": "Dépoussiérage, dégraissage, évacuation des résidus — vos locaux livrés prêts à l'emploi.",
       "iconPaths": "<path d=\"M14 3l7 7-11 11H3v-7L14 3z\"/><path d=\"M13 4l7 7\"/>"
-    },
-    {
-      "title": "Vitres & surfaces vitrées",
-      "body": "Façades, baies, verrières : transparence totale grâce à un matériel et des techniques professionnels.",
-      "iconPaths": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M4 9h16\"/><path d=\"M4 15h16\"/><path d=\"M12 3v18\"/>"
-    },
-    {
-      "title": "Remise en état complète",
-      "body": "Pour un local vieilli, un changement d'occupant ou une fin de bail — on repart sur une base saine.",
-      "iconPaths": "<path d=\"M3 12l4-8 5 8 5-8 4 8\"/><path d=\"M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/>"
     }
   ],
   "atoutsSection": {
