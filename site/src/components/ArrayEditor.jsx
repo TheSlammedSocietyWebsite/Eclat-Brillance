@@ -1,4 +1,5 @@
 import TextEditor from './TextEditor';
+import IconPicker from './IconPicker.jsx';
 
 export default function ArrayEditor({
   label,
@@ -117,6 +118,16 @@ export default function ArrayEditor({
                       />
                       <span>{f.label}</span>
                     </label>
+                  );
+                }
+                if (f.type === 'icon') {
+                  return (
+                    <IconPicker
+                      key={f.path}
+                      label={f.label}
+                      value={item[f.path] ?? ''}
+                      onChange={(v) => handleUpdate(index, f.path, v)}
+                    />
                   );
                 }
                 return (
