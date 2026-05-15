@@ -1,6 +1,17 @@
 export const config = { runtime: 'edge' };
 
-const STATS_PATH = 'site/public/stats.json';
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+async function redisGet(key) {
+  const res = await fetch(`${REDIS_URL}/get/${key}`, {
+    headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!res.ok) throw new Error(`redis_get ${res.status}`);
+  const data = await res.json();
+  return data.result;
+}
 
 export default async function handler(req) {
   if (req.method !== 'GET') {
@@ -10,23 +21,16 @@ export default async function handler(req) {
     });
   }
 
-  const branch = process.env.GITHUB_BRANCH || 'main';
   let visits = 0;
   let leads = 0;
 
-  try {
-    const rawUrl = `https://raw.githubusercontent.com/${process.env.GITHUB_REPO_OWNER}/${process.env.GITHUB_REPO_NAME}/${branch}/${STATS_PATH}?t=${Date.now()}`;
-    const res = await fetch(rawUrl, {
-      credentials: 'omit',
-      signal: AbortSignal.timeout(8000),
-    });
-    if (res.ok) {
-      const data = await res.json().catch(() => ({ visits: 0 }));
-      visits = data.visits || 0;
-      leads = data.leads || 0;
+  if (REDIS_URL && REDIS_TOKEN) {
+    try {
+      const raw = await redisGet('visits');
+      visits = parseInt(raw, 10) || 0;
+    } catch (err) {
+      console.error('stats_read_failed', err);
     }
-  } catch (err) {
-    console.error('stats_read_failed', err);
   }
 
   return new Response(
