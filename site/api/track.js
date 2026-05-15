@@ -1,8 +1,7 @@
-import { getFileSha, putFile } from './_lib/github.js';
-
 export const config = { runtime: 'edge' };
 
-const STATS_PATH = 'site/public/stats.json';
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {
@@ -11,34 +10,26 @@ function json(body, status) {
   });
 }
 
+async function redisIncr(key) {
+  const res = await fetch(`${REDIS_URL}/incr/${key}`, {
+    headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!res.ok) throw new Error(`redis_incr ${res.status}`);
+  const data = await res.json();
+  return data.result;
+}
+
 export default async function handler(req) {
   if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
 
-  const branch = process.env.GITHUB_BRANCH || 'main';
+  if (!REDIS_URL || !REDIS_TOKEN) {
+    return json({ error: 'redis_not_configured', visits: 0 }, 503);
+  }
 
   try {
-    let sha = await getFileSha(STATS_PATH, branch);
-    let stats = { visits: 0 };
-
-    if (sha) {
-      const rawUrl = `https://raw.githubusercontent.com/${process.env.GITHUB_REPO_OWNER}/${process.env.GITHUB_REPO_NAME}/${branch}/${STATS_PATH}`;
-      const res = await fetch(rawUrl, { signal: AbortSignal.timeout(5000) });
-      if (res.ok) {
-        stats = await res.json().catch(() => ({ visits: 0 }));
-      }
-    }
-
-    stats.visits = (stats.visits || 0) + 1;
-    const content = JSON.stringify(stats, null, 2);
-
-    let result = await putFile(STATS_PATH, branch, content, sha, 'NovaCMS: track visit');
-    if (!result.ok && result.status === 409) {
-      sha = await getFileSha(STATS_PATH, branch);
-      result = await putFile(STATS_PATH, branch, content, sha, 'NovaCMS: track visit (retry)');
-    }
-
-    if (!result.ok) return json({ error: 'github_error' }, 502);
-    return json({ ok: true, visits: stats.visits }, 200);
+    const visits = await redisIncr('visits');
+    return json({ ok: true, visits }, 200);
   } catch (err) {
     console.error('track_failed', err);
     return json({ error: 'failed' }, 500);
