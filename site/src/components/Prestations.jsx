@@ -2,6 +2,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
 import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
+import EditableIcon from './edit/EditableIcon.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
 const PRESTATION_FIELDS = [
@@ -15,17 +16,19 @@ function ServiceCard({ title, body, iconPaths, index, prestations }) {
   const isEditMode = useEditMode();
   return (
     <article className="service-card" ref={ref} style={{ position: 'relative' }}>
-      <span className="service-icon" aria-hidden="true">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          dangerouslySetInnerHTML={{ __html: iconPaths }}
-        />
-      </span>
+      <EditableIcon path={`prestations.${index}.iconPaths`}>
+        <span className="service-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            dangerouslySetInnerHTML={{ __html: iconPaths }}
+          />
+        </span>
+      </EditableIcon>
       <h3>
         <EditableText path={`prestations.${index}.title`} tag="span">{title}</EditableText>
       </h3>

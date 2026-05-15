@@ -1619,3 +1619,26 @@
 .icon-picker-option-name {
   font-weight: 500;
 }
+
+/* ------------------------------------------------------------------
+   Editable Icon
+   ------------------------------------------------------------------ */
+.editable-icon {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.editable-icon-overlay {
+  position: absolute;
+  inset: -4px;
+  display: grid;
+  place-items: center;
+  background: rgba(26, 43, 74, 0.7);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: #fff;
+}
+.editable-icon:hover .editable-icon-overlay {
+  opacity: 1;
+}
