@@ -1,6 +1,7 @@
 import { verifyPassword } from './_lib/crypto';
 import { signSession, buildCookie } from './_lib/session';
 import { isRateLimited, recordFailure, recordSuccess, getClientIp } from './_lib/ratelimit';
+import { redisGet, redisSet, isConfigured } from './_lib/redis';
 
 export const config = { runtime: 'edge' };
 
@@ -12,6 +13,31 @@ function json(body, status, extraHeaders) {
     status,
     headers: { 'Content-Type': 'application/json', ...(extraHeaders ?? {}) },
   });
+}
+
+async function getAdminPasswordHash() {
+  if (isConfigured()) {
+    try {
+      const hash = await redisGet('admin:password_hash');
+      if (hash) return hash;
+    } catch {
+      // Redis indisponible, fallback sur env var
+    }
+  }
+
+  const envHash = process.env.ADMIN_PASSWORD_HASH;
+  if (!envHash) return null;
+
+  // Migration automatique vers Redis si disponible
+  if (isConfigured()) {
+    try {
+      await redisSet('admin:password_hash', envHash);
+    } catch {
+      // Ignorer si Redis non disponible
+    }
+  }
+
+  return envHash;
 }
 
 export default async function handler(req) {
@@ -31,7 +57,7 @@ export default async function handler(req) {
       });
     }
 
-    const hash = process.env.ADMIN_PASSWORD_HASH;
+    const hash = await getAdminPasswordHash();
     if (!hash) return json({ error: 'server_misconfig' }, 500);
 
     let body;

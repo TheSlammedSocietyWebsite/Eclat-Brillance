@@ -1,7 +1,6 @@
-export const config = { runtime: 'edge' };
+import { redisIncr, isConfigured } from './_lib/redis';
 
-const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+export const config = { runtime: 'edge' };
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {
@@ -10,20 +9,10 @@ function json(body, status) {
   });
 }
 
-async function redisIncr(key) {
-  const res = await fetch(`${REDIS_URL}/incr/${key}`, {
-    headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
-    signal: AbortSignal.timeout(5000),
-  });
-  if (!res.ok) throw new Error(`redis_incr ${res.status}`);
-  const data = await res.json();
-  return data.result;
-}
-
 export default async function handler(req) {
   if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
 
-  if (!REDIS_URL || !REDIS_TOKEN) {
+  if (!isConfigured()) {
     return json({ error: 'redis_not_configured', count: 0 }, 503);
   }
 

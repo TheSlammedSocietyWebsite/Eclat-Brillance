@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
-import { fetchContent, rollback, fetchStats } from '../lib/api';
+import { fetchContent, rollback, fetchStats, changePassword } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import FormspreeSetup from '../components/FormspreeSetup.jsx';
 import '../admin.css';
@@ -30,6 +30,13 @@ export default function Admin() {
   const [rollbackState, setRollbackState] = useState('idle');
   const { logoutAndRedirect } = useAuth();
   const mountedRef = useRef(true);
+
+  /* Password change state */
+  const [pwdCurrent, setPwdCurrent] = useState('');
+  const [pwdNew, setPwdNew] = useState('');
+  const [pwdConfirm, setPwdConfirm] = useState('');
+  const [pwdState, setPwdState] = useState('idle');
+  const [pwdError, setPwdError] = useState('');
 
   useEffect(() => {
     let cancelled = false;
@@ -76,6 +83,45 @@ export default function Admin() {
 
   async function onLogout() {
     await logoutAndRedirect();
+  }
+
+  async function onChangePassword(e) {
+    e.preventDefault();
+    setPwdError('');
+
+    if (pwdNew.length < 8) {
+      setPwdError('Le nouveau mot de passe doit contenir au moins 8 caractères.');
+      return;
+    }
+    if (pwdNew !== pwdConfirm) {
+      setPwdError('Les nouveaux mots de passe ne correspondent pas.');
+      return;
+    }
+
+    setPwdState('loading');
+    const res = await changePassword(pwdCurrent, pwdNew);
+    if (!mountedRef.current) return;
+
+    if (res.ok) {
+      setPwdState('success');
+      setPwdCurrent('');
+      setPwdNew('');
+      setPwdConfirm('');
+      setTimeout(() => {
+        if (mountedRef.current) setPwdState('idle');
+      }, 4000);
+    } else {
+      setPwdState('error');
+      if (res.error === 'invalid_credentials') {
+        setPwdError('Mot de passe actuel incorrect.');
+      } else if (res.error === 'password_too_short') {
+        setPwdError(`Le mot de passe doit contenir au moins ${res.min} caractères.`);
+      } else if (res.error === 'redis_unavailable') {
+        setPwdError('Le service de stockage est indisponible. Réessayez plus tard.');
+      } else {
+        setPwdError('Une erreur est survenue. Veuillez réessayer.');
+      }
+    }
   }
 
   const siteInfo = [
@@ -175,6 +221,60 @@ export default function Admin() {
               <span className="error">Échec du retour en arrière.</span>
             )}
           </div>
+        </section>
+
+        <section className="dash-section">
+          <h2>Sécurité</h2>
+          <form onSubmit={onChangePassword} className="dash-password-form">
+            <div className="dash-password-field">
+              <label htmlFor="pwd-current">Mot de passe actuel</label>
+              <input
+                id="pwd-current"
+                type="password"
+                value={pwdCurrent}
+                onChange={(e) => setPwdCurrent(e.target.value)}
+                required
+                disabled={pwdState === 'loading'}
+              />
+            </div>
+            <div className="dash-password-field">
+              <label htmlFor="pwd-new">Nouveau mot de passe</label>
+              <input
+                id="pwd-new"
+                type="password"
+                value={pwdNew}
+                onChange={(e) => setPwdNew(e.target.value)}
+                required
+                disabled={pwdState === 'loading'}
+              />
+            </div>
+            <div className="dash-password-field">
+              <label htmlFor="pwd-confirm">Confirmer le nouveau mot de passe</label>
+              <input
+                id="pwd-confirm"
+                type="password"
+                value={pwdConfirm}
+                onChange={(e) => setPwdConfirm(e.target.value)}
+                required
+                disabled={pwdState === 'loading'}
+              />
+            </div>
+            <div className="dash-password-actions">
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={pwdState === 'loading'}
+              >
+                {pwdState === 'loading' ? 'Mise à jour…' : 'Mettre à jour le mot de passe'}
+              </button>
+              {pwdState === 'success' && (
+                <span className="success">Mot de passe mis à jour avec succès.</span>
+              )}
+              {pwdState === 'error' && (
+                <span className="error">{pwdError}</span>
+              )}
+            </div>
+          </form>
         </section>
       </main>
     </div>

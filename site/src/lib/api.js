@@ -76,3 +76,15 @@ export async function fetchStats() {
   if (!res || !res.ok) return null;
   return await res.json().catch(() => null);
 }
+
+export async function changePassword(currentPassword, newPassword) {
+  const res = await safeFetch('/api/change-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+  if (!res) return { ok: false, error: 'network' };
+  const j = await res.json().catch(() => ({}));
+  if (res.ok) return { ok: true };
+  return { ok: false, error: j.error ?? 'unknown', min: j.min };
+}
