@@ -1,17 +1,6 @@
+import { redisGet, isConfigured } from './_lib/redis';
+
 export const config = { runtime: 'edge' };
-
-const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
-
-async function redisGet(key) {
-  const res = await fetch(`${REDIS_URL}/get/${key}`, {
-    headers: { Authorization: `Bearer ${REDIS_TOKEN}` },
-    signal: AbortSignal.timeout(5000),
-  });
-  if (!res.ok) throw new Error(`redis_get ${res.status}`);
-  const data = await res.json();
-  return data.result;
-}
 
 export default async function handler(req) {
   if (req.method !== 'GET') {
@@ -24,7 +13,7 @@ export default async function handler(req) {
   let visits = 0;
   let leads = 0;
 
-  if (REDIS_URL && REDIS_TOKEN) {
+  if (isConfigured()) {
     try {
       const rawVisits = await redisGet('visits');
       visits = parseInt(rawVisits, 10) || 0;
@@ -43,7 +32,7 @@ export default async function handler(req) {
     JSON.stringify({
       visits,
       leads,
-      leadsNote: !(REDIS_URL && REDIS_TOKEN) ? 'À venir — configurez Redis' : undefined,
+      leadsNote: !isConfigured() ? 'À venir — configurez Redis' : undefined,
     }),
     {
       status: 200,
