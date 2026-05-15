@@ -7,7 +7,6 @@ import EditableArrayControls from './edit/EditableArrayControls.jsx';
 const PRESTATION_FIELDS = [
   { path: 'title', label: 'Titre' },
   { path: 'body', label: 'Description', multiline: true },
-  { path: 'iconPaths', label: 'Icônes SVG', multiline: true },
 ];
 
 function ServiceCard({ title, body, iconPaths, index, prestations }) {
@@ -34,7 +33,6 @@ function ServiceCard({ title, body, iconPaths, index, prestations }) {
       </p>
       {isEditMode && (
         <div style={{ marginTop: '0.5rem' }}>
-          <EditableText path={`prestations.${index}.iconPaths`} multiline tag="span">{iconPaths}</EditableText>
           <EditableArrayControls path="prestations" index={index} items={prestations} itemLabel="Prestation" fields={PRESTATION_FIELDS} />
         </div>
       )}
