@@ -85,15 +85,6 @@ export default function Admin() {
     { label: 'Email', value: content.site?.email || '—' },
   ];
 
-  const checks = [
-    { label: 'Nom du site renseigné', ok: !!content.site?.name },
-    { label: 'Téléphone renseigné', ok: !!content.site?.tel },
-    { label: 'Email renseigné', ok: !!content.site?.email },
-    { label: 'Image À propos principale', ok: !!content.images?.apropos1 },
-    { label: 'Image À propos secondaire', ok: !!content.images?.apropos2 },
-    { label: 'Formulaire Formspree configuré', ok: content.site?.formId && content.site.formId !== 'YOUR_FORM_ID' },
-  ];
-
   const visitsValue = stats?.visits != null ? stats.visits.toLocaleString() : '—';
   const visitsSub = stats?.visits != null ? 'Visites uniques' : 'Chargement…';
 
@@ -155,18 +146,6 @@ export default function Admin() {
                 <div key={info.label} className="dash-info-row">
                   <span className="dash-info-label">{info.label}</span>
                   <span className="dash-info-value">{info.value}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="dash-section dash-col">
-            <h2>Checklist contenu</h2>
-            <div className="dash-checklist">
-              {checks.map((c, i) => (
-                <div key={i} className={`dash-check-item ${c.ok ? 'ok' : 'ko'}`}>
-                  <span className="dash-check-dot" />
-                  <span>{c.label}</span>
                 </div>
               ))}
             </div>
