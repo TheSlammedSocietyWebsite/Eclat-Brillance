@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
 import { fetchContent, rollback, fetchStats } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
+import FormspreeSetup from '../components/FormspreeSetup.jsx';
 import '../admin.css';
 
 /* ------------------------------------------------------------------ */
@@ -170,6 +171,8 @@ export default function Admin() {
               ))}
             </div>
           </section>
+
+          <FormspreeSetup content={content} onUpdate={setContent} />
         </div>
 
         <section className="dash-section">
