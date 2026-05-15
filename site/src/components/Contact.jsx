@@ -85,6 +85,8 @@ export default function Contact() {
       if (response.ok) {
         form.reset();
         setStatus({ msg: statusMessages.formspreeSuccess, type: 'success' });
+        // Track lead submission
+        fetch('/api/track?type=lead', { method: 'POST', credentials: 'include' }).catch(() => {});
       } else {
         const data = await response.json().catch(() => ({}));
         const msg = (data.errors && data.errors.map(x => x.message).join(' ')) || statusMessages.formspreeError;

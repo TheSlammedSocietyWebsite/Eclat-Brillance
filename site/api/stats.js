@@ -26,8 +26,14 @@ export default async function handler(req) {
 
   if (REDIS_URL && REDIS_TOKEN) {
     try {
-      const raw = await redisGet('visits');
-      visits = parseInt(raw, 10) || 0;
+      const rawVisits = await redisGet('visits');
+      visits = parseInt(rawVisits, 10) || 0;
+    } catch (err) {
+      console.error('stats_read_failed', err);
+    }
+    try {
+      const rawLeads = await redisGet('leads');
+      leads = parseInt(rawLeads, 10) || 0;
     } catch (err) {
       console.error('stats_read_failed', err);
     }
@@ -37,7 +43,7 @@ export default async function handler(req) {
     JSON.stringify({
       visits,
       leads,
-      leadsNote: leads === 0 ? 'À venir — connectez un backend de formulaire' : undefined,
+      leadsNote: !(REDIS_URL && REDIS_TOKEN) ? 'À venir — configurez Redis' : undefined,
     }),
     {
       status: 200,

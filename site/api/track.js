@@ -24,12 +24,15 @@ export default async function handler(req) {
   if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
 
   if (!REDIS_URL || !REDIS_TOKEN) {
-    return json({ error: 'redis_not_configured', visits: 0 }, 503);
+    return json({ error: 'redis_not_configured', count: 0 }, 503);
   }
 
   try {
-    const visits = await redisIncr('visits');
-    return json({ ok: true, visits }, 200);
+    const url = new URL(req.url);
+    const type = url.searchParams.get('type') || 'visits';
+    const key = type === 'lead' ? 'leads' : 'visits';
+    const count = await redisIncr(key);
+    return json({ ok: true, count, type: key }, 200);
   } catch (err) {
     console.error('track_failed', err);
     return json({ error: 'failed' }, 500);
