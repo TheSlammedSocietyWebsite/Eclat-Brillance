@@ -1,5 +1,29 @@
+# Dependencies & build output
 node_modules/
 dist/
+
+# Environment secrets
 .env
 .env.local
 *.local
+
+# === Internal tooling (outside site/) ===
+.agents/
+.claude/
+.opencode/
+
+# === Internal project management ===
+_bmad/
+_bmad-output/
+
+# === Internal documentation ===
+docs/
+CHECKLIST.md
+design-review.md
+skills-lock.json
+
+# === Orphan assets (outside site/public/) ===
+/public/
+
+# === Internal dev docs inside site/ ===
+site/AGENTS.md
