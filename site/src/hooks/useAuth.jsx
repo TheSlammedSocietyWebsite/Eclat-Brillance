@@ -5,7 +5,6 @@ import {
   useCallback,
   useEffect,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { me, logout } from '../lib/api';
 
 const AuthContext = createContext(null);
@@ -13,7 +12,6 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const nav = useNavigate();
 
   const checkAuth = useCallback(async () => {
     const ok = await me();
@@ -24,8 +22,7 @@ export function AuthProvider({ children }) {
   const logoutAndRedirect = useCallback(async () => {
     await logout();
     setIsAuthenticated(false);
-    nav('/admin/login', { replace: true });
-  }, [nav]);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
