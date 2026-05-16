@@ -21,7 +21,6 @@ export default function App() {
     <Routes>
       <Route path="/" element={<><TrackVisit /><Site /></>} />
       <Route path="/login" element={<Login />} />
-      <Route path="/admin/login" element={<Login />} />
       <Route
         path="/admin"
         element={

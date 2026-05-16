@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
@@ -10,6 +10,16 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
   const { checkAuth } = useAuth();
+
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+    return () => {
+      document.head.removeChild(meta);
+    };
+  }, []);
 
   async function onSubmit(e) {
     e.preventDefault();
