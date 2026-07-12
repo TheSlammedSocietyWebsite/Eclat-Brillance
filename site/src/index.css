@@ -69,6 +69,7 @@
   p { margin: 0 0 1em; text-wrap: pretty; }
   strong { font-weight: 600; color: theme('colors.ink'); }
   p strong, li strong { color: theme('colors.accent'); }
+  b { font-weight: 600; color: theme('colors.ink'); }
 }
 
 @layer components {
