@@ -46,10 +46,10 @@
     }
   ],
   "hero": {
-    "eyebrow": "Entreprise locale · Réactivité · Professionnalisme",
+    "eyebrow": "Paris et ses alentours · Réactivité · Professionnalisme",
     "title": "Des locaux impeccables,",
     "titleEm": "une image professionnelle.",
-    "lede": "Nous accompagnons les entreprises dans l'entretien de leurs espaces de travail afin de garantir propreté, hygiène et confort au quotidien.",
+    "lede": "Nous accompagnons les entreprises à Paris et ses alentours dans l'entretien de leurs espaces de travail afin de garantir propreté, hygiène et confort au quotidien.",
     "primaryCta": "Demander un devis",
     "proof": [
       "Devis gratuit sous 24h",
@@ -68,7 +68,7 @@
     "body": "Chez Éclat Brillance, nous considérons que la propreté de vos locaux reflète directement le sérieux de votre activité. C'est pourquoi nous mettons à votre disposition une équipe formée, des produits efficaces et respectueux de l'environnement, et un service pensé pour s'adapter à votre rythme — en ponctuel comme en contrat.",
     "highlights": [
       "Prestations ponctuelles ou contrats d'entretien sur-mesure",
-      "Intervention rapide partout dans votre zone",
+      "Intervention rapide à Paris et ses alentours",
       "Interlocuteur dédié, disponible et transparent"
     ]
   },
@@ -165,7 +165,7 @@
   "contact": {
     "kicker": "Contact & devis",
     "title": "Parlons de vos besoins.",
-    "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Vous pouvez aussi nous joindre directement :",
+    "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Nous intervenons à Paris et ses alentours. Vous pouvez aussi nous joindre directement :",
     "notePrefix": "Offre de bienvenue :",
     "note": "−15 % sur votre première prestation.",
     "formLabels": {
@@ -198,7 +198,7 @@
     ]
   },
   "footer": {
-    "description": "Entretien de bureaux et locaux professionnels.\nEntreprise locale, réactive et engagée.",
+    "description": "Entretien de bureaux et locaux professionnels à Paris et ses alentours.\nEntreprise locale, réactive et engagée.",
     "contactHeading": "Contact",
     "infoHeading": "Informations",
     "infoLines": [
