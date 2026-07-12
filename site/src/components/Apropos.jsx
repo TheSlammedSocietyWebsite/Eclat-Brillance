@@ -32,7 +32,7 @@ export default function Apropos() {
                 <EditableArrayControls path="apropos.highlights" index={i} items={apropos.highlights} itemLabel="Atout" />
               </li>
             ))}
-            <li style={{ listStyle: 'none' }}>
+            <li className="cms-controls" style={{ listStyle: 'none' }}>
               <EditableArrayControls path="apropos.highlights" itemLabel="Atout" />
             </li>
           </ul>
