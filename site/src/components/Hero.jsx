@@ -28,7 +28,9 @@ export default function Hero() {
             <EditableText path="hero.titleEm" tag="em">{hero.titleEm}</EditableText>
           </h1>
           <p className="lede">
-            <EditableText path="hero.lede" multiline tag="span">{hero.lede}</EditableText>
+            <EditableText path="hero.lede" multiline tag="span">
+              <span dangerouslySetInnerHTML={{ __html: hero.lede }} />
+            </EditableText>
           </p>
           <div className="hero-ctas">
             <a href="#contact" className="btn btn-primary">
