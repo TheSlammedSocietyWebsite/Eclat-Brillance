@@ -46,7 +46,7 @@
     }
   ],
   "hero": {
-    "eyebrow": "Paris et ses alentours · Réactivité · Professionnalisme",
+    "eyebrow": "Entreprise locale · Réactivité · Professionnalisme",
     "title": "Des locaux impeccables,",
     "titleEm": "une image professionnelle.",
     "lede": "Nous accompagnons les entreprises à Paris et ses alentours dans l'entretien de leurs espaces de travail afin de garantir propreté, hygiène et confort au quotidien.",
@@ -68,7 +68,7 @@
     "body": "Chez Éclat Brillance, nous considérons que la propreté de vos locaux reflète directement le sérieux de votre activité. C'est pourquoi nous mettons à votre disposition une équipe formée, des produits efficaces et respectueux de l'environnement, et un service pensé pour s'adapter à votre rythme — en ponctuel comme en contrat.",
     "highlights": [
       "Prestations ponctuelles ou contrats d'entretien sur-mesure",
-      "Intervention rapide à Paris et ses alentours",
+      "Intervention rapide partout dans votre zone",
       "Interlocuteur dédié, disponible et transparent"
     ]
   },
@@ -165,7 +165,7 @@
   "contact": {
     "kicker": "Contact & devis",
     "title": "Parlons de vos besoins.",
-    "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Nous intervenons à Paris et ses alentours. Vous pouvez aussi nous joindre directement :",
+    "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Vous pouvez aussi nous joindre directement :",
     "notePrefix": "Offre de bienvenue :",
     "note": "−15 % sur votre première prestation.",
     "formLabels": {
