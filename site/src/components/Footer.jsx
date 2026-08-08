@@ -11,9 +11,12 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container footer-inner">
         <div className="footer-brand">
-          <span className="brand-name">
-            <EditableText path="site.name" tag="span">{site.name}</EditableText>
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+            <img src="/logo.svg" alt="" style={{ width: '42px', height: '42px', objectFit: 'contain' }} />
+            <span className="brand-name">
+              <EditableText path="site.name" tag="span">{site.name}</EditableText>
+            </span>
+          </div>
           <p>
             {lines.map((line, i) => (
               <span key={i}>
