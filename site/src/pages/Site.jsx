@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Header from '../components/Header.jsx';
 import Hero from '../components/Hero.jsx';
 import Apropos from '../components/Apropos.jsx';
@@ -10,8 +11,15 @@ import Footer from '../components/Footer.jsx';
 import '../index.css';
 
 export default function Site() {
+  useEffect(() => {
+    if (window.location.hash === '#top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
+
   return (
     <>
+      <div id="top" />
       <Header />
       <main>
         <Hero />
