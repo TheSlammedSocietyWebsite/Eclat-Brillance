@@ -16,28 +16,44 @@ function TrackVisit() {
   return null;
 }
 
+function NoIndex({ children }) {
+  useEffect(() => {
+    const meta = document.createElement('meta');
+    meta.name = 'robots';
+    meta.content = 'noindex, nofollow';
+    document.head.appendChild(meta);
+    return () => document.head.removeChild(meta);
+  }, []);
+
+  return children;
+}
+
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<><TrackVisit /><Site /></>} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<NoIndex><Login /></NoIndex>} />
       <Route
         path="/admin"
         element={
-          <AuthGuard>
-            <Admin />
-          </AuthGuard>
+          <NoIndex>
+            <AuthGuard>
+              <Admin />
+            </AuthGuard>
+          </NoIndex>
         }
       />
       <Route
         path="/admin/edit"
         element={
-          <AuthGuard>
-            <AdminEdit />
-          </AuthGuard>
+          <NoIndex>
+            <AuthGuard>
+              <AdminEdit />
+            </AuthGuard>
+          </NoIndex>
         }
       />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<NoIndex><NotFound /></NoIndex>} />
     </Routes>
   );
 }

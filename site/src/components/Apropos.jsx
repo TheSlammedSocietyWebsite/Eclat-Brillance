@@ -37,18 +37,20 @@ export default function Apropos() {
             </li>
           </ul>
         </div>
-        <div className="apropos-figure" ref={figureRef} aria-hidden="true">
+        <div className="apropos-figure" ref={figureRef}>
           <EditableImage path="images.apropos1">
             <div
               className="figure-card figure-card-1"
-              style={{ backgroundImage: `linear-gradient(135deg, rgba(26,43,74,0.45), rgba(26,43,74,0.15)), url("${img1}")` }}
-            />
+            >
+              <img src={img1} alt="Nettoyage professionnel de locaux" width="800" height="1000" loading="lazy" decoding="async" />
+            </div>
           </EditableImage>
           <EditableImage path="images.apropos2">
             <div
               className="figure-card figure-card-2"
-              style={{ backgroundImage: `linear-gradient(135deg, rgba(107,143,113,0.25), rgba(248,248,246,0.1)), url("${img2}")` }}
-            />
+            >
+              <img src={img2} alt="Entretien de bureaux et espaces professionnels" width="800" height="1000" loading="lazy" decoding="async" />
+            </div>
           </EditableImage>
         </div>
       </div>
