@@ -38,10 +38,7 @@ export default function Header() {
       <div className="header-inner">
         <a href="#top" onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
           <span className="brand-mark" aria-hidden="true">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20 4 C14 14, 8 20, 8 26 a12 12 0 0 0 24 0 C32 20, 26 14, 20 4 Z" fill="currentColor"/>
-              <path d="M20 12 l1.6 4.4 L26 18 l-4.4 1.6 L20 24 l-1.6-4.4 L14 18 l4.4-1.6 Z" fill="#F8F8F6"/>
-            </svg>
+            <img src="/logo.svg" alt="" className="brand-logo-img" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </span>
           <span className="brand-text">
             <span className="brand-name">
