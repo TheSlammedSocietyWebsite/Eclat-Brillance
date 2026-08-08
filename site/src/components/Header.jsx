@@ -24,10 +24,19 @@ export default function Header() {
 
   const closeNav = () => setIsOpen(false);
 
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    closeNav();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.location.hash) {
+      window.history.pushState(null, '', window.location.pathname + window.location.search);
+    }
+  };
+
   return (
-    <header className={`site-header${isScrolled ? ' is-scrolled' : ''}`} id="top">
+    <header className={`site-header${isScrolled ? ' is-scrolled' : ''}`}>
       <div className="header-inner">
-        <a href="#top" className="brand" aria-label={`${site.name} — accueil`}>
+        <a href="#top" onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
           <span className="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20 4 C14 14, 8 20, 8 26 a12 12 0 0 0 24 0 C32 20, 26 14, 20 4 Z" fill="currentColor"/>
