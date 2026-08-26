@@ -2,12 +2,12 @@
   "theme": {
     "bg": "#F8F8F6",
     "bgAlt": "#FFFFFF",
-    "ink": "#1A2B4A",
-    "inkSoft": "#2C3E5E",
-    "text": "#2C2C2C",
-    "muted": "#6B6F76",
-    "line": "#E6E3DE",
-    "accent": "#6B8F71",
+    "ink": "#152240",
+    "inkSoft": "#1E3354",
+    "text": "#2B2E32",
+    "muted": "#6D7278",
+    "line": "#E7E3DE",
+    "accent": "#5E8A68",
     "accentSoft": "#EAF0EC",
     "gold": "#B8935A"
   },

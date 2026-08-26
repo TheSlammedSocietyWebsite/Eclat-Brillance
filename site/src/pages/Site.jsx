@@ -20,9 +20,10 @@ export default function Site() {
 
   return (
     <>
+      <a href="#main" className="skip-link">Aller au contenu</a>
       <div id="top" />
       <Header />
-      <main>
+      <main id="main">
         <Hero />
         <Apropos />
         <Prestations />
