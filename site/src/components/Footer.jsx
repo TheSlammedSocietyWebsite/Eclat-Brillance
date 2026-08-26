@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="container footer-inner">
         <div className="footer-brand">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-            <img src="/logo.svg" alt="" style={{ width: '42px', height: '42px', objectFit: 'contain' }} />
+            <img src="/logo.svg" alt="Éclat Brillance — Nettoyage professionnel" style={{ width: '42px', height: '42px', objectFit: 'contain' }} />
             <span className="brand-name">
               <EditableText path="site.name" tag="span">{site.name}</EditableText>
             </span>
@@ -53,7 +53,7 @@ export default function Footer() {
               </span>
             ))}
             <EditableArrayControls path="footer.infoLines" itemLabel="Ligne" />
-            <a href="#contact">
+            <a href={typeof window !== 'undefined' && window.location.pathname !== '/' ? '/#contact' : '#contact'}>
               <EditableText path="footer.devisLabel" tag="span">{footer.devisLabel}</EditableText>
             </a>
           </p>
@@ -66,7 +66,9 @@ export default function Footer() {
             <EditableText path="footer.legal" tag="span">{footer.legal}</EditableText>
           </span>
           <span>
-            <EditableText path="footer.mentions" tag="span">{footer.mentions}</EditableText>
+            <a href="/mentions-legales" className="footer-legal-link">
+              <EditableText path="footer.mentions" tag="span">{footer.mentions}</EditableText>
+            </a>
           </span>
         </div>
       </div>

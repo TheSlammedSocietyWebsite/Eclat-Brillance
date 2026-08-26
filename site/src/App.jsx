@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Site from './pages/Site.jsx';
+import MentionsLegales from './pages/MentionsLegales.jsx';
 import Login from './pages/Login.jsx';
 import Admin from './pages/Admin.jsx';
 import AdminEdit from './pages/AdminEdit.jsx';
@@ -32,6 +33,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<><TrackVisit /><Site /></>} />
+      <Route path="/mentions-legales" element={<MentionsLegales />} />
+      <Route path="/mentions" element={<MentionsLegales />} />
       <Route path="/login" element={<NoIndex><Login /></NoIndex>} />
       <Route
         path="/admin"

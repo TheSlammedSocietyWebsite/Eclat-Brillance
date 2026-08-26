@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Header from '../components/Header.jsx';
@@ -10,7 +10,7 @@ import Departements from '../components/Departements.jsx';
 import Testimonials from '../components/Testimonials.jsx';
 import CtaBanner from '../components/CtaBanner.jsx';
 import Contact from '../components/Contact.jsx';
-import { lazy, Suspense } from 'react';
+import Footer from '../components/Footer.jsx';
 import useLenis from '../hooks/useLenis.js';
 import '../index.css';
 const Scene3D = lazy(() => import('../components/canvas/Scene3D.jsx'));

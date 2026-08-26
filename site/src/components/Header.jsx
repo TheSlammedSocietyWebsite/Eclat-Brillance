@@ -38,7 +38,7 @@ export default function Header() {
       <div className="header-inner">
         <a href="#top" onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
           <span className="brand-mark" aria-hidden="true">
-            <img src="/logo.svg" alt="" className="brand-logo-img" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            <img src="/logo.svg" alt="Éclat Brillance — Entreprise de nettoyage" className="brand-logo-img" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </span>
           <span className="brand-text">
             <span className="brand-name">
