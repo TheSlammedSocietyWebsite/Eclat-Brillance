@@ -25,18 +25,27 @@ export default function Header() {
   const closeNav = () => setIsOpen(false);
 
   const handleLogoClick = (e) => {
-    e.preventDefault();
     closeNav();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (window.location.hash) {
-      window.history.pushState(null, '', window.location.pathname + window.location.search);
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.location.hash) {
+        window.history.pushState(null, '', window.location.pathname + window.location.search);
+      }
     }
+  };
+
+  const getHref = (href) => {
+    if (href && href.startsWith('#') && typeof window !== 'undefined' && window.location.pathname !== '/') {
+      return `/${href}`;
+    }
+    return href;
   };
 
   return (
     <header className={`site-header${isScrolled ? ' is-scrolled' : ''}`}>
       <div className="header-inner">
-        <a href="#top" onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
+        <a href={typeof window !== 'undefined' && window.location.pathname === '/' ? '#top' : '/'} onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
           <span className="brand-mark" aria-hidden="true">
             <img src="/logo.svg" alt="Éclat Brillance — Entreprise de nettoyage" className="brand-logo-img" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </span>
@@ -66,7 +75,7 @@ export default function Header() {
           aria-label="Navigation principale"
         >
           {nav.map(({ label, href, cta }, i) => (
-            <a key={i} href={href} className={cta ? 'nav-cta' : undefined} onClick={closeNav} style={{ position: 'relative' }}>
+            <a key={i} href={getHref(href)} className={cta ? 'nav-cta' : undefined} onClick={closeNav} style={{ position: 'relative' }}>
               <EditableText path={`nav.${i}.label`} tag="span">{label}</EditableText>
               <EditableArrayControls path="nav" index={i} items={nav} itemLabel="Lien" fields={NAV_FIELDS} />
             </a>

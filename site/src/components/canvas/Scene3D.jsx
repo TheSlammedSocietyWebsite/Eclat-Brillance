@@ -26,115 +26,161 @@ export default function Scene3D() {
     renderer.toneMappingExposure = 1.0;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0xF8F8F6, 8, 22);
+    // Pas de fog opaque — on veut voir la 3D nettement sur fond clair
+    scene.fog = new THREE.Fog(0xF8F8F6, 12, 28);
 
-    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.set(0, 0.4, 7.2);
+    const camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0.2, 7.0);
 
-    // Lights — studio doux
-    const ambient = new THREE.AmbientLight(0xffffff, 0.9);
+    // Lights — studio plus contrasté pour que la 3D ressorte
+    const ambient = new THREE.AmbientLight(0xffffff, 1.05);
     scene.add(ambient);
-    const dir = new THREE.DirectionalLight(0xffffff, 0.9);
-    dir.position.set(4, 8, 5);
+    const dir = new THREE.DirectionalLight(0xffffff, 1.1);
+    dir.position.set(3, 7, 5);
     scene.add(dir);
-    const point1 = new THREE.PointLight(0x8fbf9a, 0.9, 30);
-    point1.position.set(-5, 2, 3);
+    const point1 = new THREE.PointLight(0x5E8A68, 1.2, 30);
+    point1.position.set(-4.5, 1.8, 3.2);
     scene.add(point1);
-    const point2 = new THREE.PointLight(0xb8935a, 0.55, 28);
-    point2.position.set(5, -3, 2);
+    const point2 = new THREE.PointLight(0xB8935A, 0.95, 28);
+    point2.position.set(4.2, -2.2, 2.4);
     scene.add(point2);
+    const rim = new THREE.PointLight(0x1a2b4a, 0.45, 22);
+    rim.position.set(0, 4, -4);
+    scene.add(rim);
 
     // Groupe bulles
     const bubbleGroup = new THREE.Group();
     scene.add(bubbleGroup);
 
-    const bubbleCount = isMobile ? 3 : isLowEnd ? 4 : 6;
+    const bubbleCount = isMobile ? 4 : isLowEnd ? 5 : 7;
     const bubbles = [];
     const geometries = [
-      new THREE.SphereGeometry(1, 32, 32),
-      new THREE.SphereGeometry(1, 32, 32),
+      new THREE.SphereGeometry(1, 36, 36),
+      new THREE.SphereGeometry(1, 36, 36),
       new THREE.IcosahedronGeometry(1, 1),
+      new THREE.TorusGeometry(0.9, 0.28, 24, 48),
     ];
 
+    // Palette marque — visible sur fond clair
     const palette = [
-      { color: 0xffffff, tint: 0xEAF0EC },
-      { color: 0xf0f6f1, tint: 0xdfe9e2 },
-      { color: 0xffffff, tint: 0xE8EEF0 },
+      { color: 0xEAF0EC, emissive: 0x5E8A68, emissiveIntensity: 0.08 }, // sage très clair, légèrement lumineux
+      { color: 0xFFF8ED, emissive: 0xB8935A, emissiveIntensity: 0.10 }, // ivoire doré
+      { color: 0xE8EEF2, emissive: 0x1A2B4A, emissiveIntensity: 0.06 }, // bleu-ink pâle
+      { color: 0xFFFFFF, emissive: 0x5E8A68, emissiveIntensity: 0.07 },
     ];
 
     for (let i = 0; i < bubbleCount; i++) {
       const g = geometries[i % geometries.length].clone();
+      const pal = palette[i % palette.length];
       const mat = new THREE.MeshPhysicalMaterial({
-        color: palette[i % palette.length].color,
+        color: pal.color,
+        emissive: pal.emissive,
+        emissiveIntensity: pal.emissiveIntensity,
         transparent: true,
-        opacity: 0.72,
-        roughness: 0.08,
-        metalness: 0.02,
-        transmission: 0.92,
-        ior: 1.38,
-        thickness: 0.45,
+        opacity: i === 0 ? 0.88 : 0.78,
+        roughness: 0.12,
+        metalness: 0.03,
+        transmission: i < 2 ? 0.78 : 0.62,
+        ior: 1.42,
+        thickness: 0.55,
         clearcoat: 1.0,
-        clearcoatRoughness: 0.18,
+        clearcoatRoughness: 0.14,
         side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(g, mat);
-      const s = (i === 0 ? 1.7 : i === 1 ? 1.15 : i === 2 ? 0.75 : 0.55 + Math.random() * 0.45);
+      // Tailles généreuses — hero orb bien visible
+      const s = (i === 0 ? 2.05 : i === 1 ? 1.38 : i === 2 ? 0.92 : 0.62 + Math.random() * 0.42);
       mesh.scale.setScalar(s);
-      // Distribution spatiale élégante
-      const spreadX = isMobile ? 3.2 : 6.5;
-      const spreadY = isMobile ? 4.5 : 7.0;
-      mesh.position.set(
-        (Math.random() - 0.5) * spreadX,
-        (Math.random() - 0.5) * spreadY - 0.2,
-        (Math.random() - 0.5) * 2.2 - 0.6
-      );
+      // Placement : orb héro centré + autres en périphérie
+      let x, y, z;
+      if (i === 0) {
+        // Grosse bulle héro — légèrement à droite derrière le badge, très visible
+        x = isMobile ? 0.2 : 2.35;
+        y = isMobile ? 0.9 : 0.35;
+        z = 0.2;
+      } else if (i === 1) {
+        x = isMobile ? -1.1 : -2.8;
+        y = isMobile ? -0.6 : 1.15;
+        z = -0.4;
+      } else {
+        const spreadX = isMobile ? 3.4 : 7.2;
+        const spreadY = isMobile ? 4.2 : 7.5;
+        x = (Math.random() - 0.5) * spreadX;
+        y = (Math.random() - 0.5) * spreadY - 0.15;
+        z = (Math.random() - 0.5) * 2.4 - 0.3;
+      }
+      mesh.position.set(x, y, z);
       mesh.userData = {
-        baseY: mesh.position.y,
-        baseX: mesh.position.x,
-        rotSpeed: (Math.random() * 0.003 + 0.0015) * (Math.random() < 0.5 ? 1 : -1),
-        floatSpeed: 0.35 + Math.random() * 0.55,
-        floatAmp: 0.25 + Math.random() * 0.35,
-        driftX: (Math.random() - 0.5) * 0.6,
+        baseY: y,
+        baseX: x,
+        rotSpeed: (Math.random() * 0.004 + 0.0018) * (Math.random() < 0.5 ? 1 : -1),
+        floatSpeed: 0.32 + Math.random() * 0.48,
+        floatAmp: 0.30 + Math.random() * 0.42,
+        driftX: (Math.random() - 0.5) * 0.5,
         phase: Math.random() * Math.PI * 2,
+        isHero: i === 0,
       };
       bubbles.push(mesh);
       bubbleGroup.add(mesh);
     }
+    // Debug log
+    console.log('[Scene3D] bubbles', bubbles.length, 'mobile', isMobile);
 
-    // Anneau fin — clin d'oeil premium (autour de la plus grosse bulle)
-    const ringGeo = new THREE.TorusGeometry(1.02, 0.009, 16, 96);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0xB8935A, transparent: true, opacity: 0.0 });
+    // Anneau premium autour de la bulle héro — bien visible
+    const ringGeo = new THREE.TorusGeometry(1.02, 0.012, 16, 96);
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0xB8935A, transparent: true, opacity: 0.32 });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     if (bubbles[0]) {
-      ring.scale.setScalar(bubbles[0].scale.x * 1.14);
+      ring.scale.setScalar(bubbles[0].scale.x * 1.08);
       ring.position.copy(bubbles[0].position);
-      ring.rotation.x = Math.PI * 0.38;
-      ring.rotation.y = Math.PI * 0.12;
+      ring.rotation.x = Math.PI * 0.42;
+      ring.rotation.y = Math.PI * 0.14;
       bubbleGroup.add(ring);
     }
+    // Deuxième anneau plus fin, doré clair
+    const ring2Geo = new THREE.TorusGeometry(1.02, 0.006, 16, 96);
+    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x5E8A68, transparent: true, opacity: 0.22 });
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    if (bubbles[0]) {
+      ring2.scale.setScalar(bubbles[0].scale.x * 1.18);
+      ring2.position.copy(bubbles[0].position);
+      ring2.rotation.x = -Math.PI * 0.22;
+      ring2.rotation.y = -Math.PI * 0.08;
+      bubbleGroup.add(ring2);
+    }
 
-    // Particules poussière / lumière — points subtils
-    const particleCount = isMobile ? 420 : isLowEnd ? 650 : 1100;
+    // Particules — plus visibles, couleur marque
+    const particleCount = isMobile ? 520 : isLowEnd ? 720 : 1250;
     const pGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
     const speeds = new Float32Array(particleCount);
     const phases = new Float32Array(particleCount);
+    const colSage = new THREE.Color(0x5E8A68);
+    const colGold = new THREE.Color(0xB8935A);
+    const colWhite = new THREE.Color(0xffffff);
     for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 18;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 14;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 8 - 1.5;
-      speeds[i] = 0.06 + Math.random() * 0.18;
+      positions[i * 3] = (Math.random() - 0.5) * 19;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 9 - 1.2;
+      // Couleurs mélangées
+      const c = i % 3 === 0 ? colSage : i % 3 === 1 ? colGold : colWhite;
+      colors[i * 3] = c.r;
+      colors[i * 3 + 1] = c.g;
+      colors[i * 3 + 2] = c.b;
+      speeds[i] = 0.07 + Math.random() * 0.20;
       phases[i] = Math.random() * Math.PI * 2;
     }
     pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
     const pMat = new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: isMobile ? 0.018 : 0.022,
+      size: isMobile ? 0.024 : 0.028,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.0, // fade in
+      opacity: 0.0,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
+      vertexColors: true,
     });
     const points = new THREE.Points(pGeo, pMat);
     scene.add(points);
@@ -190,26 +236,43 @@ export default function Scene3D() {
         bubbleGroup.rotation.x = mouseY * 0.05 - progress * 0.10;
       }
 
-      // Bulles — float + rotation + scroll parallax
+      // Bulles — float + rotation + scroll parallax (hero orb reste visible)
       bubbles.forEach((m, i) => {
         const ud = m.userData;
         const float = Math.sin(time * ud.floatSpeed + ud.phase) * ud.floatAmp;
-        m.position.y = ud.baseY + float - progress * (0.9 + i * 0.28);
-        m.position.x = ud.baseX + Math.sin(time * 0.18 + ud.phase) * 0.18 + mouseX * (0.12 + i * 0.04);
+        // Hero orb : reste dans le viewport hero plus longtemps
+        const heroFactor = ud.isHero ? Math.min(progress * 0.55, 0.55) : progress * (0.9 + i * 0.22);
+        m.position.y = ud.baseY + float - heroFactor * (ud.isHero ? 1.2 : 1.0);
+        m.position.x = ud.baseX + Math.sin(time * 0.18 + ud.phase) * 0.14 + mouseX * (0.14 + i * 0.05);
         if (!prefersReduced) {
           m.rotation.y += ud.rotSpeed;
           m.rotation.x += ud.rotSpeed * 0.6;
           m.rotation.z += ud.rotSpeed * 0.3;
+          if (ud.isHero) m.rotation.y += 0.001; // rotation hero plus lente et majestueuse
         }
-        // Scroll — scale & opacity micro
-        const depthFade = 1 - Math.min(1, Math.abs(progress - 0.18 - i * 0.09) * 2.6);
-        m.material.opacity = 0.42 + depthFade * 0.28;
-        // Ring suit la première bulle
-        if (i === 0 && ring) {
-          ring.position.copy(m.position);
-          ring.position.z += 0.02;
-          ring.rotation.y += 0.0012;
-          ring.material.opacity = 0.0 + depthFade * 0.18;
+        // Scroll — hero reste opaque, autres fade
+        if (ud.isHero) {
+          m.material.opacity = 0.88 - progress * 0.28;
+          m.scale.setScalar(2.05 - progress * 0.35);
+        } else {
+          const depthFade = 1 - Math.min(1, Math.abs(progress - 0.18 - i * 0.09) * 2.4);
+          m.material.opacity = 0.52 + depthFade * 0.26;
+        }
+        // Rings suivent hero
+        if (i === 0) {
+          if (ring) {
+            ring.position.copy(m.position);
+            ring.position.z += 0.02;
+            ring.rotation.y += 0.0014;
+            ring.rotation.z += 0.0006;
+            ring.material.opacity = 0.32 - progress * 0.12;
+          }
+          if (ring2) {
+            ring2.position.copy(m.position);
+            ring2.position.z -= 0.02;
+            ring2.rotation.y -= 0.0011;
+            ring2.material.opacity = 0.22 - progress * 0.08;
+          }
         }
       });
 
@@ -227,8 +290,11 @@ export default function Scene3D() {
         pos.array[i * 3] += mouseX * 0.00035;
       }
       pos.needsUpdate = true;
-      pMat.opacity = 0.18 + Math.sin(time * 0.22) * 0.04;
-      if (isMobile) pMat.opacity *= 0.65;
+      pGeo.attributes.color.needsUpdate = true;
+      pMat.opacity = 0.38 + Math.sin(time * 0.22) * 0.06;
+      if (isMobile) pMat.opacity *= 0.78;
+      // Pulse léger des particules au scroll
+      pMat.size = (isMobile ? 0.024 : 0.028) + progress * 0.006;
 
       renderer.render(scene, camera);
     };
@@ -246,6 +312,8 @@ export default function Scene3D() {
       bubbles.forEach(b => b.material.dispose());
       ringGeo.dispose();
       ringMat.dispose();
+      ring2Geo.dispose();
+      ring2Mat.dispose();
     };
   }, []);
 
