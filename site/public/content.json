@@ -24,19 +24,22 @@
     "formId": "YOUR_FORM_ID"
   },
   "legal": {
-    "companyName": "Éclat Brillance",
-    "activity": "Services d'entretien et nettoyage professionnel de locaux, bureaux, copropriétés et commerces",
-    "legalStatus": "Entreprise Individuelle / Société",
-    "siren": "En cours d'immatriculation",
-    "rcs": "RCS Paris",
+    "companyName": "Éclat Brillance – Stacy COMPAN (EI)",
+    "legalStatus": "Entrepreneur Individuel (EI) — Régime de la micro-entreprise",
+    "activity": "Services d'entretien et de nettoyage de copropriétés, bureaux et commerces (nettoyage sols-vitres, balayage, entretien des parties communes, lavage-désinfection et gestion des conteneurs)",
+    "siren": "992 839 837",
+    "siret": "992 839 837 00018",
+    "rcs": "Immatriculée au Registre National des Entreprises (RNE) et à la Chambre de Métiers et de l'Artisanat (CMA de Seine-Saint-Denis)",
     "ape": "81.21Z — Nettoyage courant des bâtiments",
-    "address": "Paris, Île-de-France",
+    "tva": "Franchise en base de TVA — TVA non applicable, art. 293 B du Code Général des Impôts (CGI)",
+    "address": "178 Avenue Henri Barbusse, 93700 Drancy, France",
     "phone": "06 98 61 36 83",
     "email": "contact@eclatbrillance.com",
-    "director": "Direction d'Éclat Brillance",
+    "director": "Mme Stacy COMPAN",
     "hostName": "Vercel Inc.",
     "hostAddress": "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
-    "hostWebsite": "https://vercel.com"
+    "hostWebsite": "https://vercel.com",
+    "hostContact": "privacy@vercel.com"
   },
   "nav": [
     {

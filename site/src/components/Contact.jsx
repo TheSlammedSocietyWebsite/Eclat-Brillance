@@ -215,6 +215,13 @@ export default function Contact() {
             </span>
           </button>
 
+          <p className="form-privacy-note" style={{ fontSize: '0.78rem', color: 'var(--c-muted)', marginTop: '0.75rem', lineHeight: '1.45' }}>
+            En soumettant ce formulaire, vous acceptez qu'Éclat Brillance traite vos données pour l'établissement de votre devis et la gestion de la relation commerciale. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression via notre page{' '}
+            <a href="/mentions-legales" style={{ color: 'var(--c-accent)', textDecoration: 'underline' }}>
+              mentions légales & confidentialité
+            </a>.
+          </p>
+
           {status.msg && (
             <p id={statusId} className={`form-status${status.type ? ` is-${status.type}` : ''}`} role="status" aria-live="polite">
               {status.msg}
