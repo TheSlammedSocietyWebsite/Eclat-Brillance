@@ -7,6 +7,22 @@ export const siteConfig = {
   formId: 'YOUR_FORM_ID',
 };
 
+export const legal = {
+  companyName: 'Éclat Brillance',
+  activity: "Services d'entretien et nettoyage professionnel de locaux, bureaux, copropriétés et commerces",
+  legalStatus: 'Entreprise Individuelle / Société',
+  siren: "En cours d'immatriculation",
+  rcs: 'RCS Paris',
+  ape: '81.21Z — Nettoyage courant des bâtiments',
+  address: 'Paris, Île-de-France',
+  phone: '06 98 61 36 83',
+  email: 'contact@eclatbrillance.com',
+  director: "Direction d'Éclat Brillance",
+  hostName: 'Vercel Inc.',
+  hostAddress: '440 N Barranca Ave #4133, Covina, CA 91723, États-Unis',
+  hostWebsite: 'https://vercel.com',
+};
+
 export const nav = [
   { label: 'À propos', href: '#apropos' },
   { label: 'Prestations', href: '#prestations' },

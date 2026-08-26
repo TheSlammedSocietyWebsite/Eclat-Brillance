@@ -2,15 +2,32 @@ import { useEffect } from 'react';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import { useContent } from '../hooks/useContent.jsx';
+import EditableText from '../components/edit/EditableText.jsx';
 import '../index.css';
 
 export default function MentionsLegales() {
-  const { site } = useContent();
+  const content = useContent();
+  const site = content.site || {};
+  const legal = content.legal || {};
 
   useEffect(() => {
-    document.title = `Mentions Légales & Confidentialité — ${site?.name || 'Éclat Brillance'}`;
+    document.title = `Mentions Légales & Confidentialité — ${legal.companyName || site.name || 'Éclat Brillance'}`;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [site]);
+  }, [legal.companyName, site.name]);
+
+  const companyName = legal.companyName || site.name || 'Éclat Brillance';
+  const activity = legal.activity || "Services d'entretien et nettoyage professionnel de locaux, bureaux, copropriétés et commerces";
+  const legalStatus = legal.legalStatus || 'Entreprise Individuelle / Société';
+  const siren = legal.siren || "En cours d'immatriculation";
+  const rcs = legal.rcs || 'RCS Paris';
+  const ape = legal.ape || '81.21Z — Nettoyage courant des bâtiments';
+  const address = legal.address || 'Paris, Île-de-France';
+  const phone = legal.phone || site.tel || '06 98 61 36 83';
+  const email = legal.email || site.email || 'contact@eclatbrillance.com';
+  const director = legal.director || "Direction d'Éclat Brillance";
+  const hostName = legal.hostName || 'Vercel Inc.';
+  const hostAddress = legal.hostAddress || '440 N Barranca Ave #4133, Covina, CA 91723, États-Unis';
+  const hostWebsite = legal.hostWebsite || 'https://vercel.com';
 
   return (
     <>
@@ -49,11 +66,46 @@ export default function MentionsLegales() {
                 est édité par :
               </p>
               <ul style={{ paddingLeft: '1.25rem', marginTop: '0.5rem', marginBottom: '1rem' }}>
-                <li><strong>Dénomination commerciale :</strong> {site?.name || 'Éclat Brillance'}</li>
-                <li><strong>Activité :</strong> Services d'entretien et nettoyage professionnel de locaux, bureaux, copropriétés et commerces (Code NAF/APE : 81.21Z — Nettoyage courant des bâtiments)</li>
-                <li><strong>Zone d'intervention :</strong> Paris et région Île-de-France</li>
-                <li><strong>Téléphone :</strong> <a href={site?.telHref || 'tel:+33698613683'} style={{ color: 'var(--c-accent)' }}>{site?.tel || '06 98 61 36 83'}</a></li>
-                <li><strong>Email de contact :</strong> <a href={`mailto:${site?.email || 'contact@eclatbrillance.com'}`} style={{ color: 'var(--c-accent)' }}>{site?.email || 'contact@eclatbrillance.com'}</a></li>
+                <li>
+                  <strong>Dénomination commerciale : </strong>
+                  <EditableText path="legal.companyName" tag="span">{companyName}</EditableText>
+                </li>
+                <li>
+                  <strong>Forme juridique : </strong>
+                  <EditableText path="legal.legalStatus" tag="span">{legalStatus}</EditableText>
+                </li>
+                <li>
+                  <strong>Activité : </strong>
+                  <EditableText path="legal.activity" multiline tag="span">{activity}</EditableText>
+                </li>
+                <li>
+                  <strong>SIREN / SIRET : </strong>
+                  <EditableText path="legal.siren" tag="span">{siren}</EditableText>
+                </li>
+                <li>
+                  <strong>Registre du Commerce (RCS) : </strong>
+                  <EditableText path="legal.rcs" tag="span">{rcs}</EditableText>
+                </li>
+                <li>
+                  <strong>Code NAF / APE : </strong>
+                  <EditableText path="legal.ape" tag="span">{ape}</EditableText>
+                </li>
+                <li>
+                  <strong>Adresse du siège social : </strong>
+                  <EditableText path="legal.address" tag="span">{address}</EditableText>
+                </li>
+                <li>
+                  <strong>Téléphone : </strong>
+                  <a href={`tel:${phone.replace(/\s+/g, '')}`} style={{ color: 'var(--c-accent)' }}>
+                    <EditableText path="legal.phone" tag="span">{phone}</EditableText>
+                  </a>
+                </li>
+                <li>
+                  <strong>Email de contact : </strong>
+                  <a href={`mailto:${email}`} style={{ color: 'var(--c-accent)' }}>
+                    <EditableText path="legal.email" tag="span">{email}</EditableText>
+                  </a>
+                </li>
               </ul>
             </section>
 
@@ -63,7 +115,10 @@ export default function MentionsLegales() {
                 2. Directeur de la publication
               </h2>
               <p>
-                Le Directeur de la publication du site est la direction de l'entreprise <strong>{site?.name || 'Éclat Brillance'}</strong>.
+                Le Directeur de la publication du site est :{' '}
+                <strong>
+                  <EditableText path="legal.director" tag="span">{director}</EditableText>
+                </strong>.
               </p>
             </section>
 
@@ -73,12 +128,23 @@ export default function MentionsLegales() {
                 3. Hébergement du site
               </h2>
               <p>
-                Le site est hébergé par la société <strong>Vercel Inc.</strong> :
+                Le site est hébergé par la société <strong><EditableText path="legal.hostName" tag="span">{hostName}</EditableText></strong> :
               </p>
               <ul style={{ paddingLeft: '1.25rem', marginTop: '0.5rem' }}>
-                <li><strong>Raison sociale :</strong> Vercel Inc.</li>
-                <li><strong>Adresse :</strong> 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis</li>
-                <li><strong>Site web :</strong> <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--c-accent)' }}>https://vercel.com</a></li>
+                <li>
+                  <strong>Raison sociale : </strong>
+                  <EditableText path="legal.hostName" tag="span">{hostName}</EditableText>
+                </li>
+                <li>
+                  <strong>Adresse : </strong>
+                  <EditableText path="legal.hostAddress" tag="span">{hostAddress}</EditableText>
+                </li>
+                <li>
+                  <strong>Site web : </strong>
+                  <a href={hostWebsite} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--c-accent)' }}>
+                    <EditableText path="legal.hostWebsite" tag="span">{hostWebsite}</EditableText>
+                  </a>
+                </li>
               </ul>
             </section>
 
@@ -88,7 +154,7 @@ export default function MentionsLegales() {
                 4. Propriété intellectuelle
               </h2>
               <p>
-                L’ensemble des contenus présents sur le site <strong>{site?.name || 'Éclat Brillance'}</strong> (textes, logos, photographies, graphismes, icônes, animations, structure générale du site) relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle.
+                L’ensemble des contenus présents sur le site <strong>{companyName}</strong> (textes, logos, photographies, graphismes, icônes, animations, structure générale du site) relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle.
               </p>
               <p>
                 Toute reproduction, représentation, modification, publication, transmission ou dénaturation totale ou partielle du site ou de son contenu, par quelque procédé que ce soit et sur quelque support que ce soit, sans l'autorisation écrite préalable d'Éclat Brillance est interdite et constituerait une contrefaçon sanctionnée par les articles L. 335-2 et suivants du Code de la propriété intellectuelle.
@@ -114,8 +180,8 @@ export default function MentionsLegales() {
               </p>
               <p>
                 <strong>Vos droits :</strong> Vous disposez d’un droit d’accès, de rectification, de suppression, de limitation et d'opposition au traitement de vos données. Pour exercer ces droits, vous pouvez nous contacter à tout moment par email à :{' '}
-                <a href={`mailto:${site?.email || 'contact@eclatbrillance.com'}`} style={{ color: 'var(--c-accent)', fontWeight: 500 }}>
-                  {site?.email || 'contact@eclatbrillance.com'}
+                <a href={`mailto:${email}`} style={{ color: 'var(--c-accent)', fontWeight: 500 }}>
+                  {email}
                 </a>.
               </p>
             </section>

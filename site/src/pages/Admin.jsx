@@ -131,6 +131,16 @@ export default function Admin() {
     { label: 'Email', value: content.site?.email || '—' },
   ];
 
+  const legalInfo = [
+    { label: 'Raison sociale', value: content.legal?.companyName || content.site?.name || '—' },
+    { label: 'Forme juridique', value: content.legal?.legalStatus || '—' },
+    { label: 'SIREN / SIRET', value: content.legal?.siren || '—' },
+    { label: 'Code NAF / APE', value: content.legal?.ape || '—' },
+    { label: 'Adresse siège', value: content.legal?.address || '—' },
+    { label: 'Directeur publication', value: content.legal?.director || '—' },
+    { label: 'Hébergeur', value: content.legal?.hostName || '—' },
+  ];
+
   const visitsValue = stats?.visits != null ? stats.visits.toLocaleString() : '—';
   const visitsSub = stats?.visits != null ? 'Visites uniques' : 'Chargement…';
 
@@ -199,6 +209,23 @@ export default function Admin() {
 
           <FormspreeSetup content={content} onUpdate={setContent} />
         </div>
+
+        <section className="dash-section">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h2 style={{ margin: 0 }}>Mentions Légales & Entreprise</h2>
+            <Link to="/admin/edit" className="btn-secondary btn-sm">
+              Modifier dans l'éditeur
+            </Link>
+          </div>
+          <div className="dash-info-list">
+            {legalInfo.map((info) => (
+              <div key={info.label} className="dash-info-row">
+                <span className="dash-info-label">{info.label}</span>
+                <span className="dash-info-value">{info.value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <section className="dash-section">
           <h2>Actions rapides</h2>

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
 import Site from '../pages/Site.jsx';
+import MentionsLegales from '../pages/MentionsLegales.jsx';
 import TextEditor from '../components/TextEditor';
 import ColorEditor from '../components/ColorEditor';
 import { DraftContentProvider } from '../hooks/useContent.jsx';
@@ -112,6 +113,22 @@ const META_FIELDS = [
   { path: 'site.formId', label: 'ID Formulaire (Formspree)' },
 ];
 
+const LEGAL_FIELDS = [
+  { path: 'legal.companyName', label: 'Raison sociale / Nom commercial' },
+  { path: 'legal.legalStatus', label: 'Forme juridique / Statut' },
+  { path: 'legal.activity', label: 'Activité', multiline: true },
+  { path: 'legal.siren', label: 'Numéro SIREN / SIRET' },
+  { path: 'legal.rcs', label: 'RCS' },
+  { path: 'legal.ape', label: 'Code NAF / APE' },
+  { path: 'legal.address', label: 'Adresse du siège social' },
+  { path: 'legal.phone', label: 'Téléphone contact' },
+  { path: 'legal.email', label: 'Email contact' },
+  { path: 'legal.director', label: 'Directeur de la publication' },
+  { path: 'legal.hostName', label: 'Hébergeur (Nom)' },
+  { path: 'legal.hostAddress', label: 'Hébergeur (Adresse)' },
+  { path: 'legal.hostWebsite', label: 'Hébergeur (Site web)' },
+];
+
 /* ------------------------------------------------------------------ */
 /*  Main AdminEdit component                                           */
 /* ------------------------------------------------------------------ */
@@ -119,6 +136,7 @@ const META_FIELDS = [
 export default function AdminEdit() {
   const [content, setContent] = useState(bundledContent);
   const [initialContent, setInitialContent] = useState(bundledContent);
+  const [previewPage, setPreviewPage] = useState('home'); // 'home' | 'legal'
   const [state, setState] = useState('idle');
   const [errorMsg, setErrorMsg] = useState(null);
   const [deployState, setDeployState] = useState('idle');
@@ -291,6 +309,26 @@ export default function AdminEdit() {
           )}
 
           <div className="admin-edit-section">
+            <h3>Page à éditer</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+              <button
+                type="button"
+                className={`btn-sm ${previewPage === 'home' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setPreviewPage('home')}
+              >
+                Accueil
+              </button>
+              <button
+                type="button"
+                className={`btn-sm ${previewPage === 'legal' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setPreviewPage('legal')}
+              >
+                Mentions Légales
+              </button>
+            </div>
+          </div>
+
+          <div className="admin-edit-section">
             <h3>Actions</h3>
             <div className="admin-edit-actions-row">
               <button
@@ -357,6 +395,19 @@ export default function AdminEdit() {
             ))}
           </div>
 
+          <div className="admin-edit-section">
+            <h3>Mentions Légales & Entreprise</h3>
+            {LEGAL_FIELDS.map((f) => (
+              <TextEditor
+                key={f.path}
+                label={f.label}
+                value={getDeep(content, f.path)}
+                multiline={f.multiline}
+                onChange={(v) => handleContentChange(f.path, v)}
+              />
+            ))}
+          </div>
+
           {'video' in content && (
             <div className="admin-edit-section">
               <h3>Vidéo</h3>
@@ -378,7 +429,7 @@ export default function AdminEdit() {
           <DraftActionsProvider onChange={handleContentChange}>
             <EditModeProvider value={true}>
               <div className="admin-edit-preview-inner">
-                <Site />
+                {previewPage === 'home' ? <Site /> : <MentionsLegales />}
               </div>
             </EditModeProvider>
           </DraftActionsProvider>
