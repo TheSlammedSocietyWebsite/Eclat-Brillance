@@ -261,9 +261,6 @@ export default function MentionsLegales() {
               <p style={{ marginTop: '0.5rem' }}>
                 L'offre de bienvenue (−15 % sur la première prestation) est réservée à tout nouveau client pour sa première souscription à un contrat ou première intervention ponctuelle, non cumulable avec toute autre réduction.
               </p>
-              <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--c-muted)' }}>
-                Avis clients : Les témoignages présentés sur le site proviennent de retours d'expérience et d'évaluations réelles collectés auprès de nos clients partenaires.
-              </p>
             </section>
 
             {/* Section 9 */}
