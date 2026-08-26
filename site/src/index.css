@@ -459,8 +459,30 @@
 
   .service-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .service-grid > .service-card:nth-child(7):last-of-type {
+      grid-column: 1 / -1;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+  @media (min-width: 992px) {
+    .service-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .service-grid > .service-card:nth-child(7):last-of-type {
+      grid-column: 2;
+      max-width: none;
+      margin: 0;
+      width: auto;
+    }
   }
   .service-card {
     background: theme('colors.bg-alt');
