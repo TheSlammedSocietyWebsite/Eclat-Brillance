@@ -64,49 +64,54 @@
   },
   "apropos": {
     "kicker": "À propos",
-    "title": "Un partenaire d'entretien discret et exigeant.",
-    "body": "Chez Éclat Brillance, nous considérons que la propreté de vos locaux reflète directement le sérieux de votre activité. C'est pourquoi nous mettons à votre disposition une équipe formée, des produits efficaces et respectueux de l'environnement, et un service pensé pour s'adapter à votre rythme — en ponctuel comme en contrat.",
+    "title": "Un partenaire d’entretien discret, rigoureux et exigeant.",
+    "body": "Chez Éclat Brillance, nous sommes convaincus que la propreté de vos locaux constitue le reflet de l’image, du professionnalisme et des exigences de votre entreprise.\n\nC’est pourquoi nous mettons à votre disposition une équipe qualifiée, des solutions de nettoyage performantes et respectueuses de l’environnement, ainsi qu’un service personnalisé, conçu pour s’adapter à vos contraintes et à votre organisation, qu’il s’agisse d’interventions ponctuelles ou de contrats d’entretien réguliers.",
     "highlights": [
-      "Prestations ponctuelles ou contrats d'entretien sur-mesure",
-      "Intervention rapide partout dans votre zone",
-      "Interlocuteur dédié, disponible et transparent"
+      "Des prestations ponctuelles ou des contrats d’entretien entièrement personnalisés.",
+      "Une capacité d’intervention rapide sur l’ensemble de votre secteur.",
+      "Un interlocuteur dédié, disponible, réactif et garant d’une communication transparente."
     ]
   },
   "prestationsSection": {
     "kicker": "Nos prestations",
-    "title": "Un service complet pour chaque espace.",
-    "lead": "Six expertises pour maintenir vos locaux en état impeccable, du quotidien aux remises en état les plus exigeantes."
+    "title": "Une offre de services complète pour chacun de vos espaces.",
+    "lead": "Grâce à nos sept domaines d’expertise, nous assurons l’entretien et la préservation de vos locaux selon les plus hauts standards de qualité, qu’il s’agisse des interventions quotidiennes ou des opérations de remise en état les plus exigeantes."
   },
   "prestations": [
     {
       "title": "Entretien de bureaux",
-      "body": "Nettoyage régulier ou ponctuel de vos espaces de travail : postes, sols, sanitaires, espaces communs.",
+      "body": "Nous assurons le nettoyage régulier ou ponctuel de vos espaces professionnels, les postes de travail, les sols, les sanitaires ainsi que les espaces communs dans le respect des normes d’hygiène et de qualité les plus exigeantes.",
       "iconPaths": "<rect x=\"2\" y=\"12\" width=\"20\" height=\"8\" rx=\"1\"/><rect x=\"6\" y=\"3\" width=\"12\" height=\"9\" rx=\"1\"/><rect x=\"11\" y=\"12\" width=\"2\" height=\"3\"/>"
     },
     {
-      "title": "Nettoyage d'immeubles",
-      "body": "Entretien des parties communes : halls, escaliers, ascenseurs, paliers. Rigueur et constance.",
+      "title": "Nettoyage, entretien d'immeubles et de copropriétés",
+      "body": "Entretien régulier et rigoureux des parties communes : halls d’entrée, escaliers, ascenseurs, paliers et sortie des poubelles. Sens aigu de la propreté, de la rigueur et de la constance avec une attention particulière portée à la qualité et à la pérennité des prestations.",
       "iconPaths": "<path d=\"M3 21h18\"/><path d=\"M5 21V7l7-4 7 4v14\"/><path d=\"M9 21v-6h6v6\"/>"
     },
     {
-      "title": "Commerces & locaux",
-      "body": "Des boutiques et espaces recevant du public toujours prêts à accueillir vos clients.",
+      "title": "Commerces & locaux professionnels",
+      "body": "Entretien soigné des boutiques, commerces, cabinets et tous autres espaces recevant du public, afin de garantir des locaux impeccables, accueillants et constamment prêts à recevoir votre clientèle dans les meilleures conditions.",
       "iconPaths": "<path d=\"M3 7h18l-2 13H5L3 7z\"/><path d=\"M8 7V4a4 4 0 0 1 8 0v3\"/>"
     },
     {
       "title": "Après travaux & chantiers",
-      "body": "Dépoussiérage, dégraissage, évacuation des résidus — vos locaux livrés prêts à l'emploi.",
+      "body": "Nettoyage approfondi après travaux : dépoussiérage, dégraissage et évacuation des résidus de chantier. Nous vous garantissons des locaux impeccables, soigneusement préparés et immédiatement prêts à l’emploi.",
       "iconPaths": "<path d=\"M14 3l7 7-11 11H3v-7L14 3z\"/><path d=\"M13 4l7 7\"/>"
     },
     {
       "title": "Vitres & surfaces vitrées",
-      "body": "Façades, baies, verrières : transparence totale grâce à un matériel et des techniques professionnels.",
+      "body": "Nettoyage professionnel des façades vitrées, baies vitrées et verrières, réalisé à l’aide de matériel performant et de techniques adaptées, pour garantir une transparence parfaite et une finition irréprochable.",
       "iconPaths": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M4 9h16\"/><path d=\"M4 15h16\"/><path d=\"M12 3v18\"/>"
     },
     {
       "title": "Remise en état complète",
-      "body": "Pour un local vieilli, un changement d'occupant ou une fin de bail — on repart sur une base saine.",
+      "body": "Pour un local ayant besoin d’être rafraîchi, à l’occasion d’un changement d’occupant ou en fin de bail, nous vous assurons une remise en état approfondie afin de restituer des espaces propres, soignés et prêts à accueillir leurs nouveaux occupants.",
       "iconPaths": "<path d=\"M3 12l4-8 5 8 5-8 4 8\"/><path d=\"M3 12v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7\"/>"
+    },
+    {
+      "title": "Gestion des déchets",
+      "body": "Assurer une gestion rigoureuse et régulière des déchets afin de garantir la propreté, l’hygiène et la qualité des espaces au quotidien : collecte des déchets, tri sélectif, sortie et rentrée des bacs selon le calendrier de ramassage.",
+      "iconPaths": "<path d=\"M3 6h18\"/><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6\"/><path d=\"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"/><path d=\"M10 11v6\"/><path d=\"M14 11v6\"/>"
     }
   ],
   "atoutsSection": {
@@ -117,24 +122,39 @@
     {
       "num": "01",
       "title": "Équipe sérieuse et discrète",
-      "body": "Des intervenants formés, stables et respectueux de vos espaces et de vos collaborateurs."
+      "body": "Des professionnels qualifiés, régulièrement formés et reconnus pour leur sérieux, leur stabilité et leur discrétion. Nos intervenants veillent avec le plus grand soin au respect de vos espaces, de votre environnement professionnel et de vos collaborateurs."
     },
     {
       "num": "02",
       "title": "Produits écologiques",
-      "body": "Une propreté efficace sans compromis sur la santé de vos équipes ni sur l'environnement."
+      "body": "Une propreté exigeante et durable, fondée sur l’utilisation de produits respectueux de la santé de vos collaborateurs et de l’environnement, sans compromis sur l’efficacité ni sur la qualité des prestations."
     },
     {
       "num": "03",
       "title": "Service fiable",
-      "body": "Un interlocuteur unique, des plannings tenus et une qualité contrôlée à chaque passage."
+      "body": "Un interlocuteur unique à votre écoute, des plannings rigoureusement respectés et un suivi attentif de chaque intervention, afin de garantir une qualité de service constante et irréprochable."
     },
     {
       "num": "04",
       "title": "Intervention rapide",
-      "body": "Besoin urgent ? Nous répondons sous 24h et nous adaptons à vos contraintes horaires."
+      "body": "Un besoin urgent ? Notre équipe se mobilise avec réactivité pour vous apporter une réponse dans les meilleurs délais et s’adapter avec souplesse à vos contraintes horaires. Nous veillons à vous garantir une prise en charge efficace, ponctuelle et conforme à vos exigences."
     }
   ],
+  "departementsSection": {
+    "kicker": "Zone d’intervention",
+    "title": "Départements desservis",
+    "subtitle": "Nous intervenons sur ces départements et leurs alentours.",
+    "items": [
+      "Paris (75)",
+      "Seine-Saint-Denis (93)",
+      "Hauts-de-Seine (92)",
+      "Val-de-Marne (94)",
+      "Val-d'Oise (95)",
+      "Seine-et-Marne (77)",
+      "Yvelines (78)",
+      "Essonne (91)"
+    ]
+  },
   "testimonialsSection": {
     "kicker": "Ils nous font confiance",
     "title": "Des clients satisfaits, des locaux impeccables."
@@ -189,11 +209,12 @@
     },
     "prestationOptions": [
       "Entretien de bureaux",
-      "Nettoyage d'immeubles et parties communes",
-      "Nettoyage de commerces et locaux professionnels",
-      "Nettoyage après travaux et chantiers",
-      "Nettoyage de vitres et surfaces vitrées",
+      "Nettoyage, entretien d’immeubles et de copropriétés",
+      "Commerces & locaux professionnels",
+      "Après travaux & chantiers",
+      "Vitres & surfaces vitrées",
       "Remise en état complète",
+      "Gestion des déchets",
       "Autre / Je ne sais pas"
     ]
   },

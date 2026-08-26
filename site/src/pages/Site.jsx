@@ -4,6 +4,7 @@ import Hero from '../components/Hero.jsx';
 import Apropos from '../components/Apropos.jsx';
 import Prestations from '../components/Prestations.jsx';
 import Atouts from '../components/Atouts.jsx';
+import Departements from '../components/Departements.jsx';
 import Testimonials from '../components/Testimonials.jsx';
 import CtaBanner from '../components/CtaBanner.jsx';
 import Contact from '../components/Contact.jsx';
@@ -26,6 +27,7 @@ export default function Site() {
         <Apropos />
         <Prestations />
         <Atouts />
+        <Departements />
         <Testimonials />
         <CtaBanner />
         <Contact />
