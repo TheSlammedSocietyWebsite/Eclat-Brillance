@@ -341,39 +341,6 @@
   .hero-content {
     max-width: 700px;
   }
-  .hero-eyebrow-wrapper {
-    margin-bottom: 1.25rem;
-  }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.4rem 0.95rem;
-    background: rgba(26, 43, 74, 0.035);
-    border: 1px solid rgba(26, 43, 74, 0.08);
-    border-radius: 9999px;
-    font-size: 0.73rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: theme('colors.ink');
-    box-shadow: 0 1px 2px rgba(26, 43, 74, 0.04);
-    margin-bottom: 0;
-  }
-  .hero-status-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 9999px;
-    background: theme('colors.accent');
-    box-shadow: 0 0 0 3px rgba(107, 143, 113, 0.25);
-    display: inline-block;
-    flex-shrink: 0;
-    animation: pulse-soft 3s ease-in-out infinite;
-  }
-  @keyframes pulse-soft {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.15); opacity: 0.85; }
-  }
   .hero-title {
     font-family: theme('fontFamily.serif');
     font-size: clamp(2.35rem, 3.7vw, 3.35rem);
@@ -1171,14 +1138,6 @@
 
   .hero {
     padding: clamp(3rem, 10vw, 4.5rem) 0 clamp(2.5rem, 8vw, 3.5rem);
-  }
-  .hero-eyebrow-wrapper {
-    margin-bottom: 0.9rem;
-  }
-  .hero-eyebrow {
-    font-size: 0.68rem;
-    padding: 0.35rem 0.8rem;
-    letter-spacing: 0.1em;
   }
   .hero-title {
     font-size: clamp(1.85rem, 7vw, 2.25rem);

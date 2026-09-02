@@ -40,12 +40,9 @@ export default function Hero() {
     <section className="hero">
       <div className="container hero-inner">
         <div className="hero-content" ref={contentRef}>
-          <div className="hero-eyebrow-wrapper">
-            <span className="eyebrow hero-eyebrow">
-              <span className="hero-status-dot" aria-hidden="true"></span>
-              <EditableText path="hero.eyebrow">{hero.eyebrow}</EditableText>
-            </span>
-          </div>
+          <span className="eyebrow">
+            <EditableText path="hero.eyebrow">{hero.eyebrow}</EditableText>
+          </span>
           <h1 className="hero-title">
             <span className="hero-title-line hero-title-main">
               <EditableText path="hero.title" tag="span">{renderTitleWithAmp(hero.title)}</EditableText>
