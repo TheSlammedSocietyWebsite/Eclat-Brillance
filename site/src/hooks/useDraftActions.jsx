@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useCallback } from 'react';
 
 const DraftActionsContext = createContext(null);

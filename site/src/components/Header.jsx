@@ -1,4 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { useContent } from '../hooks/useContent.jsx';
 import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
@@ -11,6 +14,7 @@ const NAV_FIELDS = [
 ];
 
 export default function Header() {
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const isEditMode = useEditMode();
@@ -51,7 +55,7 @@ export default function Header() {
 
   const getHref = (href) => {
     if (isEditMode) return undefined;
-    if (href && href.startsWith('#') && typeof window !== 'undefined' && window.location.pathname !== '/') {
+    if (href && href.startsWith('#') && pathname !== '/') {
       return `/${href}`;
     }
     return href;
@@ -60,7 +64,7 @@ export default function Header() {
   return (
     <header className={`site-header${isScrolled ? ' is-scrolled' : ''}`}>
       <div className="header-inner">
-        <a href={typeof window !== 'undefined' && window.location.pathname === '/' ? '#top' : '/'} onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
+        <a href={pathname === '/' ? '#top' : '/'} onClick={handleLogoClick} className="brand" aria-label={`${site.name} — accueil`}>
           <span className="brand-mark" aria-hidden="true">
             <img src="/logo.svg" alt="Éclat Brillance — Entreprise de nettoyage" className="brand-logo-img" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           </span>

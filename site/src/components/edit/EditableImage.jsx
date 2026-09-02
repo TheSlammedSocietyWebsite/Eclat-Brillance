@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useCallback, Children, cloneElement } from 'react';
 import { useEditMode } from '../../hooks/useEditMode.jsx';
 import { useDraftActions } from '../../hooks/useDraftActions.jsx';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useCallback } from 'react';
 
 const MAX_FILE_BYTES = 1_500_000; // ~1.5MB raw

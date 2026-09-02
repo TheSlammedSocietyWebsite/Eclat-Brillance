@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, useEffect } from 'react';
 import { ICON_LIBRARY, getIconByPaths } from '../lib/iconLibrary.js';
 

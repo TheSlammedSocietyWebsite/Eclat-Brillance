@@ -1,3 +1,5 @@
+'use client';
+
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
 import EditableText from './edit/EditableText.jsx';

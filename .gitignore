@@ -1,6 +1,8 @@
 # Dependencies & build output
 node_modules/
 dist/
+.next/
+*.tsbuildinfo
 
 # Environment secrets
 .env

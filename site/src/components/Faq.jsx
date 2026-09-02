@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';

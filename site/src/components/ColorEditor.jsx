@@ -1,3 +1,5 @@
+'use client';
+
 export default function ColorEditor({ label, value, onChange }) {
   return (
     <label className="color-editor">

@@ -1,3 +1,5 @@
+'use client';
+
 export default function TextEditor({ label, value, onChange, multiline, maxLength = 50000, showCount, rows = 4 }) {
   const length = (value ?? '').length;
   return (

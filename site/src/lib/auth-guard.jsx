@@ -1,5 +1,7 @@
+'use client';
+
 import { useAuth } from '../hooks/useAuth';
-import NotFound from '../pages/NotFound';
+import NotFound from '../views/NotFound';
 
 export default function AuthGuard({ children }) {
   const { isAuthenticated, isLoading } = useAuth();

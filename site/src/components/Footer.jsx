@@ -1,9 +1,13 @@
+'use client';
+
 import { useContent } from '../hooks/useContent.jsx';
 import { useEditMode } from '../hooks/useEditMode.jsx';
+import { usePathname } from 'next/navigation';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
   const isEditMode = useEditMode();
   const { site, footer } = useContent();
@@ -61,7 +65,7 @@ export default function Footer() {
               </span>
             ))}
             <EditableArrayControls path="footer.infoLines" itemLabel="Ligne" />
-            <a href={isEditMode ? undefined : (typeof window !== 'undefined' && window.location.pathname !== '/' ? '/#contact' : '#contact')} onClick={handleLinkClick}>
+            <a href={isEditMode ? undefined : (pathname !== '/' ? '/#contact' : '#contact')} onClick={handleLinkClick}>
               <EditableText path="footer.devisLabel" tag="span">{footer.devisLabel}</EditableText>
             </a>
           </p>
