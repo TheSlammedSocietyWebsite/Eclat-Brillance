@@ -6,12 +6,16 @@ import Prestations from '../components/Prestations.jsx';
 import Atouts from '../components/Atouts.jsx';
 import Departements from '../components/Departements.jsx';
 import Testimonials from '../components/Testimonials.jsx';
+import Faq from '../components/Faq.jsx';
 import CtaBanner from '../components/CtaBanner.jsx';
 import Contact from '../components/Contact.jsx';
 import Footer from '../components/Footer.jsx';
+import { useSEO } from '../hooks/useSEO.jsx';
 import '../index.css';
 
 export default function Site() {
+  useSEO();
+
   useEffect(() => {
     if (window.location.hash === '#top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -29,6 +33,7 @@ export default function Site() {
         <Atouts />
         <Departements />
         <Testimonials />
+        <Faq />
         <CtaBanner />
         <Contact />
       </main>

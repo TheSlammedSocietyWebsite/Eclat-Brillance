@@ -1,4 +1,7 @@
 User-agent: *
+Allow: /
 Disallow: /admin
 Disallow: /login
+Disallow: /admin/edit
+
 Sitemap: https://www.eclatbrillance.com/sitemap.xml

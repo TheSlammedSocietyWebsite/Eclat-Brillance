@@ -65,8 +65,8 @@
   ],
   "hero": {
     "eyebrow": "Entreprise locale · Réactivité · Professionnalisme",
-    "title": "Des locaux impeccables,",
-    "titleEm": "une image professionnelle.",
+    "title": "Entreprise de Nettoyage &",
+    "titleEm": "Entretien de Bureaux à Paris",
     "lede": "Nous accompagnons les entreprises implantées\nà <b>Paris et dans ses environs</b> dans l'entretien de\nleurs espaces de travail, afin de leur garantir un\nenvironnement <strong>propre</strong>, <strong>sain</strong> et propice au <strong>bien-être</strong> de leurs collaborateurs au quotidien.",
     "primaryCta": "Demander un devis",
     "proof": [
@@ -82,7 +82,7 @@
   },
   "apropos": {
     "kicker": "À propos",
-    "title": "Un partenaire d’entretien discret, rigoureux et exigeant.",
+    "title": "Votre partenaire de nettoyage professionnel en Île-de-France",
     "body": "Chez Éclat Brillance, nous sommes convaincus que la propreté de vos locaux constitue le reflet de l’image, du professionnalisme et des exigences de votre entreprise.\n\nC’est pourquoi nous mettons à votre disposition une équipe qualifiée, des solutions de nettoyage performantes et respectueuses de l’environnement, ainsi qu’un service personnalisé, conçu pour s’adapter à vos contraintes et à votre organisation, qu’il s’agisse d’interventions ponctuelles ou de contrats d’entretien réguliers.",
     "highlights": [
       "Des prestations ponctuelles ou des contrats d’entretien entièrement personnalisés.",
@@ -92,7 +92,7 @@
   },
   "prestationsSection": {
     "kicker": "Nos prestations",
-    "title": "Une offre de services complète pour chacun de vos espaces.",
+    "title": "Nos prestations de nettoyage pour entreprises, commerces et copropriétés",
     "lead": "Grâce à nos sept domaines d’expertise, nous assurons l’entretien et la préservation de vos locaux selon les plus hauts standards de qualité, qu’il s’agisse des interventions quotidiennes ou des opérations de remise en état les plus exigeantes."
   },
   "prestations": [
@@ -134,7 +134,7 @@
   ],
   "atoutsSection": {
     "kicker": "Pourquoi nous choisir",
-    "title": "Le détail qui fait la différence."
+    "title": "Pourquoi confier l'entretien de vos locaux à Éclat Brillance ?"
   },
   "atouts": [
     {
@@ -160,7 +160,7 @@
   ],
   "departementsSection": {
     "kicker": "Zone d’intervention",
-    "title": "Départements desservis",
+    "title": "Nos zones d'intervention : Paris (75) et toute l'Île-de-France",
     "subtitle": "Nous intervenons sur ces départements et leurs alentours.",
     "items": [
       "Paris (75)",
@@ -175,7 +175,7 @@
   },
   "testimonialsSection": {
     "kicker": "Ils nous font confiance",
-    "title": "Des clients satisfaits, des locaux impeccables."
+    "title": "Avis et retours d'expérience de nos clients professionnels"
   },
   "testimonials": [
     {
@@ -195,14 +195,14 @@
     }
   ],
   "ctaBanner": {
-    "title": "Prêt à transformer vos locaux ?",
+    "title": "Besoin d'un contrat d'entretien ou d'une intervention urgente ?",
     "body": "Demandez un devis gratuit et personnalisé. Nous vous répondons sous 24h.",
     "primaryCta": "Demander un devis",
     "secondaryCta": "Appeler maintenant"
   },
   "contact": {
     "kicker": "Contact & devis",
-    "title": "Parlons de vos besoins.",
+    "title": "Demandez votre devis gratuit de nettoyage professionnel sous 24h",
     "body": "Remplissez le formulaire ci-contre pour recevoir un devis gratuit et personnalisé sous 24h. Vous pouvez aussi nous joindre directement :",
     "notePrefix": "Offre de bienvenue :",
     "note": "−15 % sur votre première prestation.",
@@ -250,5 +250,27 @@
   },
   "media": [
     "https://raw.githubusercontent.com/TheSlammedSocietyWebsite/Eclat-Brillance/master/public/media/Gemini_Generated_Image___1_.png"
+  ],
+  "faq": [
+    {
+      "question": "Quels sont les tarifs pour le nettoyage de bureaux à Paris ?",
+      "answer": "Nos tarifs sont établis sur-mesure selon la surface des locaux, la fréquence de passage (quotidienne, hebdomadaire ou bimensuelle) et les prestations spécifiques requises. Nous transmettons un devis gratuit et détaillé sous 24h."
+    },
+    {
+      "question": "Quels types de produits de nettoyage utilisez-vous ?",
+      "answer": "Éclat Brillance s'engage pour la santé de vos collaborateurs et la protection de l'environnement en utilisant exclusivement des produits d'entretien écologiques et écolabellisés, sans composés organiques volatils (COV) nocifs."
+    },
+    {
+      "question": "Intervenez-vous en dehors des heures de bureau ?",
+      "answer": "Oui, nos équipes s'adaptent à votre organisation. Nous intervenons tôt le matin (avant 8h), en soirée (après 18h30) ou le week-end pour ne jamais perturber l'activité de vos équipes."
+    },
+    {
+      "question": "Sur quels départements d'Île-de-France intervenez-vous ?",
+      "answer": "Nous couvrons l'ensemble de la région Île-de-France : Paris (75), Hauts-de-Seine (92), Seine-Saint-Denis (93), Val-de-Marne (94), Val-d'Oise (95), Yvelines (78), Essonne (91) et Seine-et-Marne (77)."
+    },
+    {
+      "question": "Proposez-vous des interventions ponctuelles sans contrat long terme ?",
+      "answer": "Absolument. Nous réalisons des prestations ponctuelles de remise en état, nettoyage de fin de chantier, fin de bail ou lavage de vitres, sans obligation d'engagement contractuel."
+    }
   ]
 }

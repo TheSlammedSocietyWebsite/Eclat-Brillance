@@ -4,6 +4,7 @@ import Footer from '../components/Footer.jsx';
 import { useContent } from '../hooks/useContent.jsx';
 import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from '../components/edit/EditableText.jsx';
+import { useSEO } from '../hooks/useSEO.jsx';
 import '../index.css';
 
 export default function MentionsLegales() {
@@ -12,12 +13,17 @@ export default function MentionsLegales() {
   const site = content.site || {};
   const legal = content.legal || {};
 
+  useSEO({
+    title: `Mentions Légales & Confidentialité — ${legal.companyName || site.name || 'Éclat Brillance'}`,
+    description: `Mentions légales, politique de confidentialité et conditions d'utilisation du site Éclat Brillance, entreprise de nettoyage professionnel à Paris.`,
+    canonical: 'https://www.eclatbrillance.com/mentions-legales',
+  });
+
   useEffect(() => {
-    document.title = `Mentions Légales & Confidentialité — ${legal.companyName || site.name || 'Éclat Brillance'}`;
     if (!isEditMode) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [legal.companyName, site.name, isEditMode]);
+  }, [isEditMode]);
 
   const companyName = legal.companyName || 'Éclat Brillance – Stacy COMPAN (EI)';
   const legalStatus = legal.legalStatus || 'Entrepreneur Individuel (EI) — Régime de la micro-entreprise';

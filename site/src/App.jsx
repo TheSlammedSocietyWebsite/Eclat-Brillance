@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Site from './pages/Site.jsx';
 import MentionsLegales from './pages/MentionsLegales.jsx';
-import Login from './pages/Login.jsx';
-import Admin from './pages/Admin.jsx';
-import AdminEdit from './pages/AdminEdit.jsx';
 import NotFound from './pages/NotFound.jsx';
 import AuthGuard from './lib/auth-guard.jsx';
+
+const Login = lazy(() => import('./pages/Login.jsx'));
+const Admin = lazy(() => import('./pages/Admin.jsx'));
+const AdminEdit = lazy(() => import('./pages/AdminEdit.jsx'));
 
 function TrackVisit() {
   useEffect(() => {
@@ -19,15 +20,21 @@ function TrackVisit() {
 
 function NoIndex({ children }) {
   useEffect(() => {
-    const meta = document.createElement('meta');
-    meta.name = 'robots';
-    meta.content = 'noindex, nofollow';
-    document.head.appendChild(meta);
-    return () => document.head.removeChild(meta);
+    const meta = document.querySelector('meta[name="robots"]');
+    if (meta) {
+      meta.setAttribute('content', 'noindex, nofollow');
+    }
+    return () => {
+      if (meta) {
+        meta.setAttribute('content', 'index, follow');
+      }
+    };
   }, []);
 
   return children;
 }
+
+const AdminFallback = () => <div style={{ minHeight: '100vh' }} />;
 
 export default function App() {
   return (
@@ -35,14 +42,22 @@ export default function App() {
       <Route path="/" element={<><TrackVisit /><Site /></>} />
       <Route path="/mentions-legales" element={<MentionsLegales />} />
       <Route path="/mentions" element={<MentionsLegales />} />
-      <Route path="/login" element={<NoIndex><Login /></NoIndex>} />
+      <Route path="/login" element={
+        <NoIndex>
+          <Suspense fallback={<AdminFallback />}>
+            <Login />
+          </Suspense>
+        </NoIndex>
+      } />
       <Route
         path="/admin"
         element={
           <NoIndex>
-            <AuthGuard>
-              <Admin />
-            </AuthGuard>
+            <Suspense fallback={<AdminFallback />}>
+              <AuthGuard>
+                <Admin />
+              </AuthGuard>
+            </Suspense>
           </NoIndex>
         }
       />
@@ -50,9 +65,11 @@ export default function App() {
         path="/admin/edit"
         element={
           <NoIndex>
-            <AuthGuard>
-              <AdminEdit />
-            </AuthGuard>
+            <Suspense fallback={<AdminFallback />}>
+              <AuthGuard>
+                <AdminEdit />
+              </AuthGuard>
+            </Suspense>
           </NoIndex>
         }
       />
