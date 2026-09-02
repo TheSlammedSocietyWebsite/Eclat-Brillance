@@ -13,6 +13,19 @@ const PhoneIcon = () => (
   </svg>
 );
 
+function renderTitleWithAmp(text) {
+  if (typeof text !== 'string') return text;
+  const parts = text.split(/(&)/g);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) =>
+    part === '&' ? (
+      <span key={i} className="hero-amp" aria-hidden="true">&amp;</span>
+    ) : (
+      part
+    )
+  );
+}
+
 export default function Hero() {
   const contentRef = useScrollReveal();
   const badgeRef = useScrollReveal();
@@ -27,13 +40,19 @@ export default function Hero() {
     <section className="hero">
       <div className="container hero-inner">
         <div className="hero-content" ref={contentRef}>
-          <span className="eyebrow">
-            <EditableText path="hero.eyebrow">{hero.eyebrow}</EditableText>
-          </span>
-          <h1>
-            <EditableText path="hero.title" tag="span">{hero.title}</EditableText>
-            <br/>
-            <EditableText path="hero.titleEm" tag="em">{hero.titleEm}</EditableText>
+          <div className="hero-eyebrow-wrapper">
+            <span className="eyebrow hero-eyebrow">
+              <span className="hero-status-dot" aria-hidden="true"></span>
+              <EditableText path="hero.eyebrow">{hero.eyebrow}</EditableText>
+            </span>
+          </div>
+          <h1 className="hero-title">
+            <span className="hero-title-line hero-title-main">
+              <EditableText path="hero.title" tag="span">{renderTitleWithAmp(hero.title)}</EditableText>
+            </span>
+            <span className="hero-title-line hero-title-sub">
+              <EditableText path="hero.titleEm" tag="span">{renderTitleWithAmp(hero.titleEm)}</EditableText>
+            </span>
           </h1>
           <p className="lede">
             <EditableText path="hero.lede" multiline tag="span">
