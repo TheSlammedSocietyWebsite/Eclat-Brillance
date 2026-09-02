@@ -134,11 +134,19 @@ export default function Admin() {
   const legalInfo = [
     { label: 'Raison sociale', value: content.legal?.companyName || content.site?.name || '—' },
     { label: 'Forme juridique', value: content.legal?.legalStatus || '—' },
-    { label: 'SIREN / SIRET', value: content.legal?.siren || '—' },
+    { label: 'Activité principale', value: content.legal?.activity || '—' },
+    { label: 'SIREN / SIRET', value: `${content.legal?.siren || '—'} / ${content.legal?.siret || '—'}` },
+    { label: 'Immatriculation', value: content.legal?.rcs || '—' },
     { label: 'Code NAF / APE', value: content.legal?.ape || '—' },
+    { label: 'Régime TVA', value: content.legal?.tva || '—' },
     { label: 'Adresse siège', value: content.legal?.address || '—' },
-    { label: 'Directeur publication', value: content.legal?.director || '—' },
-    { label: 'Hébergeur', value: content.legal?.hostName || '—' },
+    { label: 'Téléphone contact', value: content.legal?.phone || content.site?.tel || '—' },
+    { label: 'Email contact', value: content.legal?.email || content.site?.email || '—' },
+    { label: 'Directrice publication', value: content.legal?.director || '—' },
+    { label: 'Hébergeur (Nom)', value: content.legal?.hostName || '—' },
+    { label: 'Hébergeur (Adresse)', value: content.legal?.hostAddress || '—' },
+    { label: 'Hébergeur (Site)', value: content.legal?.hostWebsite || '—' },
+    { label: 'Hébergeur (Contact)', value: content.legal?.hostContact || '—' },
   ];
 
   const visitsValue = stats?.visits != null ? stats.visits.toLocaleString() : '—';
@@ -211,9 +219,9 @@ export default function Admin() {
         </div>
 
         <section className="dash-section">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <h2 style={{ margin: 0 }}>Mentions Légales & Entreprise</h2>
-            <Link to="/admin/edit" className="btn-secondary btn-sm">
+            <Link to="/admin/edit?page=legal" className="btn-secondary btn-sm">
               Modifier dans l'éditeur
             </Link>
           </div>

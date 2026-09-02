@@ -16,7 +16,7 @@ export function getDeep(obj, path) {
     }
     return undefined;
   }, obj);
-  return typeof value === 'string' ? value : '';
+  return typeof value === 'string' ? value : (value != null ? String(value) : '');
 }
 
 export function setDeep(obj, path, value) {
@@ -83,11 +83,12 @@ export default function EditableText({ path, multiline, maxLength = 50000, showC
           setIsOpen(true);
         }}
         style={{ cursor: 'pointer' }}
+        title="Cliquer pour modifier ce texte"
       >
         {children}
       </Tag>
       {isOpen && (
-        <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)}>
+        <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)} title={path}>
           <TextEditor
             label={path}
             value={value}

@@ -151,7 +151,7 @@ function EditableStringListItem({ index, value, arrayItems, onChange, onRemove, 
         </span>
       )}
       {isOpen && (
-        <EditPopover targetRef={triggerRef} onClose={onClose}>
+        <EditPopover targetRef={triggerRef} onClose={onClose} title={`${itemLabel} ${index + 1}`}>
           <TextEditor
             label={`${itemLabel} ${index + 1}`}
             value={value}

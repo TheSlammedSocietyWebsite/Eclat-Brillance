@@ -61,16 +61,13 @@ export default function EditableImage({ path, children }) {
         ),
       })}
       {isOpen && (
-        <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)}>
-          <div style={{ minWidth: '320px' }}>
-            <h4 style={{ margin: '0 0 0.75rem', fontSize: '0.95rem', fontWeight: 600 }}>
-              Modifier l'image
-            </h4>
+        <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)} title="Modifier l'image">
+          <div style={{ minWidth: '300px' }}>
             {value && (
               <img
                 src={value}
                 alt=""
-                style={{ width: '100%', maxHeight: '200px', objectFit: 'cover', borderRadius: '6px', marginBottom: '0.75rem' }}
+                style={{ width: '100%', maxHeight: '180px', objectFit: 'cover', borderRadius: '8px', marginBottom: '0.75rem', border: '1px solid #e5e7eb' }}
               />
             )}
             <MediaUploader

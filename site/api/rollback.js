@@ -1,5 +1,5 @@
 import { verifySession, parseCookie, SESSION_COOKIE } from './_lib/session';
-import { getFileSha, putFile } from './_lib/github';
+import { getFileSha, putFile, encodePath } from './_lib/github';
 
 export const config = { runtime: 'edge' };
 
@@ -46,13 +46,17 @@ export default async function handler(req) {
   const token = parseCookie(req.headers.get('cookie'), SESSION_COOKIE);
   if (!token || !(await verifySession(token))) return json({ error: 'unauthorized' }, 401);
 
-  const branch = process.env.GITHUB_BRANCH || 'main';
-  const path = process.env.CONTENT_PATH || 'public/content.json';
+  const branch = process.env.GITHUB_BRANCH || 'master';
+  const path = process.env.CONTENT_PATH || 'site/public/content.json';
+
+  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REPO_OWNER || !process.env.GITHUB_REPO_NAME) {
+    return json({ error: 'server_misconfig' }, 500);
+  }
 
   try {
     // 1. Get last 2 commits for the file
     const commitsRes = await fetch(
-      `${repoBase()}/commits?path=${encodeURIComponent(path)}&sha=${encodeURIComponent(branch)}&per_page=2`,
+      `${repoBase()}/commits?path=${encodePath(path)}&sha=${encodeURIComponent(branch)}&per_page=2`,
       {
         headers: ghHeaders(),
         signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
@@ -70,7 +74,7 @@ export default async function handler(req) {
 
     // 2. Get file content at previous commit
     const contentRes = await fetch(
-      `${repoBase()}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(previousCommitSha)}`,
+      `${repoBase()}/contents/${encodePath(path)}?ref=${encodeURIComponent(previousCommitSha)}`,
       {
         headers: ghHeaders(),
         signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),

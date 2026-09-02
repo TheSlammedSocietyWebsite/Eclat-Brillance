@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useContent } from '../hooks/useContent.jsx';
+import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
@@ -12,6 +13,7 @@ const NAV_FIELDS = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const isEditMode = useEditMode();
   const content = useContent();
   const { site, nav } = content;
 
@@ -25,6 +27,10 @@ export default function Header() {
   const closeNav = () => setIsOpen(false);
 
   const handleLogoClick = (e) => {
+    if (isEditMode) {
+      e.preventDefault();
+      return;
+    }
     closeNav();
     if (window.location.pathname === '/') {
       e.preventDefault();
@@ -35,7 +41,16 @@ export default function Header() {
     }
   };
 
+  const handleNavClick = (e) => {
+    if (isEditMode) {
+      e.preventDefault();
+      return;
+    }
+    closeNav();
+  };
+
   const getHref = (href) => {
+    if (isEditMode) return undefined;
     if (href && href.startsWith('#') && typeof window !== 'undefined' && window.location.pathname !== '/') {
       return `/${href}`;
     }
@@ -75,7 +90,7 @@ export default function Header() {
           aria-label="Navigation principale"
         >
           {nav.map(({ label, href, cta }, i) => (
-            <a key={i} href={getHref(href)} className={cta ? 'nav-cta' : undefined} onClick={closeNav} style={{ position: 'relative' }}>
+            <a key={i} href={getHref(href)} className={cta ? 'nav-cta' : undefined} onClick={handleNavClick} style={{ position: 'relative' }}>
               <EditableText path={`nav.${i}.label`} tag="span">{label}</EditableText>
               <EditableArrayControls path="nav" index={i} items={nav} itemLabel="Lien" fields={NAV_FIELDS} />
             </a>

@@ -1,5 +1,6 @@
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
+import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
 
 const PhoneIcon = () => (
@@ -10,7 +11,12 @@ const PhoneIcon = () => (
 
 export default function CtaBanner() {
   const ref = useScrollReveal();
+  const isEditMode = useEditMode();
   const { site, ctaBanner } = useContent();
+
+  const handleLinkClick = (e) => {
+    if (isEditMode) e.preventDefault();
+  };
 
   return (
     <section className="cta-banner" ref={ref}>
@@ -22,10 +28,10 @@ export default function CtaBanner() {
           <EditableText path="ctaBanner.body" multiline tag="span">{ctaBanner.body}</EditableText>
         </p>
         <div className="cta-banner-actions">
-          <a href="#contact" className="btn btn-primary">
+          <a href={isEditMode ? undefined : "#contact"} className="btn btn-primary" onClick={handleLinkClick}>
             <EditableText path="ctaBanner.primaryCta" tag="span">{ctaBanner.primaryCta}</EditableText>
           </a>
-          <a href={site.telHref} className="btn btn-ghost">
+          <a href={isEditMode ? undefined : site.telHref} className="btn btn-ghost" onClick={handleLinkClick}>
             <PhoneIcon />
             <EditableText path="site.tel" tag="span">{site.tel}</EditableText>
           </a>

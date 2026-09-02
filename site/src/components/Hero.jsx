@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal.js';
 import { useContent } from '../hooks/useContent.jsx';
+import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
@@ -13,7 +14,12 @@ const PhoneIcon = () => (
 export default function Hero() {
   const contentRef = useScrollReveal();
   const badgeRef = useScrollReveal();
+  const isEditMode = useEditMode();
   const { hero, site } = useContent();
+
+  const handleLinkClick = (e) => {
+    if (isEditMode) e.preventDefault();
+  };
 
   return (
     <section className="hero">
@@ -33,10 +39,10 @@ export default function Hero() {
             </EditableText>
           </p>
           <div className="hero-ctas">
-            <a href="#contact" className="btn btn-primary">
+            <a href={isEditMode ? undefined : "#contact"} className="btn btn-primary" onClick={handleLinkClick}>
               <EditableText path="hero.primaryCta" tag="span">{hero.primaryCta}</EditableText>
             </a>
-            <a href={site.telHref} className="btn btn-ghost">
+            <a href={isEditMode ? undefined : site.telHref} className="btn btn-ghost" onClick={handleLinkClick}>
               <PhoneIcon />
               <EditableText path="site.tel" tag="span">{site.tel}</EditableText>
             </a>

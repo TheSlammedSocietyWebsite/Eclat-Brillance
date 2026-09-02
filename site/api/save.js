@@ -42,8 +42,13 @@ export default async function handler(req) {
     return json({ error: 'too_large' }, 413);
   }
 
-  const branch = process.env.GITHUB_BRANCH || 'main';
-  const path = process.env.CONTENT_PATH || 'public/content.json';
+  const branch = process.env.GITHUB_BRANCH || 'master';
+  const path = process.env.CONTENT_PATH || 'site/public/content.json';
+
+  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REPO_OWNER || !process.env.GITHUB_REPO_NAME) {
+    console.error('GitHub environment variables missing (GITHUB_TOKEN, GITHUB_REPO_OWNER, GITHUB_REPO_NAME)');
+    return json({ error: 'server_misconfig' }, 500);
+  }
 
   try {
     let sha = await getFileSha(path, branch);

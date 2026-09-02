@@ -176,11 +176,8 @@ function ArrayItemWrapper({ index, item, fields, items, itemLabel, onUpdate, onR
         </span>
       )}
       {isOpen && (
-        <EditPopover targetRef={triggerRef} onClose={onClose}>
-          <div style={{ minWidth: '320px' }}>
-            <h4 style={{ margin: '0 0 0.75rem', fontSize: '0.95rem', fontWeight: 600 }}>
-              {itemLabel} {index + 1}
-            </h4>
+        <EditPopover targetRef={triggerRef} onClose={onClose} title={`${itemLabel} ${index + 1}`}>
+          <div style={{ minWidth: '300px' }}>
             {fields.map((f) => (
               <TextEditor
                 key={f.path}

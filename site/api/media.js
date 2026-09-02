@@ -49,10 +49,14 @@ export default async function handler(req) {
     return json({ error: 'too_large' }, 413);
   }
 
-  const branch = process.env.GITHUB_BRANCH || 'main';
-  const mediaPath = `public/media/${filename}`;
+  const branch = process.env.GITHUB_BRANCH || 'master';
+  const mediaPath = process.env.MEDIA_PATH ? `${process.env.MEDIA_PATH}/${filename}` : `site/public/media/${filename}`;
   const owner = process.env.GITHUB_REPO_OWNER;
   const repo = process.env.GITHUB_REPO_NAME;
+
+  if (!process.env.GITHUB_TOKEN || !owner || !repo) {
+    return json({ error: 'server_misconfig' }, 500);
+  }
 
   try {
     const sha = await getFileSha(mediaPath, branch);

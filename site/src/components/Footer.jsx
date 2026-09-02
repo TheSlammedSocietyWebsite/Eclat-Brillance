@@ -1,11 +1,19 @@
 import { useContent } from '../hooks/useContent.jsx';
+import { useEditMode } from '../hooks/useEditMode.jsx';
 import EditableText from './edit/EditableText.jsx';
 import EditableArrayControls from './edit/EditableArrayControls.jsx';
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const isEditMode = useEditMode();
   const { site, footer } = useContent();
   const lines = footer.description.split('\n');
+
+  const handleLinkClick = (e) => {
+    if (isEditMode) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <footer className="site-footer">
@@ -31,11 +39,11 @@ export default function Footer() {
             <EditableText path="footer.contactHeading" tag="span">{footer.contactHeading}</EditableText>
           </h4>
           <p>
-            <a href={site.telHref}>
+            <a href={isEditMode ? undefined : site.telHref} onClick={handleLinkClick}>
               <EditableText path="site.tel" tag="span">{site.tel}</EditableText>
             </a>
             <br/>
-            <a href={`mailto:${site.email}`}>
+            <a href={isEditMode ? undefined : `mailto:${site.email}`} onClick={handleLinkClick}>
               <EditableText path="site.email" tag="span">{site.email}</EditableText>
             </a>
           </p>
@@ -53,7 +61,7 @@ export default function Footer() {
               </span>
             ))}
             <EditableArrayControls path="footer.infoLines" itemLabel="Ligne" />
-            <a href={typeof window !== 'undefined' && window.location.pathname !== '/' ? '/#contact' : '#contact'}>
+            <a href={isEditMode ? undefined : (typeof window !== 'undefined' && window.location.pathname !== '/' ? '/#contact' : '#contact')} onClick={handleLinkClick}>
               <EditableText path="footer.devisLabel" tag="span">{footer.devisLabel}</EditableText>
             </a>
           </p>
@@ -66,7 +74,7 @@ export default function Footer() {
             <EditableText path="footer.legal" tag="span">{footer.legal}</EditableText>
           </span>
           <span>
-            <a href="/mentions-legales" className="footer-legal-link">
+            <a href={isEditMode ? undefined : "/mentions-legales"} className="footer-legal-link" onClick={handleLinkClick}>
               <EditableText path="footer.mentions" tag="span">{footer.mentions}</EditableText>
             </a>
           </span>

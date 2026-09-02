@@ -37,8 +37,12 @@ async function readErrorBody(res) {
   }
 }
 
+export function encodePath(path) {
+  return path.split('/').map(encodeURIComponent).join('/');
+}
+
 export async function getFileSha(path, branch) {
-  const url = `${repoBase()}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(branch)}`;
+  const url = `${repoBase()}/contents/${encodePath(path)}?ref=${encodeURIComponent(branch)}`;
   const res = await fetch(url, {
     headers: ghHeaders(),
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
@@ -57,7 +61,7 @@ export async function getFileSha(path, branch) {
 }
 
 export async function putFile(path, branch, content, sha, message, alreadyBase64 = false) {
-  const url = `${repoBase()}/contents/${encodeURIComponent(path)}`;
+  const url = `${repoBase()}/contents/${encodePath(path)}`;
   const body = {
     message,
     content: alreadyBase64 ? content : utf8ToBase64(content),

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import bundledContent from '../../public/content.json';
 import Site from '../pages/Site.jsx';
 import MentionsLegales from '../pages/MentionsLegales.jsx';
@@ -28,7 +27,7 @@ function getDeep(obj, path) {
     }
     return undefined;
   }, obj);
-  return typeof value === 'string' ? value : '';
+  return typeof value === 'string' ? value : (value != null ? String(value) : '');
 }
 
 function setDeep(obj, path, value) {
@@ -68,10 +67,12 @@ function messageForError(code) {
   switch (code) {
     case 'unauthorized':
       return 'Session expirée — reconnectez-vous.';
+    case 'server_misconfig':
+      return 'Configuration GitHub / Vercel manquante (GITHUB_TOKEN, GITHUB_REPO_OWNER, GITHUB_REPO_NAME).';
     case 'github_unavailable':
-      return 'Échec de la sauvegarde, réessayez dans un instant.';
+      return 'Échec de la sauvegarde, service temporairement indisponible. Réessayez.';
     case 'github_error':
-      return 'Modifications externes détectées, rechargez la page.';
+      return 'Modifications externes détectées sur le dépôt, rechargez la page.';
     case 'too_large':
       return 'Contenu trop volumineux.';
     case 'empty_content':
@@ -116,19 +117,20 @@ const META_FIELDS = [
 const LEGAL_FIELDS = [
   { path: 'legal.companyName', label: 'Raison sociale / Nom commercial' },
   { path: 'legal.legalStatus', label: 'Forme juridique / Statut' },
-  { path: 'legal.activity', label: 'Activité', multiline: true },
+  { path: 'legal.activity', label: 'Activité principale', multiline: true },
   { path: 'legal.siren', label: 'Numéro SIREN' },
   { path: 'legal.siret', label: 'Numéro SIRET' },
   { path: 'legal.rcs', label: 'Immatriculation (RNE / CMA / RCS)' },
-  { path: 'legal.tva', label: 'Mention TVA' },
   { path: 'legal.ape', label: 'Code NAF / APE' },
+  { path: 'legal.tva', label: 'Régime / Mention TVA' },
   { path: 'legal.address', label: "Adresse de l'établissement" },
   { path: 'legal.phone', label: 'Téléphone contact' },
   { path: 'legal.email', label: 'Email contact' },
-  { path: 'legal.director', label: 'Directeur de la publication' },
+  { path: 'legal.director', label: 'Directrice de la publication' },
   { path: 'legal.hostName', label: 'Hébergeur (Nom)' },
   { path: 'legal.hostAddress', label: 'Hébergeur (Adresse)' },
   { path: 'legal.hostWebsite', label: 'Hébergeur (Site web)' },
+  { path: 'legal.hostContact', label: 'Hébergeur (Contact / Email)' },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -136,9 +138,11 @@ const LEGAL_FIELDS = [
 /* ------------------------------------------------------------------ */
 
 export default function AdminEdit() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = searchParams.get('page') === 'legal' ? 'legal' : 'home';
   const [content, setContent] = useState(bundledContent);
   const [initialContent, setInitialContent] = useState(bundledContent);
-  const [previewPage, setPreviewPage] = useState('home'); // 'home' | 'legal'
+  const [previewPage, setPreviewPage] = useState(initialPage); // 'home' | 'legal'
   const [state, setState] = useState('idle');
   const [errorMsg, setErrorMsg] = useState(null);
   const [deployState, setDeployState] = useState('idle');
@@ -157,6 +161,11 @@ export default function AdminEdit() {
   const navTimerRef = useRef(null);
   const deployPollRef = useRef(null);
   const deployTimeoutRef = useRef(null);
+
+  const handleSetPreviewPage = (page) => {
+    setPreviewPage(page);
+    setSearchParams(page === 'legal' ? { page: 'legal' } : {});
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -316,14 +325,14 @@ export default function AdminEdit() {
               <button
                 type="button"
                 className={`btn-sm ${previewPage === 'home' ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setPreviewPage('home')}
+                onClick={() => handleSetPreviewPage('home')}
               >
                 Accueil
               </button>
               <button
                 type="button"
                 className={`btn-sm ${previewPage === 'legal' ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setPreviewPage('legal')}
+                onClick={() => handleSetPreviewPage('legal')}
               >
                 Mentions Légales
               </button>
@@ -338,6 +347,7 @@ export default function AdminEdit() {
                 className="btn-primary btn-sm"
                 onClick={onSave}
                 disabled={state === 'saving' || !dirty}
+                style={{ flex: 1 }}
               >
                 {state === 'saving' ? 'Sauvegarde…' : 'Sauvegarder'}
               </button>
@@ -354,27 +364,39 @@ export default function AdminEdit() {
             </div>
 
             {state === 'saved' && deployState === 'idle' && (
-              <span className="success">Sauvegardé — rebuild en cours (~60s).</span>
+              <span className="success" style={{ display: 'block', marginTop: '0.5rem' }}>
+                ✓ Sauvegardé — rebuild en cours (~60s).
+              </span>
             )}
             {deployState === 'checking' && (
-              <span className="success">Vérification du déploiement…</span>
+              <span className="success" style={{ display: 'block', marginTop: '0.5rem' }}>
+                ⏳ Vérification du déploiement…
+              </span>
             )}
             {deployState === 'deployed' && (
-              <span className="success">En ligne !</span>
+              <span className="success" style={{ display: 'block', marginTop: '0.5rem' }}>
+                🚀 En ligne !
+              </span>
             )}
             {rollbackState === 'rolled' && (
-              <span className="success">Retour à la version précédente effectué.</span>
+              <span className="success" style={{ display: 'block', marginTop: '0.5rem' }}>
+                ✓ Retour à la version précédente effectué.
+              </span>
             )}
             {rollbackState === 'error' && (
-              <span className="error">Échec du retour en arrière.</span>
+              <span className="error" style={{ display: 'block', marginTop: '0.5rem' }}>
+                ✕ Échec du retour en arrière.
+              </span>
             )}
             {state === 'error' && errorMsg && (
-              <span className="error">{errorMsg}</span>
+              <span className="error" style={{ display: 'block', marginTop: '0.5rem' }}>
+                ✕ {errorMsg}
+              </span>
             )}
           </div>
 
           <div className="admin-edit-section">
-            <h3>Thème</h3>
+            <h3>Thème & Couleurs</h3>
             {COLOR_FIELDS.map((f) => (
               <ColorEditor
                 key={f.path}
@@ -386,7 +408,7 @@ export default function AdminEdit() {
           </div>
 
           <div className="admin-edit-section">
-            <h3>Métadonnées</h3>
+            <h3>Métadonnées du site</h3>
             {META_FIELDS.map((f) => (
               <TextEditor
                 key={f.path}

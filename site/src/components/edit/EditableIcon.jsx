@@ -47,18 +47,8 @@ export default function EditableIcon({ path, children }) {
         </span>
       </span>
       {isOpen && triggerRef.current && (
-        <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)}>
+        <EditPopover targetRef={triggerRef} onClose={() => setIsOpen(false)} title="Changer l'icône">
           <div style={{ minWidth: '280px' }}>
-            <h4
-              style={{
-                margin: '0 0 0.75rem',
-                fontSize: '0.95rem',
-                fontWeight: 600,
-                color: '#1a2b4a',
-              }}
-            >
-              Changer l'icône
-            </h4>
             <IconPicker
               label="Icône"
               value={value}

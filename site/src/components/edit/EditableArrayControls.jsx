@@ -121,18 +121,8 @@ export default function EditableArrayControls({
           + Ajouter {itemLabel.toLowerCase()}
         </button>
         {isAdding && addButtonRef.current && (
-          <EditPopover targetRef={addButtonRef} onClose={handleCancelAdd}>
-            <div className="edit-popover-form" style={{ minWidth: '280px' }}>
-              <h4
-                style={{
-                  margin: '0 0 0.75rem',
-                  fontSize: '0.95rem',
-                  fontWeight: 600,
-                  color: '#1a2b4a',
-                }}
-              >
-                Ajouter {itemLabel.toLowerCase()}
-              </h4>
+          <EditPopover targetRef={addButtonRef} onClose={handleCancelAdd} title={`Ajouter ${itemLabel.toLowerCase()}`}>
+            <div style={{ minWidth: '280px' }}>
               {fields ? (
                 fields.map((f) => {
                   if (f.type === 'checkbox') {
