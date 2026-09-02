@@ -359,9 +359,11 @@
     font-weight: 600;
   }
   .hero-title-sub {
-    color: theme('colors.ink');
-    font-weight: 600;
-    margin-top: 0.12em;
+    color: theme('colors.accent');
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-top: -0.14em;
   }
   .hero-amp {
     font-family: theme('fontFamily.serif');
@@ -1146,7 +1148,7 @@
     margin-bottom: 1.15rem;
   }
   .hero-title-sub {
-    margin-top: 0.15em;
+    margin-top: -0.1em;
   }
   .lede {
     font-size: 1rem;
