@@ -1,4 +1,6 @@
+import '../../src/admin.css';
 import AuthGuard from '../../src/lib/auth-guard.jsx';
+import { AuthProvider } from '../../src/hooks/useAuth.jsx';
 
 export const metadata = {
   title: { absolute: 'Administration — Éclat Brillance' },
@@ -10,5 +12,9 @@ export const metadata = {
 };
 
 export default function AdminLayout({ children }) {
-  return <AuthGuard>{children}</AuthGuard>;
+  return (
+    <AuthProvider>
+      <AuthGuard>{children}</AuthGuard>
+    </AuthProvider>
+  );
 }

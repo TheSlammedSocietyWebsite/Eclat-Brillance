@@ -1,17 +1,18 @@
 import HomeClient from './home-client.jsx';
 import TrackVisit from './track-visit.jsx';
 import {
-  cleaningServiceJsonLd,
-  faqPageJsonLd,
+  siteJsonLd,
   serializeJsonLd,
 } from '../src/data/structured-data.js';
-
-const title = 'Entreprise de Nettoyage de Bureaux à Paris & IDF — Éclat Brillance';
-const description = 'Société de nettoyage professionnel à Paris et en Île-de-France. Entretien de bureaux, immeubles et commerces. Devis gratuit et personnalisé sous 24h.';
+import {
+  HOME_DESCRIPTION,
+  HOME_TITLE,
+  SITE_NAME,
+} from '../src/data/site-config.js';
 
 export const metadata = {
-  title: { absolute: title },
-  description,
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
   alternates: {
     canonical: '/',
   },
@@ -27,10 +28,10 @@ export const metadata = {
     },
   },
   openGraph: {
-    title,
-    description,
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     url: '/',
-    siteName: 'Éclat Brillance',
+    siteName: SITE_NAME,
     locale: 'fr_FR',
     type: 'website',
     images: [
@@ -45,8 +46,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title,
-    description,
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
     images: ['/og-eclat-brillance.png'],
   },
 };
@@ -55,14 +56,9 @@ export default function HomePage() {
   return (
     <>
       <script
-        id="cleaning-service-jsonld"
+        id="site-jsonld"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(cleaningServiceJsonLd) }}
-      />
-      <script
-        id="faq-page-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqPageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteJsonLd) }}
       />
       <TrackVisit />
       <HomeClient />

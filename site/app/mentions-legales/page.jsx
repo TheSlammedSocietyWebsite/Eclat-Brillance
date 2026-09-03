@@ -1,13 +1,17 @@
 import MentionsLegales from '../../src/views/MentionsLegales.jsx';
-import content from '../../public/content.json';
-
-const companyName = content.legal?.companyName || content.site?.name || 'Éclat Brillance';
-const title = `Mentions Légales & Confidentialité — ${companyName}`;
-const description = "Mentions légales, politique de confidentialité et conditions d'utilisation du site Éclat Brillance, entreprise de nettoyage professionnel à Paris.";
+import {
+  legalPageJsonLd,
+  serializeJsonLd,
+} from '../../src/data/structured-data.js';
+import {
+  LEGAL_DESCRIPTION,
+  LEGAL_TITLE,
+  SITE_NAME,
+} from '../../src/data/site-config.js';
 
 export const metadata = {
-  title: { absolute: title },
-  description,
+  title: { absolute: LEGAL_TITLE },
+  description: LEGAL_DESCRIPTION,
   alternates: {
     canonical: '/mentions-legales',
   },
@@ -16,10 +20,10 @@ export const metadata = {
     follow: true,
   },
   openGraph: {
-    title,
-    description,
+    title: LEGAL_TITLE,
+    description: LEGAL_DESCRIPTION,
     url: '/mentions-legales',
-    siteName: 'Éclat Brillance',
+    siteName: SITE_NAME,
     locale: 'fr_FR',
     type: 'website',
     images: [
@@ -34,12 +38,21 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title,
-    description,
+    title: LEGAL_TITLE,
+    description: LEGAL_DESCRIPTION,
     images: ['/og-eclat-brillance.png'],
   },
 };
 
 export default function LegalPage() {
-  return <MentionsLegales />;
+  return (
+    <>
+      <script
+        id="legal-page-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(legalPageJsonLd) }}
+      />
+      <MentionsLegales />
+    </>
+  );
 }

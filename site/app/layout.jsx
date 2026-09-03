@@ -1,22 +1,24 @@
 import '../src/index.css';
-import '../src/admin.css';
+import { preload } from 'react-dom';
 import Providers from './providers.jsx';
-
-const siteUrl = 'https://www.eclatbrillance.com';
+import { SITE_NAME, SITE_URL } from '../src/data/site-config.js';
 
 export const metadata = {
-  metadataBase: new URL(siteUrl),
-  applicationName: 'Éclat Brillance',
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
   title: {
-    default: 'Éclat Brillance',
-    template: '%s — Éclat Brillance',
+    default: 'Éclat Brillance | Nettoyage professionnel en Île-de-France',
+    template: `%s | ${SITE_NAME}`,
   },
   description: 'Entreprise de nettoyage professionnel à Paris et en Île-de-France.',
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: 'services de nettoyage professionnel',
   icons: {
     icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
   openGraph: {
-    siteName: 'Éclat Brillance',
+    siteName: SITE_NAME,
     locale: 'fr_FR',
     type: 'website',
   },
@@ -31,13 +33,19 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
+  preload('/fonts/inter-latin.woff2', {
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous',
+  });
+  preload('/fonts/cormorant-garamond-600-latin.woff2', {
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous',
+  });
+
   return (
     <html lang="fr">
-      <head>
-        <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/cormorant-garamond-600-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/cormorant-garamond-400-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-      </head>
       <body>
         <Providers>{children}</Providers>
       </body>

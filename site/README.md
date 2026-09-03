@@ -131,9 +131,10 @@ Pour Vercel :
 ## SEO et sécurité
 
 - Métadonnées, canonical, Open Graph et Twitter générés côté serveur ;
-- schémas JSON-LD `CleaningService` et `FAQPage` dans le HTML de l’accueil ;
+- graphe JSON-LD `LocalBusiness`, `WebSite` et `WebPage` dans le HTML de l’accueil ;
 - `robots.txt` et `sitemap.xml` servis depuis `public/` ;
-- pages privées protégées par métadonnées robots et `X-Robots-Tag` ;
+- pages privées et ressources techniques exclues par métadonnées robots et `X-Robots-Tag` ;
+- déploiements Vercel Preview exclus de l’indexation via `X-Robots-Tag` ;
 - cookie de session `HttpOnly`, `Secure` en production et `SameSite=Strict` ;
 - en-têtes de sécurité configurés dans `next.config.mjs`.
 

@@ -7,16 +7,24 @@ const securityHeaders = [
 ];
 
 const noIndexHeaders = [
-  { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+  { key: 'X-Robots-Tag', value: 'noindex, nofollow, nosnippet, noarchive' },
 ];
+
+const previewHeaders = process.env.VERCEL_ENV === 'production'
+  ? []
+  : noIndexHeaders;
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
+  experimental: {
+    useTypeScriptCli: false,
+  },
   async headers() {
     return [
       {
         source: '/:path*',
-        headers: securityHeaders,
+        headers: [...securityHeaders, ...previewHeaders],
       },
       {
         source: '/login',
@@ -28,6 +36,22 @@ const nextConfig = {
       },
       {
         source: '/admin/:path*',
+        headers: noIndexHeaders,
+      },
+      {
+        source: '/api/:path*',
+        headers: noIndexHeaders,
+      },
+      {
+        source: '/content.json',
+        headers: noIndexHeaders,
+      },
+      {
+        source: '/stats.json',
+        headers: noIndexHeaders,
+      },
+      {
+        source: '/google1c82e0d7e6c888f0.html',
         headers: noIndexHeaders,
       },
     ];
